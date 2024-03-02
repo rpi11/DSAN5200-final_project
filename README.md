@@ -16,7 +16,7 @@ All relevant files live within the Quarto website directory titled FinalProject/
 1. Perform edits
 2. Run "quarto render" from within FinalProject/
 3. Push edits to DSAN5200-final_project repository
-4. Use following command to update with relevant files: rm -r public_html/DSAN5200_FinalProject/; mkdir public_html/DSAN5200_FinalProject/; cd DSAN5200-final_project/; git pull; cd ..; cp -r DSAN5200-final_project/FinalProject/_site/* public_html/DSAN5200_FinalProject
+4. Use following command to update with relevant files: ```rm -r public_html/DSAN5200_FinalProject/; mkdir public_html/DSAN5200_FinalProject/; cd DSAN5200-final_project/; git pull; cd ..; cp -r DSAN5200-final_project/FinalProject/_site/* public_html/DSAN5200_FinalProject```
 5. Open [your domain].georgetown.domains/DSAN5200_FinalProject/ and press Cmd+Shift+R
 
 #### Performing and pushing edits
@@ -29,7 +29,7 @@ This is formatted such that you will be able to enter "[your domain].georgetown.
 
 First, clone the repository into the highest level of your domain — mine looks like [pihlstro@gtown3 ~]$ git clone ...
 
-Having cloned the repository, still at the highest level of your domains structure run the following command: "rm -r public_html/DSAN5200_FinalProject/; mkdir public_html/DSAN5200_FinalProject/; cd DSAN5200-final_project/; git pull; cd ..; cp -r DSAN5200-final_project/FinalProject/_site/* public_html/DSAN5200_FinalProject"
+Having cloned the repository, still at the highest level of your domains structure run the following command: ```rm -r public_html/DSAN5200_FinalProject/; mkdir public_html/DSAN5200_FinalProject/; cd DSAN5200-final_project/; git pull; cd ..; cp -r DSAN5200-final_project/FinalProject/_site/* public_html/DSAN5200_FinalProject```
 
 The above command will remove and recreate the "DSAN5200_FinalProject" directory in the public site, update the version of the repository on your domain, and then copy the site contents to the deployable platform.
 
