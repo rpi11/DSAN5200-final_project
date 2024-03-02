@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "eda/explore.html",
+    "href": "eda/explore.html",
+    "title": "Initial EDA",
+    "section": "",
+    "text": "import pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport json\n\n\nwith open(\"data.csv\", \"r\") as f:\n    df = pd.read_csv(f)\ndf.head()\n\n\n\n\n\n\n\n\nLevel\nCategory\nVariable\nCounty\nDate\nGEOID\nState FIPS\nState\nValue\nDenominator\nDenominator Description\nRow-ID\nLatitude\nLongitude\nLocation\nYear\n\n\n\n\n0\nCounty\nAirports\nTotal Airports\nGrant County, Wisconsin\n01/01/2020 12:00:00 AM\n55043\n55\nWisconsin\n9.0\n9.0\nTotal Airports\nairports-2020-55043\n42.867479\n-90.706205\nPOINT (-90.706205 42.867479)\n2020\n\n\n1\nCounty\nAirports\nTotal Airports\nTaylor County, Florida\n01/01/2020 12:00:00 AM\n12123\n12\nFlorida\n7.0\n7.0\nTotal Airports\nairports-2020-12123\n30.047015\n-83.603520\nPOINT (-83.60352 30.047015)\n2020\n\n\n2\nCounty\nAirports\nTotal Airports\nStephens County, Texas\n01/01/2020 12:00:00 AM\n48429\n48\nTexas\n2.0\n2.0\nTotal Airports\nairports-2020-48429\n32.735872\n-98.836184\nPOINT (-98.836184 32.735872)\n2020\n\n\n3\nCounty\nAirports\nOther airports\nKnox County, Maine\n01/01/2020 12:00:00 AM\n23013\n23\nMaine\n7.0\n9.0\nTotal Airports\nother-airports-2020-23013\n44.155975\n-69.234045\nPOINT (-69.234045 44.155975)\n2020\n\n\n4\nCounty\nAirports\nPrimary Airports\nColfax County, New Mexico\n01/01/2020 12:00:00 AM\n35007\n35\nNew Mexico\n0.0\n5.0\nTotal Airports\nprimary-airports-2020-35007\n36.606139\n-104.646840\nPOINT (-104.64684 36.606139)\n2020"
+  },
+  {
+    "objectID": "eda/explore.html#import",
+    "href": "eda/explore.html#import",
+    "title": "Initial EDA",
+    "section": "",
+    "text": "import pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport json\n\n\nwith open(\"data.csv\", \"r\") as f:\n    df = pd.read_csv(f)\ndf.head()\n\n\n\n\n\n\n\n\nLevel\nCategory\nVariable\nCounty\nDate\nGEOID\nState FIPS\nState\nValue\nDenominator\nDenominator Description\nRow-ID\nLatitude\nLongitude\nLocation\nYear\n\n\n\n\n0\nCounty\nAirports\nTotal Airports\nGrant County, Wisconsin\n01/01/2020 12:00:00 AM\n55043\n55\nWisconsin\n9.0\n9.0\nTotal Airports\nairports-2020-55043\n42.867479\n-90.706205\nPOINT (-90.706205 42.867479)\n2020\n\n\n1\nCounty\nAirports\nTotal Airports\nTaylor County, Florida\n01/01/2020 12:00:00 AM\n12123\n12\nFlorida\n7.0\n7.0\nTotal Airports\nairports-2020-12123\n30.047015\n-83.603520\nPOINT (-83.60352 30.047015)\n2020\n\n\n2\nCounty\nAirports\nTotal Airports\nStephens County, Texas\n01/01/2020 12:00:00 AM\n48429\n48\nTexas\n2.0\n2.0\nTotal Airports\nairports-2020-48429\n32.735872\n-98.836184\nPOINT (-98.836184 32.735872)\n2020\n\n\n3\nCounty\nAirports\nOther airports\nKnox County, Maine\n01/01/2020 12:00:00 AM\n23013\n23\nMaine\n7.0\n9.0\nTotal Airports\nother-airports-2020-23013\n44.155975\n-69.234045\nPOINT (-69.234045 44.155975)\n2020\n\n\n4\nCounty\nAirports\nPrimary Airports\nColfax County, New Mexico\n01/01/2020 12:00:00 AM\n35007\n35\nNew Mexico\n0.0\n5.0\nTotal Airports\nprimary-airports-2020-35007\n36.606139\n-104.646840\nPOINT (-104.64684 36.606139)\n2020"
+  },
+  {
+    "objectID": "eda/explore.html#groupings",
+    "href": "eda/explore.html#groupings",
+    "title": "Initial EDA",
+    "section": "Groupings",
+    "text": "Groupings\n\n“Category”\n\n\ncats = list(df[\"Category\"].unique())\nprint(cats)\n\n['Airports', 'Bridges', 'Business', 'Commuting', 'Demographics', 'Maritime', 'Person trips', 'Railroad']\n\n\n\ncatVars = {}\nfor cat in cats:\n    if cat not in catVars:\n        catVars[cat] = []\n    \n    for var in df[df[\"Category\"] == cat][\"Variable\"].unique():\n        catVars[cat].append(var)\n    \nprint(json.dumps(catVars, indent = 4))\n\n{\n    \"Airports\": [\n        \"Total Airports\",\n        \"Other airports\",\n        \"Primary Airports\",\n        \"Commercial-service Airports\",\n        \"Civil use and seaplane bases\"\n    ],\n    \"Bridges\": [\n        \"Bridges, poor\",\n        \"Bridges, fair\",\n        \"Total bridges\",\n        \"Bridges, good\",\n        \"Bridge area (square meters)\",\n        \"Bridge area, poor (square meters)\",\n        \"Bridge area, fair (square meters)\",\n        \"Bridge area, good (square meters)\"\n    ],\n    \"Business\": [\n        \"Establishments\",\n        \"Employees\"\n    ],\n    \"Commuting\": [\n        \"Workers\",\n        \"Commute by car/ truck/van\",\n        \"Work at home\",\n        \"Work in-state\",\n        \"Work out-of-state\",\n        \"Commute by public transportation\",\n        \"Workers wo/ a vehicle\"\n    ],\n    \"Demographics\": [\n        \"Population\",\n        \"Hispanic\",\n        \"Median Household Income\",\n        \"Non Hispanic White Alone\"\n    ],\n    \"Maritime\": [\n        \"Marinas\",\n        \"Docks\"\n    ],\n    \"Person trips\": [\n        \"Trips 1-3 miles\",\n        \"Trips less than 1 mile\",\n        \"Total trips\",\n        \"Trips 10-25 miles\",\n        \"Trips 25-50 miles\",\n        \"Trips 100-250 miles\",\n        \"Trips 3-5 miles\",\n        \"Trips 5-10 miles\",\n        \"Trips 250-500 miles\",\n        \"Trips 50-100 miles\",\n        \"Trips greater than or equal to 500 miles\"\n    ],\n    \"Railroad\": [\n        \"Rail freight miles\",\n        \"Rail passenger miles\"\n    ]\n}\n\n\n\nlen(df[\"Variable\"].unique())\n\n41"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "INSERT TITLE",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  }
+]
