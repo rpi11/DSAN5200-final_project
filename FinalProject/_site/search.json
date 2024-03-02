@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "INSERT TITLE",
     "section": "",
-    "text": "About this site"
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
   },
   {
     "objectID": "eda/explore.html",
@@ -26,12 +26,5 @@
     "title": "Initial EDA",
     "section": "Groupings",
     "text": "Groupings\n\n“Category”\n\n\ncats = list(df[\"Category\"].unique())\nprint(cats)\n\n['Airports', 'Bridges', 'Business', 'Commuting', 'Demographics', 'Maritime', 'Person trips', 'Railroad']\n\n\n\ncatVars = {}\nfor cat in cats:\n    if cat not in catVars:\n        catVars[cat] = []\n    \n    for var in df[df[\"Category\"] == cat][\"Variable\"].unique():\n        catVars[cat].append(var)\n    \nprint(json.dumps(catVars, indent = 4))\n\n{\n    \"Airports\": [\n        \"Total Airports\",\n        \"Other airports\",\n        \"Primary Airports\",\n        \"Commercial-service Airports\",\n        \"Civil use and seaplane bases\"\n    ],\n    \"Bridges\": [\n        \"Bridges, poor\",\n        \"Bridges, fair\",\n        \"Total bridges\",\n        \"Bridges, good\",\n        \"Bridge area (square meters)\",\n        \"Bridge area, poor (square meters)\",\n        \"Bridge area, fair (square meters)\",\n        \"Bridge area, good (square meters)\"\n    ],\n    \"Business\": [\n        \"Establishments\",\n        \"Employees\"\n    ],\n    \"Commuting\": [\n        \"Workers\",\n        \"Commute by car/ truck/van\",\n        \"Work at home\",\n        \"Work in-state\",\n        \"Work out-of-state\",\n        \"Commute by public transportation\",\n        \"Workers wo/ a vehicle\"\n    ],\n    \"Demographics\": [\n        \"Population\",\n        \"Hispanic\",\n        \"Median Household Income\",\n        \"Non Hispanic White Alone\"\n    ],\n    \"Maritime\": [\n        \"Marinas\",\n        \"Docks\"\n    ],\n    \"Person trips\": [\n        \"Trips 1-3 miles\",\n        \"Trips less than 1 mile\",\n        \"Total trips\",\n        \"Trips 10-25 miles\",\n        \"Trips 25-50 miles\",\n        \"Trips 100-250 miles\",\n        \"Trips 3-5 miles\",\n        \"Trips 5-10 miles\",\n        \"Trips 250-500 miles\",\n        \"Trips 50-100 miles\",\n        \"Trips greater than or equal to 500 miles\"\n    ],\n    \"Railroad\": [\n        \"Rail freight miles\",\n        \"Rail passenger miles\"\n    ]\n}\n\n\n\nlen(df[\"Variable\"].unique())\n\n41"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "INSERT TITLE",
-    "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
   }
 ]
