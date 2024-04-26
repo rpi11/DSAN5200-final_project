@@ -166,7 +166,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#import" id="toc-import" class="nav-link active" data-scroll-target="#import">Import</a></li>
+  <li><a href="#about-the-data" id="toc-about-the-data" class="nav-link active" data-scroll-target="#about-the-data">About the Data</a></li>
+  <li><a href="#import" id="toc-import" class="nav-link" data-scroll-target="#import">Import</a></li>
   <li><a href="#groupings" id="toc-groupings" class="nav-link" data-scroll-target="#groupings">Groupings</a></li>
   <li><a href="#dates" id="toc-dates" class="nav-link" data-scroll-target="#dates">Dates</a></li>
   <li><a href="#locations" id="toc-locations" class="nav-link" data-scroll-target="#locations">Locations</a></li>
@@ -193,25 +194,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<p>In this section, we will explore a few different aspects of our dataset. We will examine the different categories and values that exist within the data, as well as the distributions for various sub-categorizations. This analysis will help contextualize which attributes of the data are most useful for addressing our areas of interest.</p>
+<section id="about-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-data">About the Data</h2>
+</section>
 <section id="import" class="level2">
 <h2 class="anchored" data-anchor-id="import">Import</h2>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="8">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tabulate <span class="im">import</span> tabulate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="9">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../data/data.csv"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(f)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
 
@@ -345,17 +352,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>“Category”</li>
 </ol>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="10">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cats <span class="op">=</span> <span class="bu">list</span>(df[<span class="st">"Category"</span>].unique())</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tabulate())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>['Airports', 'Bridges', 'Business', 'Commuting', 'Demographics', 'Maritime', 'Person trips', 'Railroad']</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="13">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>catVars <span class="op">=</span> {}</span>
@@ -365,69 +372,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> var <span class="kw">in</span> df[df[<span class="st">"Category"</span>] <span class="op">==</span> cat][<span class="st">"Variable"</span>].unique():</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        catVars[cat].append(var)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(json.dumps(catVars, indent <span class="op">=</span> <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>catVarDf <span class="op">=</span> []</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">max</span>(<span class="bu">len</span>(catVars[k]) <span class="cf">for</span> k <span class="kw">in</span> catVars)):</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    catVarDf.append([])</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> catVars:</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            catVarDf[<span class="op">-</span><span class="dv">1</span>].append(catVars[k][i])</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            catVarDf[<span class="op">-</span><span class="dv">1</span>].append(<span class="st">" "</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> tabulate(catVarDf, headers<span class="op">=</span><span class="bu">list</span>(catVars.keys()))</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>{
-    "Airports": [
-        "Total Airports",
-        "Other airports",
-        "Primary Airports",
-        "Commercial-service Airports",
-        "Civil use and seaplane bases"
-    ],
-    "Bridges": [
-        "Bridges, poor",
-        "Bridges, fair",
-        "Total bridges",
-        "Bridges, good",
-        "Bridge area (square meters)",
-        "Bridge area, poor (square meters)",
-        "Bridge area, fair (square meters)",
-        "Bridge area, good (square meters)"
-    ],
-    "Business": [
-        "Establishments",
-        "Employees"
-    ],
-    "Commuting": [
-        "Workers",
-        "Commute by car/ truck/van",
-        "Work at home",
-        "Work in-state",
-        "Work out-of-state",
-        "Commute by public transportation",
-        "Workers wo/ a vehicle"
-    ],
-    "Demographics": [
-        "Population",
-        "Hispanic",
-        "Median Household Income",
-        "Non Hispanic White Alone"
-    ],
-    "Maritime": [
-        "Marinas",
-        "Docks"
-    ],
-    "Person trips": [
-        "Trips 1-3 miles",
-        "Trips less than 1 mile",
-        "Total trips",
-        "Trips 10-25 miles",
-        "Trips 25-50 miles",
-        "Trips 100-250 miles",
-        "Trips 3-5 miles",
-        "Trips 5-10 miles",
-        "Trips 250-500 miles",
-        "Trips 50-100 miles",
-        "Trips greater than or equal to 500 miles"
-    ],
-    "Railroad": [
-        "Rail freight miles",
-        "Rail passenger miles"
-    ]
-}</code></pre>
+<pre><code>Airports                      Bridges                            Business        Commuting                         Demographics              Maritime    Person trips                              Railroad
+----------------------------  ---------------------------------  --------------  --------------------------------  ------------------------  ----------  ----------------------------------------  --------------------
+Total Airports                Bridges, poor                      Establishments  Workers                           Population                Marinas     Trips 1-3 miles                           Rail freight miles
+Other airports                Bridges, fair                      Employees       Commute by car/ truck/van         Hispanic                  Docks       Trips less than 1 mile                    Rail passenger miles
+Primary Airports              Total bridges                                      Work at home                      Median Household Income               Total trips
+Commercial-service Airports   Bridges, good                                      Work in-state                     Non Hispanic White Alone              Trips 10-25 miles
+Civil use and seaplane bases  Bridge area (square meters)                        Work out-of-state                                                       Trips 25-50 miles
+                              Bridge area, poor (square meters)                  Commute by public transportation                                        Trips 100-250 miles
+                              Bridge area, fair (square meters)                  Workers wo/ a vehicle                                                   Trips 3-5 miles
+                              Bridge area, good (square meters)                                                                                          Trips 5-10 miles
+                                                                                                                                                         Trips 250-500 miles
+                                                                                                                                                         Trips 50-100 miles
+                                                                                                                                                         Trips greater than or equal to 500 miles</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="9">
