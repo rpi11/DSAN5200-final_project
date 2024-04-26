@@ -7,8 +7,20 @@ website:
     left:
       - href: index.qmd
         text: Introduction
-      - href: eda/explore.ipynb
-        text: Test
+      - href: RICH/eda.ipynb
+        text: EDA
+      - href: PASHA/explore.ipynb
+        text: Explore the Data!
+      - href: RICH/trendOverTime.ipynb
+        text: Trends Over Time
+      - href: ZENAN/commute.ipynb
+        text: Commuting Numbers
+      - href: ZENAN/transportation.ipynb
+        text: Transportation Methods
+      - href: ZENAN/bridge.ipynb
+        text: Bridge Quality
+      - href: conclusion.qmd
+        text: Conclusion
 
 format:
   html:
