@@ -9,7 +9,7 @@ website:
         text: Introduction
       - href: RICH/eda.ipynb
         text: EDA
-      - href: PASHA/explore.ipynb
+      - href: PASHA/folium-county.ipynb
         text: Explore the Data!
       - href: RICH/trendOverTime.ipynb
         text: Trends Over Time
