@@ -5,4 +5,19 @@ subtitle: A Deep Dive into County-Level Transportation Data
 
 ## Introduction
 
-To Be Added
+* Focused on how commuting dynamics are impacted by a variety of indicators
+    * Infrastructural: bridge quality specifically (most robust / correlated)
+    * Demographic: income, business presence, employee type counts
+* Additional coniseration about how bridge quality varies across similar indicators
+
+#### Data Science Questions (from proposal)
+
+1. What is the geographic distribution of travel frequency?
+2. In areas with high trip counts, how does public transportation use compare to personal vehicle use?
+3. How are commute numbers related to the number of businesses in a county?
+4. How are commute number/trip counts related to the quality of bridges?
+5. How does income correlate with commuting methods?
+6. How does population/employee numbers relate to commuting methods/trip counts?
+7. How does bridge quality relate to income and population?
+8. How does bridge quality relate to the length of trips?
+9. What is the geographic distribution of various lengths of trips
