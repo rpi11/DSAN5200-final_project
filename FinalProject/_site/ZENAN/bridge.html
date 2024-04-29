@@ -178,7 +178,16 @@ require(['plotly'], function(Plotly) {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#filter-out-rows-with-two-indicators-of-our-paticular-interest" id="toc-filter-out-rows-with-two-indicators-of-our-paticular-interest" class="nav-link active" data-scroll-target="#filter-out-rows-with-two-indicators-of-our-paticular-interest">Filter out rows with two indicators of our paticular interest</a></li>
+  <li><a href="#plot-an-interactive-plot-for-two-indicators-commuting-by-personal-vehicle-and-bridge-area-good-for-several-counties" id="toc-plot-an-interactive-plot-for-two-indicators-commuting-by-personal-vehicle-and-bridge-area-good-for-several-counties" class="nav-link" data-scroll-target="#plot-an-interactive-plot-for-two-indicators-commuting-by-personal-vehicle-and-bridge-area-good-for-several-counties">Plot an interactive plot for two indicators ‘commuting by personal vehicle’ and ‘Bridge area, good’ for several counties</a></li>
+  <li><a href="#filter-out-rows-featuring-5-states-of-our-paticular-interest-georgia-has-the-greatest-percent-of-good-bridge-while-utah-has-the-lowest-percent-of-poor-bridge" id="toc-filter-out-rows-featuring-5-states-of-our-paticular-interest-georgia-has-the-greatest-percent-of-good-bridge-while-utah-has-the-lowest-percent-of-poor-bridge" class="nav-link" data-scroll-target="#filter-out-rows-featuring-5-states-of-our-paticular-interest-georgia-has-the-greatest-percent-of-good-bridge-while-utah-has-the-lowest-percent-of-poor-bridge">Filter out rows featuring 5 states of our paticular interest: Georgia has the greatest percent of good bridge, while Utah has the lowest percent of poor bridge</a></li>
+  <li><a href="#plot-all-the-indicators-for-bridge-for-each-state" id="toc-plot-all-the-indicators-for-bridge-for-each-state" class="nav-link" data-scroll-target="#plot-all-the-indicators-for-bridge-for-each-state">Plot all the indicators for bridge for each state</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -220,7 +229,7 @@ require(['plotly'], function(Plotly) {
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(f)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="68">
+<div class="cell-output cell-output-display" data-execution_count="37">
 <div>
 
 
@@ -354,15 +363,148 @@ require(['plotly'], function(Plotly) {
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> df[(df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">'Person trips'</span>) <span class="op">&amp;</span> (df[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">'Total trips'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<section id="filter-out-rows-with-two-indicators-of-our-paticular-interest" class="level2">
+<h2 class="anchored" data-anchor-id="filter-out-rows-with-two-indicators-of-our-paticular-interest">Filter out rows with two indicators of our paticular interest</h2>
 <div class="cell" data-execution_count="4">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>top_100_values_df <span class="op">=</span> filtered_df.nlargest(<span class="dv">50</span>, <span class="st">'Value'</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df[df[<span class="st">'GEOID'</span>].isin(top_100_values_df[<span class="st">'GEOID'</span>])]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df_with_top100_travel[df_with_top100_travel[<span class="st">'Category'</span>].isin([<span class="st">'Bridges'</span>, <span class="st">'Commuting'</span>])]</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df_with_top100_travel[(df_with_top100_travel[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">"Bridge area, good (square meters)"</span>) <span class="op">|</span> (df_with_top100_travel[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">"Commute by car/ truck/van"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df_with_top100_travel[(df_with_top100_travel[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">"Bridge area, good (square meters)"</span>) <span class="op">|</span> (df_with_top100_travel[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">"Commute by car/ truck/van"</span>)]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Level</th>
+<th data-quarto-table-cell-role="th">Category</th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">County</th>
+<th data-quarto-table-cell-role="th">Date</th>
+<th data-quarto-table-cell-role="th">GEOID</th>
+<th data-quarto-table-cell-role="th">State FIPS</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Value</th>
+<th data-quarto-table-cell-role="th">Denominator</th>
+<th data-quarto-table-cell-role="th">Denominator Description</th>
+<th data-quarto-table-cell-role="th">Row-ID</th>
+<th data-quarto-table-cell-role="th">Latitude</th>
+<th data-quarto-table-cell-role="th">Longitude</th>
+<th data-quarto-table-cell-role="th">Location</th>
+<th data-quarto-table-cell-role="th">Year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18362</td>
+<td>County</td>
+<td>Bridges</td>
+<td>Bridge area, good (square meters)</td>
+<td>Queens County, New York</td>
+<td>01/01/2018 12:00:00 AM</td>
+<td>36081</td>
+<td>36</td>
+<td>New York</td>
+<td>212446.29</td>
+<td>1250590.92</td>
+<td>Bridge area</td>
+<td>bridge-area-good-2018-36081</td>
+<td>40.702284</td>
+<td>-73.820270</td>
+<td>POINT (-73.82027 40.702284)</td>
+<td>2018</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">18595</td>
+<td>County</td>
+<td>Bridges</td>
+<td>Bridge area, good (square meters)</td>
+<td>Bexar County, Texas</td>
+<td>01/01/2018 12:00:00 AM</td>
+<td>48029</td>
+<td>48</td>
+<td>Texas</td>
+<td>1416350.03</td>
+<td>2883966.61</td>
+<td>Bridge area</td>
+<td>bridge-area-good-2018-48029</td>
+<td>29.448938</td>
+<td>-98.520005</td>
+<td>POINT (-98.520005 29.448938)</td>
+<td>2018</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">19191</td>
+<td>County</td>
+<td>Bridges</td>
+<td>Bridge area, good (square meters)</td>
+<td>Alameda County, California</td>
+<td>01/01/2019 12:00:00 AM</td>
+<td>6001</td>
+<td>6</td>
+<td>California</td>
+<td>709721.03</td>
+<td>1569829.15</td>
+<td>Bridge area</td>
+<td>bridge-area-good-2019-06001</td>
+<td>37.597747</td>
+<td>-121.905734</td>
+<td>POINT (-121.905734 37.597747)</td>
+<td>2019</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19270</td>
+<td>County</td>
+<td>Bridges</td>
+<td>Bridge area, good (square meters)</td>
+<td>Santa Clara County, California</td>
+<td>01/01/2017 12:00:00 AM</td>
+<td>6085</td>
+<td>6</td>
+<td>California</td>
+<td>798394.01</td>
+<td>1289201.01</td>
+<td>Bridge area</td>
+<td>bridge-area-good-2017-06085</td>
+<td>37.231785</td>
+<td>-121.695126</td>
+<td>POINT (-121.695126 37.231785)</td>
+<td>2017</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">19703</td>
+<td>County</td>
+<td>Bridges</td>
+<td>Bridge area, good (square meters)</td>
+<td>Riverside County, California</td>
+<td>01/01/2019 12:00:00 AM</td>
+<td>6065</td>
+<td>6</td>
+<td>California</td>
+<td>674038.91</td>
+<td>1209152.26</td>
+<td>Bridge area</td>
+<td>bridge-area-good-2019-06065</td>
+<td>33.743663</td>
+<td>-115.993807</td>
+<td>POINT (-115.993807 33.743663)</td>
+<td>2019</td>
+</tr>
+</tbody>
+</table>
+
 </div>
+</div>
+</div>
+</section>
+<section id="plot-an-interactive-plot-for-two-indicators-commuting-by-personal-vehicle-and-bridge-area-good-for-several-counties" class="level2">
+<h2 class="anchored" data-anchor-id="plot-an-interactive-plot-for-two-indicators-commuting-by-personal-vehicle-and-bridge-area-good-for-several-counties">Plot an interactive plot for two indicators ‘commuting by personal vehicle’ and ‘Bridge area, good’ for several counties</h2>
 <div class="cell" data-execution_count="5">
 <details>
 <summary>Code</summary>
@@ -391,9 +533,9 @@ require(['plotly'], function(Plotly) {
 </details>
 <div class="cell-output cell-output-display">
 
-<div>                            <div id="95191318-3f60-4c7c-a87a-ec409c1e2498" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("95191318-3f60-4c7c-a87a-ec409c1e2498")) {                    Plotly.newPlot(                        "95191318-3f60-4c7c-a87a-ec409c1e2498",                        [{"alignmentgroup":"True","hovertemplate":"Variable=Bridge area, good (square meters)\u003cbr\u003eCounty name=%{x}\u003cbr\u003eValue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Bridge area, good (square meters)","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"Bridge area, good (square meters)","offsetgroup":"Bridge area, good (square meters)","orientation":"v","showlegend":true,"textposition":"auto","x":["Alameda County, California","Bexar County, Texas","Bronx County, New York","Broward County, Florida","Clark County, Nevada","Cook County, Illinois","Dallas County, Texas","Harris County, Texas","Hillsborough County, Florida","King County, Washington","Kings County, New York","Los Angeles County, California","Maricopa County, Arizona","Miami-Dade County, Florida","Middlesex County, Massachusetts","Nassau County, New York","New York County, New York","Orange County, California","Orange County, Florida","Palm Beach County, Florida","Philadelphia County, Pennsylvania","Queens County, New York","Riverside County, California","Sacramento County, California","San Bernardino County, California","San Diego County, California","Santa Clara County, California","Suffolk County, New York","Tarrant County, Texas","Wayne County, Michigan"],"xaxis":"x","y":[709721.03,1416350.03,148022.86,951842.48,633185.93,832494.84,2813632.22,4195869.56,1064602.01,668888.14,151113.51,4791480.88,1920597.57,1428671.98,123251.88,96226.54,87783.98,771793.22,880367.44,662491.38,115593.31,212446.29,674038.91,595961.57,722042.6,1489578.61,798394.01,211171.83,1913530.89,470939.74],"yaxis":"y","type":"bar"},{"alignmentgroup":"True","hovertemplate":"Variable=Commute by car\u002f truck\u002fvan\u003cbr\u003eCounty name=%{x}\u003cbr\u003eValue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Commute by car\u002f truck\u002fvan","marker":{"color":"#EF553B","pattern":{"shape":""}},"name":"Commute by car\u002f truck\u002fvan","offsetgroup":"Commute by car\u002f truck\u002fvan","orientation":"v","showlegend":true,"textposition":"auto","x":["Alameda County, California","Bexar County, Texas","Bronx County, New York","Broward County, Florida","Clark County, Nevada","Cook County, Illinois","Dallas County, Texas","Harris County, Texas","Hillsborough County, Florida","King County, Washington","Kings County, New York","Los Angeles County, California","Maricopa County, Arizona","Miami-Dade County, Florida","Middlesex County, Massachusetts","Nassau County, New York","New York County, New York","Orange County, California","Orange County, Florida","Palm Beach County, Florida","Philadelphia County, Pennsylvania","Queens County, New York","Riverside County, California","Sacramento County, California","San Bernardino County, California","San Diego County, California","Santa Clara County, California","Suffolk County, New York","Tarrant County, Texas","Wayne County, Michigan"],"xaxis":"x","y":[552777.0,747344.0,149417.0,839831.0,902254.0,1717708.0,1128574.0,1990510.0,608552.0,826647.0,265480.0,3745936.0,1724792.0,1041383.0,629915.0,501003.0,68659.0,1325725.0,579427.0,537668.0,379712.0,427291.0,860364.0,587410.0,819700.0,1306221.0,817073.0,645979.0,865576.0,628669.0],"yaxis":"y","type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"County name"},"categoryorder":"total descending","tickangle":-45},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Value"}},"legend":{"title":{"text":"Variable"},"tracegroupgap":0},"title":{"text":"Comparison of Commuting (Personal vehicle) vs. Bridges (Bridge area, good) for the Counties with top 100 most Travel"},"barmode":"group"},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="16f14642-aae9-47dd-85bc-a60da4a99967" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("16f14642-aae9-47dd-85bc-a60da4a99967")) {                    Plotly.newPlot(                        "16f14642-aae9-47dd-85bc-a60da4a99967",                        [{"alignmentgroup":"True","hovertemplate":"Variable=Bridge area, good (square meters)\u003cbr\u003eCounty name=%{x}\u003cbr\u003eValue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Bridge area, good (square meters)","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"Bridge area, good (square meters)","offsetgroup":"Bridge area, good (square meters)","orientation":"v","showlegend":true,"textposition":"auto","x":["Alameda County, California","Bexar County, Texas","Bronx County, New York","Broward County, Florida","Clark County, Nevada","Cook County, Illinois","Dallas County, Texas","Harris County, Texas","Hillsborough County, Florida","King County, Washington","Kings County, New York","Los Angeles County, California","Maricopa County, Arizona","Miami-Dade County, Florida","Middlesex County, Massachusetts","Nassau County, New York","New York County, New York","Orange County, California","Orange County, Florida","Palm Beach County, Florida","Philadelphia County, Pennsylvania","Queens County, New York","Riverside County, California","Sacramento County, California","San Bernardino County, California","San Diego County, California","Santa Clara County, California","Suffolk County, New York","Tarrant County, Texas","Wayne County, Michigan"],"xaxis":"x","y":[709721.03,1416350.03,148022.86,951842.48,633185.93,832494.84,2813632.22,4195869.56,1064602.01,668888.14,151113.51,4791480.88,1920597.57,1428671.98,123251.88,96226.54,87783.98,771793.22,880367.44,662491.38,115593.31,212446.29,674038.91,595961.57,722042.6,1489578.61,798394.01,211171.83,1913530.89,470939.74],"yaxis":"y","type":"bar"},{"alignmentgroup":"True","hovertemplate":"Variable=Commute by car\u002f truck\u002fvan\u003cbr\u003eCounty name=%{x}\u003cbr\u003eValue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Commute by car\u002f truck\u002fvan","marker":{"color":"#EF553B","pattern":{"shape":""}},"name":"Commute by car\u002f truck\u002fvan","offsetgroup":"Commute by car\u002f truck\u002fvan","orientation":"v","showlegend":true,"textposition":"auto","x":["Alameda County, California","Bexar County, Texas","Bronx County, New York","Broward County, Florida","Clark County, Nevada","Cook County, Illinois","Dallas County, Texas","Harris County, Texas","Hillsborough County, Florida","King County, Washington","Kings County, New York","Los Angeles County, California","Maricopa County, Arizona","Miami-Dade County, Florida","Middlesex County, Massachusetts","Nassau County, New York","New York County, New York","Orange County, California","Orange County, Florida","Palm Beach County, Florida","Philadelphia County, Pennsylvania","Queens County, New York","Riverside County, California","Sacramento County, California","San Bernardino County, California","San Diego County, California","Santa Clara County, California","Suffolk County, New York","Tarrant County, Texas","Wayne County, Michigan"],"xaxis":"x","y":[552777.0,747344.0,149417.0,839831.0,902254.0,1717708.0,1128574.0,1990510.0,608552.0,826647.0,265480.0,3745936.0,1724792.0,1041383.0,629915.0,501003.0,68659.0,1325725.0,579427.0,537668.0,379712.0,427291.0,860364.0,587410.0,819700.0,1306221.0,817073.0,645979.0,865576.0,628669.0],"yaxis":"y","type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"County name"},"categoryorder":"total descending","tickangle":-45},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Value"}},"legend":{"title":{"text":"Variable"},"tracegroupgap":0},"title":{"text":"Comparison of Commuting (Personal vehicle) vs. Bridges (Bridge area, good) for the Counties with top 100 most Travel"},"barmode":"group"},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('95191318-3f60-4c7c-a87a-ec409c1e2498');
+var gd = document.getElementById('16f14642-aae9-47dd-85bc-a60da4a99967');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -418,14 +560,111 @@ if (outputEl) {{
                         })                };                });            </script>        </div>
 </div>
 </div>
+</section>
+<section id="filter-out-rows-featuring-5-states-of-our-paticular-interest-georgia-has-the-greatest-percent-of-good-bridge-while-utah-has-the-lowest-percent-of-poor-bridge" class="level2">
+<h2 class="anchored" data-anchor-id="filter-out-rows-featuring-5-states-of-our-paticular-interest-georgia-has-the-greatest-percent-of-good-bridge-while-utah-has-the-lowest-percent-of-poor-bridge">Filter out rows featuring 5 states of our paticular interest: Georgia has the greatest percent of good bridge, while Utah has the lowest percent of poor bridge</h2>
 <div class="cell" data-execution_count="6">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bridge <span class="op">=</span> df[df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">'Bridges'</span>]</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>bridge <span class="op">=</span> bridge[bridge[<span class="st">'State'</span>].isin([<span class="st">"Georgia"</span>, <span class="st">"Utah"</span>, <span class="st">"Maryland"</span>, <span class="st">"Virginia"</span>, <span class="st">"District of Columbia"</span>])]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> bridge.pivot_table(index<span class="op">=</span><span class="st">'State'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'mean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> bridge.pivot_table(index<span class="op">=</span><span class="st">'State'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'mean'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>pivoted_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">Bridge area (square meters)</th>
+<th data-quarto-table-cell-role="th">Bridge area, fair (square meters)</th>
+<th data-quarto-table-cell-role="th">Bridge area, good (square meters)</th>
+<th data-quarto-table-cell-role="th">Bridge area, poor (square meters)</th>
+<th data-quarto-table-cell-role="th">Bridges, fair</th>
+<th data-quarto-table-cell-role="th">Bridges, good</th>
+<th data-quarto-table-cell-role="th">Bridges, poor</th>
+<th data-quarto-table-cell-role="th">Total bridges</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">District of Columbia</td>
+<td>568966.237500</td>
+<td>451956.677500</td>
+<td>77175.882500</td>
+<td>39833.677500</td>
+<td>172.250000</td>
+<td>63.250000</td>
+<td>8.500000</td>
+<td>244.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Georgia</td>
+<td>63370.239827</td>
+<td>28856.889104</td>
+<td>33167.458349</td>
+<td>1345.892374</td>
+<td>45.405660</td>
+<td>45.474843</td>
+<td>2.902516</td>
+<td>93.783019</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Maryland</td>
+<td>223776.438854</td>
+<td>152238.142187</td>
+<td>64092.300208</td>
+<td>7445.996458</td>
+<td>138.697917</td>
+<td>73.760417</td>
+<td>11.541667</td>
+<td>224.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Utah</td>
+<td>66849.585086</td>
+<td>35619.783362</td>
+<td>30640.537672</td>
+<td>589.264052</td>
+<td>51.681034</td>
+<td>51.439655</td>
+<td>2.370690</td>
+<td>105.491379</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Virginia</td>
+<td>76852.521530</td>
+<td>47371.914187</td>
+<td>26458.663920</td>
+<td>3021.943423</td>
+<td>65.301527</td>
+<td>36.080153</td>
+<td>4.959924</td>
+<td>106.341603</td>
+</tr>
+</tbody>
+</table>
+
 </div>
+</div>
+</div>
+</section>
+<section id="plot-all-the-indicators-for-bridge-for-each-state" class="level2">
+<h2 class="anchored" data-anchor-id="plot-all-the-indicators-for-bridge-for-each-state">Plot all the indicators for bridge for each state</h2>
 <div class="cell" data-execution_count="7">
 <details>
 <summary>Code</summary>
@@ -483,9 +722,9 @@ if (outputEl) {{
 </details>
 <div class="cell-output cell-output-display">
 
-<div>                            <div id="5b3095fe-2f8b-4d33-b8a7-8450633c7a36" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("5b3095fe-2f8b-4d33-b8a7-8450633c7a36")) {                    Plotly.newPlot(                        "5b3095fe-2f8b-4d33-b8a7-8450633c7a36",                        [{"marker":{"color":"blue"},"name":"Georgia","visible":true,"x":["Bridge area (square meters)","Bridge area, fair (square meters)","Bridge area, good (square meters)","Bridge area, poor (square meters)","Bridges, fair","Bridges, good","Bridges, poor","Total bridges"],"y":[63370.239827044024,28856.889103773585,33167.45834905661,1345.8923742138365,45.405660377358494,45.4748427672956,2.90251572327044,93.78301886792453],"type":"bar"},{"marker":{"color":"green"},"name":"Utah","visible":false,"x":["Bridge area (square meters)","Bridge area, fair (square meters)","Bridge area, good (square meters)","Bridge area, poor (square meters)","Bridges, fair","Bridges, good","Bridges, poor","Total bridges"],"y":[66849.58508620689,35619.78336206896,30640.537672413793,589.264051724138,51.68103448275862,51.439655172413794,2.3706896551724137,105.49137931034483],"type":"bar"},{"marker":{"color":"red"},"name":"Maryland","visible":false,"x":["Bridge area (square meters)","Bridge area, fair (square meters)","Bridge area, good (square meters)","Bridge area, poor (square meters)","Bridges, fair","Bridges, good","Bridges, poor","Total bridges"],"y":[223776.43885416666,152238.1421875,64092.300208333334,7445.996458333334,138.69791666666666,73.76041666666667,11.541666666666666,224.0],"type":"bar"},{"marker":{"color":"purple"},"name":"Virginia","visible":false,"x":["Bridge area (square meters)","Bridge area, fair (square meters)","Bridge area, good (square meters)","Bridge area, poor (square meters)","Bridges, fair","Bridges, good","Bridges, poor","Total bridges"],"y":[76852.52152963671,47371.9141873805,26458.663919694074,3021.943422562141,65.30152671755725,36.08015267175573,4.959923664122138,106.34160305343511],"type":"bar"},{"marker":{"color":"orange"},"name":"District of Columbia","visible":false,"x":["Bridge area (square meters)","Bridge area, fair (square meters)","Bridge area, good (square meters)","Bridge area, poor (square meters)","Bridges, fair","Bridges, good","Bridges, poor","Total bridges"],"y":[568966.2375,451956.6775,77175.8825,39833.6775,172.25,63.25,8.5,244.0],"type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"title":{"text":"Bridge Types in District of Columbia "},"updatemenus":[{"buttons":[{"args":[{"visible":[true,false,false,false,false]},{"title":"Bridge Types in District of Columbia"}],"label":"District of Columbia","method":"update"},{"args":[{"visible":[false,true,false,false,false]},{"title":"Bridge Types in Georgia"}],"label":"Georgia","method":"update"},{"args":[{"visible":[false,false,true,false,false]},{"title":"Bridge Types in Maryland"}],"label":"Maryland","method":"update"},{"args":[{"visible":[false,false,false,true,false]},{"title":"Bridge Types in Utah"}],"label":"Utah","method":"update"},{"args":[{"visible":[false,false,false,false,true]},{"title":"Bridge Types in Virginia"}],"label":"Virginia","method":"update"}],"direction":"down","pad":{"r":10,"t":10},"showactive":true,"x":0.1,"xanchor":"left","y":1.1,"yanchor":"top"}],"barmode":"group","xaxis":{"title":{"text":"Bridge Type"}},"yaxis":{"title":{"text":"Average Value"}}},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="c86793fa-4f18-46f2-bec0-f5c2339f5f55" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("c86793fa-4f18-46f2-bec0-f5c2339f5f55")) {                    Plotly.newPlot(                        "c86793fa-4f18-46f2-bec0-f5c2339f5f55",                        [{"marker":{"color":"blue"},"name":"Georgia","visible":true,"x":["Bridge area (square meters)","Bridge area, fair (square meters)","Bridge area, good (square meters)","Bridge area, poor (square meters)","Bridges, fair","Bridges, good","Bridges, poor","Total bridges"],"y":[63370.239827044024,28856.889103773585,33167.45834905661,1345.8923742138365,45.405660377358494,45.4748427672956,2.90251572327044,93.78301886792453],"type":"bar"},{"marker":{"color":"green"},"name":"Utah","visible":false,"x":["Bridge area (square meters)","Bridge area, fair (square meters)","Bridge area, good (square meters)","Bridge area, poor (square meters)","Bridges, fair","Bridges, good","Bridges, poor","Total bridges"],"y":[66849.58508620689,35619.78336206896,30640.537672413793,589.264051724138,51.68103448275862,51.439655172413794,2.3706896551724137,105.49137931034483],"type":"bar"},{"marker":{"color":"red"},"name":"Maryland","visible":false,"x":["Bridge area (square meters)","Bridge area, fair (square meters)","Bridge area, good (square meters)","Bridge area, poor (square meters)","Bridges, fair","Bridges, good","Bridges, poor","Total bridges"],"y":[223776.43885416666,152238.1421875,64092.300208333334,7445.996458333334,138.69791666666666,73.76041666666667,11.541666666666666,224.0],"type":"bar"},{"marker":{"color":"purple"},"name":"Virginia","visible":false,"x":["Bridge area (square meters)","Bridge area, fair (square meters)","Bridge area, good (square meters)","Bridge area, poor (square meters)","Bridges, fair","Bridges, good","Bridges, poor","Total bridges"],"y":[76852.52152963671,47371.9141873805,26458.663919694074,3021.943422562141,65.30152671755725,36.08015267175573,4.959923664122138,106.34160305343511],"type":"bar"},{"marker":{"color":"orange"},"name":"District of Columbia","visible":false,"x":["Bridge area (square meters)","Bridge area, fair (square meters)","Bridge area, good (square meters)","Bridge area, poor (square meters)","Bridges, fair","Bridges, good","Bridges, poor","Total bridges"],"y":[568966.2375,451956.6775,77175.8825,39833.6775,172.25,63.25,8.5,244.0],"type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"title":{"text":"Bridge Types in District of Columbia "},"updatemenus":[{"buttons":[{"args":[{"visible":[true,false,false,false,false]},{"title":"Bridge Types in District of Columbia"}],"label":"District of Columbia","method":"update"},{"args":[{"visible":[false,true,false,false,false]},{"title":"Bridge Types in Georgia"}],"label":"Georgia","method":"update"},{"args":[{"visible":[false,false,true,false,false]},{"title":"Bridge Types in Maryland"}],"label":"Maryland","method":"update"},{"args":[{"visible":[false,false,false,true,false]},{"title":"Bridge Types in Utah"}],"label":"Utah","method":"update"},{"args":[{"visible":[false,false,false,false,true]},{"title":"Bridge Types in Virginia"}],"label":"Virginia","method":"update"}],"direction":"down","pad":{"r":10,"t":10},"showactive":true,"x":0.1,"xanchor":"left","y":1.1,"yanchor":"top"}],"barmode":"group","xaxis":{"title":{"text":"Bridge Type"}},"yaxis":{"title":{"text":"Average Value"}}},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('5b3095fe-2f8b-4d33-b8a7-8450633c7a36');
+var gd = document.getElementById('c86793fa-4f18-46f2-bec0-f5c2339f5f55');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -512,6 +751,7 @@ if (outputEl) {{
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

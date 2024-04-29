@@ -31,13 +31,16 @@ df.head()
 filtered_df = df[(df['Category'] == 'Person trips') & (df['Variable'] == 'Total trips')]
 ```
 
+## Filter out rows with two indicators of our paticular interest
 ```{python}
 top_100_values_df = filtered_df.nlargest(50, 'Value')
 df_with_top100_travel = df[df['GEOID'].isin(top_100_values_df['GEOID'])]
 df_with_top100_travel = df_with_top100_travel[df_with_top100_travel['Category'].isin(['Bridges', 'Commuting'])]
 df_with_top100_travel = df_with_top100_travel[(df_with_top100_travel['Variable'] == "Bridge area, good (square meters)") | (df_with_top100_travel['Variable'] == "Commute by car/ truck/van")]
+df_with_top100_travel.head()
 ```
 
+## Plot an interactive plot for two indicators 'commuting by personal vehicle' and 'Bridge area, good' for several counties
 ```{python}
 pivoted_df = df_with_top100_travel.pivot_table(index='County', columns='Variable', values='Value', aggfunc='first')
 long_df = pivoted_df.reset_index().melt(id_vars='County', var_name='Variable', value_name='Value')
@@ -63,12 +66,15 @@ fig.update_xaxes(tickangle=-45)
 fig.show()
 ```
 
+## Filter out rows featuring 5 states of our paticular interest: Georgia has the greatest percent of good bridge, while Utah has the lowest percent of poor bridge
 ```{python}
 bridge = df[df['Category'] == 'Bridges']
 bridge = bridge[bridge['State'].isin(["Georgia", "Utah", "Maryland", "Virginia", "District of Columbia"])]
 pivoted_df = bridge.pivot_table(index='State', columns='Variable', values='Value', aggfunc='mean')
+pivoted_df.head()
 ```
 
+## Plot all the indicators for bridge for each state
 ```{python}
 state_colors = {
     'Georgia': 'blue',
