@@ -2,8 +2,10 @@
 format:
   html:
     code-fold: true
+    code-tools: true
 execute:
   warning: false
+  echo: true  # Ensures that code is shown along with output
 ---
 ```{python}
 import pandas as pd
@@ -162,5 +164,11 @@ folium.LayerControl(collapsed=False).add_to(m)
 ```
 
 ```{python}
+#| column: screen-inset-right
+#| out-width: 85%
 m
+```
+
+```{python}
+m.save('.fullscreen_explore_map.html')
 ```
