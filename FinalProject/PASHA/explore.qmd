@@ -7,6 +7,44 @@ execute:
   warning: false
   echo: true  # Ensures that code is shown along with output
 ---
+# Exploring the Data
+
+In this section, you can explore the data on your own and discover which variables are more interesting to you. The
+purpose of this exploration is to allow you to investigate different counties and see if you find anything noteworthy.
+In subsequent pages, we will delve into more specific aspects of the data.
+
+The data provided includes information on bridges in the United States, categorized by their condition (poor, fair, or
+good) and the total bridge area in square meters. You can visualize this data using choropleth maps, which display the
+data based on geographic regions, in this case, counties.
+
+The choropleth maps are interactive, allowing you to zoom in and out, pan around the map, and toggle different data
+layers on and off. Each layer represents a specific variable, such as the total number of bridges or the total bridge
+area in a particular condition.
+
+By exploring these maps, you can gain insights into the distribution of bridges across the country, identify regions
+with a higher concentration of bridges in poor or fair condition, and compare the total bridge area across different
+counties.
+
+Feel free to interact with the maps, switch between different data layers, and observe any patterns or outliers that
+catch your attention. This exploration will serve as a foundation for further analysis and discussion in the subsequent
+pages.
+
+## Data Preparation
+
+In the data preparation part, we perform several key steps to prepare the data for visualization. We load the bridge
+data from a CSV file and define a mapping for renaming and scaling the variables. This mapping helps to provide more
+meaningful names and scales the values appropriately for better visualization. We apply the renaming and scaling to the
+data based on the mapping.
+
+Additionally, we define a color scheme for each category of bridge condition (poor, fair, good) to ensure consistent
+color representation across the choropleth maps.
+
+Lastly, we fetch the US county GeoJSON data from a URL and filter out specific states (Hawaii, Alaska, and Washington
+D.C.) to focus on the contiguous United States.
+
+These data preparation steps ensure that the data is in a suitable format for creating the interactive choropleth maps
+in the subsequent sections.
+
 ```{python}
 import pandas as pd
 import folium
@@ -100,6 +138,7 @@ us_counties['features'] = [
 ]
 ```
 
+## Data Presentation
 ```{python}
 # Create a folium Map object, centered on the US, *without* a tile layer yet
 m = folium.Map(

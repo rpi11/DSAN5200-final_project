@@ -10,7 +10,7 @@ website:
       - href: RICH/eda.ipynb
         text: EDA
       - href: PASHA/explore.qmd
-        text: Explore the Data!
+        text: Explore the Data
       - href: RICH/trendOverTime.ipynb
         text: Trends Over Time
       - href: ZENAN/commute.ipynb
