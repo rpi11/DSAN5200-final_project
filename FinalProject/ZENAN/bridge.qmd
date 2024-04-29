@@ -1,0 +1,130 @@
+---
+format:
+  html:
+    code-fold: true
+execute:
+  warning: false
+title: Bridge Quality
+jupyter: python3
+---
+
+
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.figure_factory as ff
+import plotly.graph_objects as go
+import warnings
+warnings.filterwarnings('ignore')
+```
+
+```{python}
+with open("../data/data.csv", "r") as f:
+    df = pd.read_csv(f)
+df.head()
+```
+
+```{python}
+filtered_df = df[(df['Category'] == 'Person trips') & (df['Variable'] == 'Total trips')]
+```
+
+## Filter out rows with two indicators of our paticular interest
+```{python}
+top_100_values_df = filtered_df.nlargest(50, 'Value')
+df_with_top100_travel = df[df['GEOID'].isin(top_100_values_df['GEOID'])]
+df_with_top100_travel = df_with_top100_travel[df_with_top100_travel['Category'].isin(['Bridges', 'Commuting'])]
+df_with_top100_travel = df_with_top100_travel[(df_with_top100_travel['Variable'] == "Bridge area, good (square meters)") | (df_with_top100_travel['Variable'] == "Commute by car/ truck/van")]
+df_with_top100_travel.head()
+```
+
+## Plot an interactive plot for two indicators 'commuting by personal vehicle' and 'Bridge area, good' for several counties
+```{python}
+pivoted_df = df_with_top100_travel.pivot_table(index='County', columns='Variable', values='Value', aggfunc='first')
+long_df = pivoted_df.reset_index().melt(id_vars='County', var_name='Variable', value_name='Value')
+fig = px.bar(
+    long_df,
+    x='County',
+    y='Value',
+    color='Variable',
+    title='Comparison of Commuting (Personal vehicle) vs. Bridges (Bridge area, good) for the Counties with top 100 most Travel',
+    labels={'Value': 'Value', 'County': 'County name'}
+)
+
+fig.update_layout(
+    xaxis={'categoryorder':'total descending'},
+    xaxis_title='County name',
+    yaxis_title='Value',
+    legend_title='Variable',
+    barmode='group'
+)
+
+fig.update_xaxes(tickangle=-45)
+
+fig.show()
+```
+
+## Filter out rows featuring 5 states of our paticular interest: Georgia has the greatest percent of good bridge, while Utah has the lowest percent of poor bridge
+```{python}
+bridge = df[df['Category'] == 'Bridges']
+bridge = bridge[bridge['State'].isin(["Georgia", "Utah", "Maryland", "Virginia", "District of Columbia"])]
+pivoted_df = bridge.pivot_table(index='State', columns='Variable', values='Value', aggfunc='mean')
+pivoted_df.head()
+```
+
+## Plot all the indicators for bridge for each state
+```{python}
+state_colors = {
+    'Georgia': 'blue',
+    'Utah': 'green',
+    'Maryland': 'red',
+    'Virginia': 'purple',
+    'District of Columbia': 'orange'
+}
+
+fig = go.Figure()
+
+for state, color in state_colors.items():
+    fig.add_trace(go.Bar(
+        name=state,
+        x=pivoted_df.columns,
+        y=pivoted_df.loc[state],
+        visible=False,  
+        marker_color=color  
+    ))
+
+fig.data[0].visible = True
+
+dropdown_buttons = [
+    {'label': state,
+     'method': 'update',
+     'args': [{
+         'visible': [state == s for s in pivoted_df.index]
+     },
+         {'title': f'Bridge Types in {state}'}
+     ]}
+    for state in pivoted_df.index
+]
+
+fig.update_layout(
+    updatemenus=[{
+        'buttons': dropdown_buttons,
+        'direction': 'down',
+        'pad': {"r": 10, "t": 10},
+        'showactive': True,
+        'x': 0.1,
+        'xanchor': 'left',
+        'y': 1.1,
+        'yanchor': 'top'
+    }],
+    title_text='Comparison of Bridge Types by Selected States',
+    barmode='group'
+)
+
+fig.update_layout(title=f'Bridge Types in District of Columbia ')
+fig.update_xaxes(title_text='Bridge Type')
+fig.update_yaxes(title_text='Average Value')
+fig.show()
+```

@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -59,6 +93,25 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.31.1.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script>
+
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -90,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">EDA</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../PASHA/explore.html" rel="" target="">
+    <a class="nav-link" href="../PASHA/folium-county.html" rel="" target="">
  <span class="menu-text">Explore the Data!</span></a>
   </li>  
   <li class="nav-item">
@@ -125,7 +178,15 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#filter-out-rows-featuring-states-with-the-top-5-travel-frequencies" id="toc-filter-out-rows-featuring-states-with-the-top-5-travel-frequencies" class="nav-link active" data-scroll-target="#filter-out-rows-featuring-states-with-the-top-5-travel-frequencies">Filter out rows featuring states with the top 5 travel frequencies</a></li>
+  <li><a href="#filter-out-rows-based-on-5-selected-methods-of-commuting" id="toc-filter-out-rows-based-on-5-selected-methods-of-commuting" class="nav-link" data-scroll-target="#filter-out-rows-based-on-5-selected-methods-of-commuting">Filter out rows based on 5 selected methods of commuting</a></li>
+  <li><a href="#plot-an-interactive-plot-for-the-counties-featureing-top-50-travel-frequencies-from-the-5-states-selected-before" id="toc-plot-an-interactive-plot-for-the-counties-featureing-top-50-travel-frequencies-from-the-5-states-selected-before" class="nav-link" data-scroll-target="#plot-an-interactive-plot-for-the-counties-featureing-top-50-travel-frequencies-from-the-5-states-selected-before">Plot an interactive plot for the counties featureing top 50 travel frequencies from the 5 states selected before</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -147,8 +208,494 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.figure_factory <span class="im">as</span> ff</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../data/data.csv"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(f)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
 
 
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Level</th>
+<th data-quarto-table-cell-role="th">Category</th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">County</th>
+<th data-quarto-table-cell-role="th">Date</th>
+<th data-quarto-table-cell-role="th">GEOID</th>
+<th data-quarto-table-cell-role="th">State FIPS</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Value</th>
+<th data-quarto-table-cell-role="th">Denominator</th>
+<th data-quarto-table-cell-role="th">Denominator Description</th>
+<th data-quarto-table-cell-role="th">Row-ID</th>
+<th data-quarto-table-cell-role="th">Latitude</th>
+<th data-quarto-table-cell-role="th">Longitude</th>
+<th data-quarto-table-cell-role="th">Location</th>
+<th data-quarto-table-cell-role="th">Year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>County</td>
+<td>Airports</td>
+<td>Total Airports</td>
+<td>Grant County, Wisconsin</td>
+<td>01/01/2020 12:00:00 AM</td>
+<td>55043</td>
+<td>55</td>
+<td>Wisconsin</td>
+<td>9.0</td>
+<td>9.0</td>
+<td>Total Airports</td>
+<td>airports-2020-55043</td>
+<td>42.867479</td>
+<td>-90.706205</td>
+<td>POINT (-90.706205 42.867479)</td>
+<td>2020</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>County</td>
+<td>Airports</td>
+<td>Total Airports</td>
+<td>Taylor County, Florida</td>
+<td>01/01/2020 12:00:00 AM</td>
+<td>12123</td>
+<td>12</td>
+<td>Florida</td>
+<td>7.0</td>
+<td>7.0</td>
+<td>Total Airports</td>
+<td>airports-2020-12123</td>
+<td>30.047015</td>
+<td>-83.603520</td>
+<td>POINT (-83.60352 30.047015)</td>
+<td>2020</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>County</td>
+<td>Airports</td>
+<td>Total Airports</td>
+<td>Stephens County, Texas</td>
+<td>01/01/2020 12:00:00 AM</td>
+<td>48429</td>
+<td>48</td>
+<td>Texas</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>Total Airports</td>
+<td>airports-2020-48429</td>
+<td>32.735872</td>
+<td>-98.836184</td>
+<td>POINT (-98.836184 32.735872)</td>
+<td>2020</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>County</td>
+<td>Airports</td>
+<td>Other airports</td>
+<td>Knox County, Maine</td>
+<td>01/01/2020 12:00:00 AM</td>
+<td>23013</td>
+<td>23</td>
+<td>Maine</td>
+<td>7.0</td>
+<td>9.0</td>
+<td>Total Airports</td>
+<td>other-airports-2020-23013</td>
+<td>44.155975</td>
+<td>-69.234045</td>
+<td>POINT (-69.234045 44.155975)</td>
+<td>2020</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>County</td>
+<td>Airports</td>
+<td>Primary Airports</td>
+<td>Colfax County, New Mexico</td>
+<td>01/01/2020 12:00:00 AM</td>
+<td>35007</td>
+<td>35</td>
+<td>New Mexico</td>
+<td>0.0</td>
+<td>5.0</td>
+<td>Total Airports</td>
+<td>primary-airports-2020-35007</td>
+<td>36.606139</td>
+<td>-104.646840</td>
+<td>POINT (-104.64684 36.606139)</td>
+<td>2020</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> df[(df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">'Person trips'</span>) <span class="op">&amp;</span> (df[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">'Total trips'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="filter-out-rows-featuring-states-with-the-top-5-travel-frequencies" class="level2">
+<h2 class="anchored" data-anchor-id="filter-out-rows-featuring-states-with-the-top-5-travel-frequencies">Filter out rows featuring states with the top 5 travel frequencies</h2>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> filtered_df[filtered_df[<span class="st">'State'</span>].isin([<span class="st">"California"</span>, <span class="st">"Texas"</span>, <span class="st">"New York"</span>, <span class="st">"Florida"</span>, <span class="st">"Illinois"</span>])]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>filtered_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Level</th>
+<th data-quarto-table-cell-role="th">Category</th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">County</th>
+<th data-quarto-table-cell-role="th">Date</th>
+<th data-quarto-table-cell-role="th">GEOID</th>
+<th data-quarto-table-cell-role="th">State FIPS</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Value</th>
+<th data-quarto-table-cell-role="th">Denominator</th>
+<th data-quarto-table-cell-role="th">Denominator Description</th>
+<th data-quarto-table-cell-role="th">Row-ID</th>
+<th data-quarto-table-cell-role="th">Latitude</th>
+<th data-quarto-table-cell-role="th">Longitude</th>
+<th data-quarto-table-cell-role="th">Location</th>
+<th data-quarto-table-cell-role="th">Year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">338545</td>
+<td>County</td>
+<td>Person trips</td>
+<td>Total trips</td>
+<td>Menard County, Texas</td>
+<td>01/01/2020 12:00:00 AM</td>
+<td>48327</td>
+<td>48</td>
+<td>Texas</td>
+<td>2741053.0</td>
+<td>2741053.0</td>
+<td>Person trips</td>
+<td>trips-2020-48327</td>
+<td>30.889818</td>
+<td>-99.820600</td>
+<td>POINT (-99.8206 30.889818)</td>
+<td>2020</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">338552</td>
+<td>County</td>
+<td>Person trips</td>
+<td>Total trips</td>
+<td>Clay County, Texas</td>
+<td>01/01/2019 12:00:00 AM</td>
+<td>48077</td>
+<td>48</td>
+<td>Texas</td>
+<td>11658497.0</td>
+<td>11658497.0</td>
+<td>Person trips</td>
+<td>trips-2019-48077</td>
+<td>33.785508</td>
+<td>-98.208514</td>
+<td>POINT (-98.208514 33.785508)</td>
+<td>2019</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">338553</td>
+<td>County</td>
+<td>Person trips</td>
+<td>Total trips</td>
+<td>Stark County, Illinois</td>
+<td>01/01/2019 12:00:00 AM</td>
+<td>17175</td>
+<td>17</td>
+<td>Illinois</td>
+<td>8028854.0</td>
+<td>8028854.0</td>
+<td>Person trips</td>
+<td>trips-2019-17175</td>
+<td>41.093339</td>
+<td>-89.797473</td>
+<td>POINT (-89.797473 41.093339)</td>
+<td>2019</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">338562</td>
+<td>County</td>
+<td>Person trips</td>
+<td>Total trips</td>
+<td>Knox County, Texas</td>
+<td>01/01/2020 12:00:00 AM</td>
+<td>48275</td>
+<td>48</td>
+<td>Texas</td>
+<td>3832334.0</td>
+<td>3832334.0</td>
+<td>Person trips</td>
+<td>trips-2020-48275</td>
+<td>33.606093</td>
+<td>-99.741427</td>
+<td>POINT (-99.741427 33.606093)</td>
+<td>2020</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">338567</td>
+<td>County</td>
+<td>Person trips</td>
+<td>Total trips</td>
+<td>Briscoe County, Texas</td>
+<td>01/01/2020 12:00:00 AM</td>
+<td>48045</td>
+<td>48</td>
+<td>Texas</td>
+<td>2258298.0</td>
+<td>2258298.0</td>
+<td>Person trips</td>
+<td>trips-2020-48045</td>
+<td>34.530275</td>
+<td>-101.208553</td>
+<td>POINT (-101.208553 34.530275)</td>
+<td>2020</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="filter-out-rows-based-on-5-selected-methods-of-commuting" class="level2">
+<h2 class="anchored" data-anchor-id="filter-out-rows-based-on-5-selected-methods-of-commuting">Filter out rows based on 5 selected methods of commuting</h2>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>top_50_values_df <span class="op">=</span> filtered_df.nlargest(<span class="dv">50</span>, <span class="st">'Value'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>population_vs_commute <span class="op">=</span> df[(df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">"Demographics"</span>) <span class="op">|</span> (df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">"Commuting"</span>)]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>population_vs_commute <span class="op">=</span> population_vs_commute[population_vs_commute[<span class="st">'Variable'</span>].isin([<span class="st">"Workers"</span>, <span class="st">"Commute by car/ truck/van"</span>, <span class="st">"Commute by public transportation"</span>, <span class="st">"Work at home"</span>,<span class="st">"Population"</span> ])]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>population_vs_commute <span class="op">=</span> population_vs_commute[population_vs_commute[<span class="st">'GEOID'</span>].isin(top_50_values_df[<span class="st">'GEOID'</span>])]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>population_vs_commute.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Level</th>
+<th data-quarto-table-cell-role="th">Category</th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">County</th>
+<th data-quarto-table-cell-role="th">Date</th>
+<th data-quarto-table-cell-role="th">GEOID</th>
+<th data-quarto-table-cell-role="th">State FIPS</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Value</th>
+<th data-quarto-table-cell-role="th">Denominator</th>
+<th data-quarto-table-cell-role="th">Denominator Description</th>
+<th data-quarto-table-cell-role="th">Row-ID</th>
+<th data-quarto-table-cell-role="th">Latitude</th>
+<th data-quarto-table-cell-role="th">Longitude</th>
+<th data-quarto-table-cell-role="th">Location</th>
+<th data-quarto-table-cell-role="th">Year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">151162</td>
+<td>County</td>
+<td>Commuting</td>
+<td>Work at home</td>
+<td>Orange County, Florida</td>
+<td>01/01/2016 12:00:00 AM</td>
+<td>12095</td>
+<td>12</td>
+<td>Florida</td>
+<td>31026.0</td>
+<td>611025.0</td>
+<td>Workers 16 years &amp; older</td>
+<td>workers-home-2016-12095</td>
+<td>28.479872</td>
+<td>-81.260753</td>
+<td>POINT (-81.260753 28.479872)</td>
+<td>2016</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">151281</td>
+<td>County</td>
+<td>Commuting</td>
+<td>Commute by public transportation</td>
+<td>Fresno County, California</td>
+<td>01/01/2016 12:00:00 AM</td>
+<td>6019</td>
+<td>6</td>
+<td>California</td>
+<td>4770.0</td>
+<td>368119.0</td>
+<td>Workers 16 years &amp; older</td>
+<td>workers-transit-2016-06019</td>
+<td>37.113974</td>
+<td>-119.000122</td>
+<td>POINT (-119.000122 37.113974)</td>
+<td>2016</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">151513</td>
+<td>County</td>
+<td>Commuting</td>
+<td>Commute by public transportation</td>
+<td>Travis County, Texas</td>
+<td>01/01/2016 12:00:00 AM</td>
+<td>48453</td>
+<td>48</td>
+<td>Texas</td>
+<td>20421.0</td>
+<td>612192.0</td>
+<td>Workers 16 years &amp; older</td>
+<td>workers-transit-2016-48453</td>
+<td>30.249986</td>
+<td>-97.771258</td>
+<td>POINT (-97.771258 30.249986)</td>
+<td>2016</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">151729</td>
+<td>County</td>
+<td>Commuting</td>
+<td>Workers</td>
+<td>Queens County, New York</td>
+<td>01/01/2019 12:00:00 AM</td>
+<td>36081</td>
+<td>36</td>
+<td>New York</td>
+<td>1101747.0</td>
+<td>1101747.0</td>
+<td>Workers 16 years &amp; older</td>
+<td>workers-2019-36081</td>
+<td>40.702284</td>
+<td>-73.820270</td>
+<td>POINT (-73.82027 40.702284)</td>
+<td>2019</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">151790</td>
+<td>County</td>
+<td>Commuting</td>
+<td>Commute by car/ truck/van</td>
+<td>Miami-Dade County, Florida</td>
+<td>01/01/2016 12:00:00 AM</td>
+<td>12086</td>
+<td>12</td>
+<td>Florida</td>
+<td>1041383.0</td>
+<td>1214352.0</td>
+<td>Workers 16 years &amp; older</td>
+<td>workers-car-2016-12086</td>
+<td>25.615881</td>
+<td>-80.563710</td>
+<td>POINT (-80.56371 25.615881)</td>
+<td>2016</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="plot-an-interactive-plot-for-the-counties-featureing-top-50-travel-frequencies-from-the-5-states-selected-before" class="level2">
+<h2 class="anchored" data-anchor-id="plot-an-interactive-plot-for-the-counties-featureing-top-50-travel-frequencies-from-the-5-states-selected-before">Plot an interactive plot for the counties featureing top 50 travel frequencies from the 5 states selected before</h2>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> population_vs_commute.pivot_table(index<span class="op">=</span><span class="st">'County'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'first'</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>long_df <span class="op">=</span> pivoted_df.reset_index().melt(id_vars<span class="op">=</span><span class="st">'County'</span>, var_name<span class="op">=</span><span class="st">'Variable'</span>, value_name<span class="op">=</span><span class="st">'Value'</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.line(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    long_df,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'County'</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'Value'</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'Variable'</span>,  </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">'Comparison of 3 Commuting methods vs Population by Counties'</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">'Value'</span>: <span class="st">'Value'</span>, <span class="st">'County'</span>: <span class="st">'County name'</span>}</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>fig.update_layout(</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    hovermode<span class="op">=</span><span class="st">'x unified'</span>,  </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    xaxis<span class="op">=</span>{<span class="st">'tickangle'</span>: <span class="op">-</span><span class="dv">90</span>},  </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    xaxis_title<span class="op">=</span><span class="st">'County name'</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    yaxis_title<span class="op">=</span><span class="st">'Value'</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<div>                            <div id="29837bb7-717a-4605-9dd0-fb32448cf61f" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("29837bb7-717a-4605-9dd0-fb32448cf61f")) {                    Plotly.newPlot(                        "29837bb7-717a-4605-9dd0-fb32448cf61f",                        [{"hovertemplate":"Variable=Commute by car\u002f truck\u002fvan\u003cbr\u003eCounty name=%{x}\u003cbr\u003eValue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Commute by car\u002f truck\u002fvan","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"Commute by car\u002f truck\u002fvan","orientation":"v","showlegend":true,"x":["Alameda County, California","Bexar County, Texas","Bronx County, New York","Broward County, Florida","Contra Costa County, California","Cook County, Illinois","Dallas County, Texas","Erie County, New York","Fresno County, California","Harris County, Texas","Hillsborough County, Florida","Kern County, California","Kings County, New York","Los Angeles County, California","Miami-Dade County, Florida","Nassau County, New York","New York County, New York","Orange County, California","Orange County, Florida","Palm Beach County, Florida","Queens County, New York","Riverside County, California","Sacramento County, California","San Bernardino County, California","San Diego County, California","Santa Clara County, California","Suffolk County, New York","Tarrant County, Texas","Travis County, Texas","Westchester County, New York"],"xaxis":"x","y":[552777.0,747344.0,149417.0,839831.0,399524.0,1717708.0,1128574.0,394543.0,330459.0,1990510.0,608552.0,293228.0,265480.0,3745936.0,1041383.0,501003.0,68659.0,1325725.0,579427.0,537668.0,427291.0,860364.0,587410.0,819700.0,1306221.0,817073.0,645979.0,865576.0,564008.0,308168.0],"yaxis":"y","type":"scatter"},{"hovertemplate":"Variable=Commute by public transportation\u003cbr\u003eCounty name=%{x}\u003cbr\u003eValue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Commute by public transportation","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"Commute by public transportation","orientation":"v","showlegend":true,"x":["Alameda County, California","Bexar County, Texas","Bronx County, New York","Broward County, Florida","Contra Costa County, California","Cook County, Illinois","Dallas County, Texas","Erie County, New York","Fresno County, California","Harris County, Texas","Hillsborough County, Florida","Kern County, California","Kings County, New York","Los Angeles County, California","Miami-Dade County, Florida","Nassau County, New York","New York County, New York","Orange County, California","Orange County, Florida","Palm Beach County, Florida","Queens County, New York","Riverside County, California","Sacramento County, California","San Bernardino County, California","San Diego County, California","Santa Clara County, California","Suffolk County, New York","Tarrant County, Texas","Travis County, Texas","Westchester County, New York"],"xaxis":"x","y":[109855.0,21758.0,346240.0,25527.0,49863.0,453217.0,34410.0,16600.0,4770.0,58349.0,9396.0,2760.0,733657.0,307868.0,67251.0,109597.0,528413.0,31296.0,16793.0,11899.0,573952.0,12823.0,17156.0,13484.0,45855.0,42965.0,47169.0,5669.0,20421.0,106345.0],"yaxis":"y","type":"scatter"},{"hovertemplate":"Variable=Population\u003cbr\u003eCounty name=%{x}\u003cbr\u003eValue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Population","line":{"color":"#00cc96","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"Population","orientation":"v","showlegend":true,"x":["Alameda County, California","Bexar County, Texas","Bronx County, New York","Broward County, Florida","Contra Costa County, California","Cook County, Illinois","Dallas County, Texas","Erie County, New York","Fresno County, California","Harris County, Texas","Hillsborough County, Florida","Kern County, California","Kings County, New York","Los Angeles County, California","Miami-Dade County, Florida","Nassau County, New York","New York County, New York","Orange County, California","Orange County, Florida","Palm Beach County, Florida","Queens County, New York","Riverside County, California","Sacramento County, California","San Bernardino County, California","San Diego County, California","Santa Clara County, California","Suffolk County, New York","Tarrant County, Texas","Travis County, Texas","Westchester County, New York"],"xaxis":"x","y":[1605217.0,1892004.0,1436785.0,1843152.0,1107925.0,5236393.0,2586552.0,921584.0,956749.0,4646630.0,1378883.0,878744.0,2635121.0,10038388.0,2664418.0,1356564.0,1629507.0,3155816.0,1229039.0,1398757.0,2287388.0,2355002.0,1465832.0,2106754.0,3302833.0,1885056.0,1483832.0,2049770.0,1203166.0,968890.0],"yaxis":"y","type":"scatter"},{"hovertemplate":"Variable=Work at home\u003cbr\u003eCounty name=%{x}\u003cbr\u003eValue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Work at home","line":{"color":"#ab63fa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"Work at home","orientation":"v","showlegend":true,"x":["Alameda County, California","Bexar County, Texas","Bronx County, New York","Broward County, Florida","Contra Costa County, California","Cook County, Illinois","Dallas County, Texas","Erie County, New York","Fresno County, California","Harris County, Texas","Hillsborough County, Florida","Kern County, California","Kings County, New York","Los Angeles County, California","Miami-Dade County, Florida","Nassau County, New York","New York County, New York","Orange County, California","Orange County, Florida","Palm Beach County, Florida","Queens County, New York","Riverside County, California","Sacramento County, California","San Bernardino County, California","San Diego County, California","Santa Clara County, California","Suffolk County, New York","Tarrant County, Texas","Travis County, Texas","Westchester County, New York"],"xaxis":"x","y":[43888.0,33128.0,17978.0,42524.0,28916.0,107374.0,47637.0,11048.0,16113.0,68314.0,33555.0,9697.0,44680.0,232386.0,51366.0,23611.0,58746.0,80810.0,31026.0,35984.0,26128.0,47751.0,31331.0,38141.0,107560.0,43033.0,25442.0,35742.0,43449.0,22619.0],"yaxis":"y","type":"scatter"},{"hovertemplate":"Variable=Workers\u003cbr\u003eCounty name=%{x}\u003cbr\u003eValue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Workers","line":{"color":"#FFA15A","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"Workers","orientation":"v","showlegend":true,"x":["Alameda County, California","Bexar County, Texas","Bronx County, New York","Broward County, Florida","Contra Costa County, California","Cook County, Illinois","Dallas County, Texas","Erie County, New York","Fresno County, California","Harris County, Texas","Hillsborough County, Florida","Kern County, California","Kings County, New York","Los Angeles County, California","Miami-Dade County, Florida","Nassau County, New York","New York County, New York","Orange County, California","Orange County, Florida","Palm Beach County, Florida","Queens County, New York","Riverside County, California","Sacramento County, California","San Bernardino County, California","San Diego County, California","Santa Clara County, California","Suffolk County, New York","Tarrant County, Texas","Travis County, Texas","Westchester County, New York"],"xaxis":"x","y":[736979.0,850829.0,560324.0,931338.0,495757.0,2412753.0,1260913.0,438586.0,395689.0,2182197.0,605087.0,333091.0,1189261.0,4516714.0,1289937.0,671593.0,879881.0,1562046.0,650883.0,607430.0,1101747.0,923845.0,650426.0,816403.0,1603486.0,966853.0,721417.0,959562.0,635422.0,459790.0],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"County name"},"tickangle":-90},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Value"}},"legend":{"title":{"text":"Variable"},"tracegroupgap":0},"title":{"text":"Comparison of 3 Commuting methods vs Population by Counties"},"hovermode":"x unified"},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('29837bb7-717a-4605-9dd0-fb32448cf61f');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

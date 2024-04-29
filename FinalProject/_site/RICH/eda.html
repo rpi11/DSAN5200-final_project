@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Final Project - Initial EDA</title>
+<title>Final Project - EDA and Munging</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -127,7 +127,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">EDA</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../PASHA/explore.html" rel="" target="">
+    <a class="nav-link" href="../PASHA/folium-county.html" rel="" target="">
  <span class="menu-text">Explore the Data!</span></a>
   </li>  
   <li class="nav-item">
@@ -139,7 +139,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Commuting Numbers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ZENAN/transportation.html" rel="" target="">
+    <a class="nav-link" href="../ZENAN/transportation.ipynb" rel="" target="">
  <span class="menu-text">Transportation Methods</span></a>
   </li>  
   <li class="nav-item">
@@ -170,7 +170,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#import" id="toc-import" class="nav-link" data-scroll-target="#import">Import</a></li>
   <li><a href="#groupings" id="toc-groupings" class="nav-link" data-scroll-target="#groupings">Groupings</a></li>
   <li><a href="#dates" id="toc-dates" class="nav-link" data-scroll-target="#dates">Dates</a></li>
-  <li><a href="#locations" id="toc-locations" class="nav-link" data-scroll-target="#locations">Locations</a></li>
+  <li><a href="#locations" id="toc-locations" class="nav-link" data-scroll-target="#locations">Locations</a>
+  <ul class="collapse">
+  <li><a href="#pare-down-dataset" id="toc-pare-down-dataset" class="nav-link" data-scroll-target="#pare-down-dataset">Pare Down Dataset</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -179,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Initial EDA</h1>
+<h1 class="title">EDA and Munging</h1>
 </div>
 
 
@@ -200,25 +203,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="import" class="level2">
 <h2 class="anchored" data-anchor-id="import">Import</h2>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="48">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tabulate <span class="im">import</span> tabulate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tabulate <span class="im">import</span> tabulate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="49">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../data/data.csv"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(f)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"Date"</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">"Date"</span>])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="49">
 <div>
 
 
@@ -251,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Airports</td>
 <td>Total Airports</td>
 <td>Grant County, Wisconsin</td>
-<td>01/01/2020 12:00:00 AM</td>
+<td>2020-01-01</td>
 <td>55043</td>
 <td>55</td>
 <td>Wisconsin</td>
@@ -270,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Airports</td>
 <td>Total Airports</td>
 <td>Taylor County, Florida</td>
-<td>01/01/2020 12:00:00 AM</td>
+<td>2020-01-01</td>
 <td>12123</td>
 <td>12</td>
 <td>Florida</td>
@@ -289,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Airports</td>
 <td>Total Airports</td>
 <td>Stephens County, Texas</td>
-<td>01/01/2020 12:00:00 AM</td>
+<td>2020-01-01</td>
 <td>48429</td>
 <td>48</td>
 <td>Texas</td>
@@ -308,7 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Airports</td>
 <td>Other airports</td>
 <td>Knox County, Maine</td>
-<td>01/01/2020 12:00:00 AM</td>
+<td>2020-01-01</td>
 <td>23013</td>
 <td>23</td>
 <td>Maine</td>
@@ -327,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Airports</td>
 <td>Primary Airports</td>
 <td>Colfax County, New Mexico</td>
-<td>01/01/2020 12:00:00 AM</td>
+<td>2020-01-01</td>
 <td>35007</td>
 <td>35</td>
 <td>New Mexico</td>
@@ -350,39 +352,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="groupings" class="level2">
 <h2 class="anchored" data-anchor-id="groupings">Groupings</h2>
 <ol type="1">
-<li>“Category”</li>
+<li>Categories</li>
 </ol>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="50">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cats <span class="op">=</span> <span class="bu">list</span>(df[<span class="st">"Category"</span>].unique())</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tabulate())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cats <span class="op">=</span> <span class="bu">list</span>(df[<span class="st">"Category"</span>].unique())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>['Airports', 'Bridges', 'Business', 'Commuting', 'Demographics', 'Maritime', 'Person trips', 'Railroad']</code></pre>
 </div>
-</div>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="51">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>catVars <span class="op">=</span> {}</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat <span class="kw">in</span> cats:</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cat <span class="kw">not</span> <span class="kw">in</span> catVars:</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        catVars[cat] <span class="op">=</span> []</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> var <span class="kw">in</span> df[df[<span class="st">"Category"</span>] <span class="op">==</span> cat][<span class="st">"Variable"</span>].unique():</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        catVars[cat].append(var)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>catVarDf <span class="op">=</span> []</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">max</span>(<span class="bu">len</span>(catVars[k]) <span class="cf">for</span> k <span class="kw">in</span> catVars)):</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    catVarDf.append([])</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> catVars:</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            catVarDf[<span class="op">-</span><span class="dv">1</span>].append(catVars[k][i])</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            catVarDf[<span class="op">-</span><span class="dv">1</span>].append(<span class="st">" "</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> tabulate(catVarDf, headers<span class="op">=</span><span class="bu">list</span>(catVars.keys()))</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>catVars <span class="op">=</span> {}</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cat <span class="kw">in</span> cats:</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cat <span class="kw">not</span> <span class="kw">in</span> catVars:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        catVars[cat] <span class="op">=</span> []</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> var <span class="kw">in</span> df[df[<span class="st">"Category"</span>] <span class="op">==</span> cat][<span class="st">"Variable"</span>].unique():</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        catVars[cat].append(var)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>catVarDf <span class="op">=</span> []</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">max</span>(<span class="bu">len</span>(catVars[k]) <span class="cf">for</span> k <span class="kw">in</span> catVars)):</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    catVarDf.append([])</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> catVars:</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            catVarDf[<span class="op">-</span><span class="dv">1</span>].append(catVars[k][i])</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            catVarDf[<span class="op">-</span><span class="dv">1</span>].append(<span class="st">" "</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> tabulate(catVarDf, headers<span class="op">=</span><span class="bu">list</span>(catVars.keys()))</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Airports                      Bridges                            Business        Commuting                         Demographics              Maritime    Person trips                              Railroad
@@ -400,35 +398,43 @@ Civil use and seaplane bases  Bridge area (square meters)                       
                                                                                                                                                          Trips greater than or equal to 500 miles</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(df[<span class="st">"Variable"</span>].unique())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>41</code></pre>
-</div>
-</div>
+<p>TALK ABOUT WHICH CATEGORIES ARE INTERESTING</p>
 </section>
 <section id="dates" class="level1">
 <h1>Dates</h1>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="52">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sorted</span>(<span class="bu">list</span>(df[<span class="st">"Year"</span>].unique()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sorted</span>(<span class="bu">list</span>(df[<span class="st">"Date"</span>].unique()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="52">
+<pre><code>[Timestamp('2014-01-01 00:00:00'),
+ Timestamp('2015-01-01 00:00:00'),
+ Timestamp('2016-01-01 00:00:00'),
+ Timestamp('2017-01-01 00:00:00'),
+ Timestamp('2018-01-01 00:00:00'),
+ Timestamp('2019-01-01 00:00:00'),
+ Timestamp('2020-01-01 00:00:00'),
+ Timestamp('2021-01-01 00:00:00')]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="53">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sorted</span>(<span class="bu">list</span>(df[<span class="st">"Year"</span>].unique()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="53">
 <pre><code>[2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="54">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2013</span>, <span class="dv">2022</span>)]</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>labs <span class="op">=</span> [<span class="bu">str</span>(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2013</span>, <span class="dv">2022</span>)]</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.hist(df[<span class="st">"Year"</span>], bins <span class="op">=</span> bins, edgecolor <span class="op">=</span> <span class="st">"black"</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2013</span>, <span class="dv">2022</span>)]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>labs <span class="op">=</span> [<span class="bu">str</span>(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2013</span>, <span class="dv">2022</span>)]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.hist(df[<span class="st">"Year"</span>], bins <span class="op">=</span> bins, edgecolor <span class="op">=</span> <span class="st">"black"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <p><img src="eda_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
@@ -437,28 +443,625 @@ Civil use and seaplane bases  Bridge area (square meters)                       
 </section>
 <section id="locations" class="level1">
 <h1>Locations</h1>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="55">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>states <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">list</span>(df[<span class="st">"State"</span>].unique()))</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(states)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>states <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">list</span>(df[<span class="st">"State"</span>].unique()))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(states)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="55">
 <pre><code>56</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="56">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>counties <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">list</span>(df[<span class="st">"County"</span>].unique()))</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(counties)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>counties <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">list</span>(df[<span class="st">"County"</span>].unique()))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(counties)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="56">
 <pre><code>3233</code></pre>
 </div>
 </div>
+<section id="pare-down-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="pare-down-dataset">Pare Down Dataset</h2>
+<div class="cell" data-execution_count="57">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Level"</span>].unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="57">
+<pre><code>array(['County'], dtype=object)</code></pre>
+</div>
+</div>
+<section id="reduce-the-amount-of-data" class="level4">
+<h4 class="anchored" data-anchor-id="reduce-the-amount-of-data">1. Reduce the Amount of Data</h4>
+<div class="cell" data-execution_count="89">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cleaned <span class="op">=</span> df[df[<span class="st">"Category"</span>].isin([<span class="st">"Bridges"</span>, <span class="st">"Business"</span>, <span class="st">"Commuting"</span>, <span class="st">"Demographics"</span>, <span class="st">"Person trips"</span>])].copy()</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>cleaned.drop(columns <span class="op">=</span> [<span class="st">"Row-ID"</span>,<span class="st">"Level"</span>,<span class="st">"Date"</span>,<span class="st">"State FIPS"</span>,<span class="st">"Denominator"</span>,<span class="st">"Denominator Description"</span>], inplace <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>cleaned.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="89">
+<div>
 
 
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Category</th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">County</th>
+<th data-quarto-table-cell-role="th">GEOID</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Value</th>
+<th data-quarto-table-cell-role="th">Latitude</th>
+<th data-quarto-table-cell-role="th">Longitude</th>
+<th data-quarto-table-cell-role="th">Location</th>
+<th data-quarto-table-cell-role="th">Year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16165</td>
+<td>Bridges</td>
+<td>Bridges, poor</td>
+<td>Greeley County, Nebraska</td>
+<td>31077</td>
+<td>Nebraska</td>
+<td>10.0</td>
+<td>41.567444</td>
+<td>-98.521218</td>
+<td>POINT (-98.521218 41.567444)</td>
+<td>2018</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">16166</td>
+<td>Bridges</td>
+<td>Bridges, fair</td>
+<td>Lewis County, Missouri</td>
+<td>29111</td>
+<td>Missouri</td>
+<td>72.0</td>
+<td>40.096875</td>
+<td>-91.722106</td>
+<td>POINT (-91.722106 40.096875)</td>
+<td>2017</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16167</td>
+<td>Bridges</td>
+<td>Bridges, fair</td>
+<td>Knox County, Ohio</td>
+<td>39083</td>
+<td>Ohio</td>
+<td>107.0</td>
+<td>40.398760</td>
+<td>-82.421514</td>
+<td>POINT (-82.421514 40.39876)</td>
+<td>2018</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">16168</td>
+<td>Bridges</td>
+<td>Total bridges</td>
+<td>Harnett County, North Carolina</td>
+<td>37085</td>
+<td>North Carolina</td>
+<td>135.0</td>
+<td>35.368633</td>
+<td>-78.869415</td>
+<td>POINT (-78.869415 35.368633)</td>
+<td>2017</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16169</td>
+<td>Bridges</td>
+<td>Total bridges</td>
+<td>Gem County, Idaho</td>
+<td>16045</td>
+<td>Idaho</td>
+<td>56.0</td>
+<td>43.979330</td>
+<td>-116.432524</td>
+<td>POINT (-116.432524 43.97933)</td>
+<td>2017</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="add-categories-to-variable-descriptors" class="level4">
+<h4 class="anchored" data-anchor-id="add-categories-to-variable-descriptors">2. Add Categories to Variable Descriptors</h4>
+<div class="cell" data-execution_count="90">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> addCategory(cat,var):</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>cat<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>cleaned[<span class="st">"Variable"</span>] <span class="op">=</span> cleaned.<span class="bu">apply</span>(<span class="kw">lambda</span> row: addCategory(row[<span class="st">'Category'</span>], row[<span class="st">'Variable'</span>]), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>cleaned.drop(columns <span class="op">=</span> [<span class="st">"Category"</span>], inplace <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>cleaned.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="90">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">County</th>
+<th data-quarto-table-cell-role="th">GEOID</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Value</th>
+<th data-quarto-table-cell-role="th">Latitude</th>
+<th data-quarto-table-cell-role="th">Longitude</th>
+<th data-quarto-table-cell-role="th">Location</th>
+<th data-quarto-table-cell-role="th">Year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16165</td>
+<td>Bridges_Bridges, poor</td>
+<td>Greeley County, Nebraska</td>
+<td>31077</td>
+<td>Nebraska</td>
+<td>10.0</td>
+<td>41.567444</td>
+<td>-98.521218</td>
+<td>POINT (-98.521218 41.567444)</td>
+<td>2018</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">16166</td>
+<td>Bridges_Bridges, fair</td>
+<td>Lewis County, Missouri</td>
+<td>29111</td>
+<td>Missouri</td>
+<td>72.0</td>
+<td>40.096875</td>
+<td>-91.722106</td>
+<td>POINT (-91.722106 40.096875)</td>
+<td>2017</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16167</td>
+<td>Bridges_Bridges, fair</td>
+<td>Knox County, Ohio</td>
+<td>39083</td>
+<td>Ohio</td>
+<td>107.0</td>
+<td>40.398760</td>
+<td>-82.421514</td>
+<td>POINT (-82.421514 40.39876)</td>
+<td>2018</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">16168</td>
+<td>Bridges_Total bridges</td>
+<td>Harnett County, North Carolina</td>
+<td>37085</td>
+<td>North Carolina</td>
+<td>135.0</td>
+<td>35.368633</td>
+<td>-78.869415</td>
+<td>POINT (-78.869415 35.368633)</td>
+<td>2017</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16169</td>
+<td>Bridges_Total bridges</td>
+<td>Gem County, Idaho</td>
+<td>16045</td>
+<td>Idaho</td>
+<td>56.0</td>
+<td>43.979330</td>
+<td>-116.432524</td>
+<td>POINT (-116.432524 43.97933)</td>
+<td>2017</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="remove-state-names-from-county-names" class="level4">
+<h4 class="anchored" data-anchor-id="remove-state-names-from-county-names">3. Remove state names from county names</h4>
+<div class="cell" data-execution_count="91">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dropStateFromCounty(county):</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> county <span class="op">!=</span> <span class="st">"District of Columbia"</span>:</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> county.split(<span class="st">","</span>)[<span class="dv">0</span>]</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> county</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>cleaned[<span class="st">"County"</span>] <span class="op">=</span> cleaned[<span class="st">"County"</span>].<span class="bu">apply</span>(dropStateFromCounty)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>cleaned.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="91">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">County</th>
+<th data-quarto-table-cell-role="th">GEOID</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Value</th>
+<th data-quarto-table-cell-role="th">Latitude</th>
+<th data-quarto-table-cell-role="th">Longitude</th>
+<th data-quarto-table-cell-role="th">Location</th>
+<th data-quarto-table-cell-role="th">Year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16165</td>
+<td>Bridges_Bridges, poor</td>
+<td>Greeley County</td>
+<td>31077</td>
+<td>Nebraska</td>
+<td>10.0</td>
+<td>41.567444</td>
+<td>-98.521218</td>
+<td>POINT (-98.521218 41.567444)</td>
+<td>2018</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">16166</td>
+<td>Bridges_Bridges, fair</td>
+<td>Lewis County</td>
+<td>29111</td>
+<td>Missouri</td>
+<td>72.0</td>
+<td>40.096875</td>
+<td>-91.722106</td>
+<td>POINT (-91.722106 40.096875)</td>
+<td>2017</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16167</td>
+<td>Bridges_Bridges, fair</td>
+<td>Knox County</td>
+<td>39083</td>
+<td>Ohio</td>
+<td>107.0</td>
+<td>40.398760</td>
+<td>-82.421514</td>
+<td>POINT (-82.421514 40.39876)</td>
+<td>2018</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">16168</td>
+<td>Bridges_Total bridges</td>
+<td>Harnett County</td>
+<td>37085</td>
+<td>North Carolina</td>
+<td>135.0</td>
+<td>35.368633</td>
+<td>-78.869415</td>
+<td>POINT (-78.869415 35.368633)</td>
+<td>2017</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16169</td>
+<td>Bridges_Total bridges</td>
+<td>Gem County</td>
+<td>16045</td>
+<td>Idaho</td>
+<td>56.0</td>
+<td>43.979330</td>
+<td>-116.432524</td>
+<td>POINT (-116.432524 43.97933)</td>
+<td>2017</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="add-state-abbreviation-and-remove-territories" class="level4">
+<h4 class="anchored" data-anchor-id="add-state-abbreviation-and-remove-territories">4. Add state abbreviation and remove territories</h4>
+<div class="cell" data-execution_count="92">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>state_dict <span class="op">=</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Alabama'</span>: <span class="st">'AL'</span>,<span class="st">'Alaska'</span>: <span class="st">'AK'</span>,<span class="st">'Arizona'</span>: <span class="st">'AZ'</span>,<span class="st">'Arkansas'</span>: <span class="st">'AR'</span>,<span class="st">'California'</span>: <span class="st">'CA'</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Colorado'</span>: <span class="st">'CO'</span>,<span class="st">'Connecticut'</span>: <span class="st">'CT'</span>,<span class="st">'Delaware'</span>: <span class="st">'DE'</span>,<span class="st">'Florida'</span>: <span class="st">'FL'</span>,<span class="st">'Georgia'</span>: <span class="st">'GA'</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Hawaii'</span>: <span class="st">'HI'</span>,<span class="st">'Idaho'</span>: <span class="st">'ID'</span>,<span class="st">'Illinois'</span>: <span class="st">'IL'</span>,<span class="st">'Indiana'</span>: <span class="st">'IN'</span>,<span class="st">'Iowa'</span>: <span class="st">'IA'</span>,<span class="st">'Kansas'</span>: <span class="st">'KS'</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Kentucky'</span>: <span class="st">'KY'</span>,<span class="st">'Louisiana'</span>: <span class="st">'LA'</span>,<span class="st">'Maine'</span>: <span class="st">'ME'</span>,<span class="st">'Maryland'</span>: <span class="st">'MD'</span>,<span class="st">'Massachusetts'</span>: <span class="st">'MA'</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Michigan'</span>: <span class="st">'MI'</span>,<span class="st">'Minnesota'</span>: <span class="st">'MN'</span>,<span class="st">'Mississippi'</span>: <span class="st">'MS'</span>,<span class="st">'Missouri'</span>: <span class="st">'MO'</span>,<span class="st">'Montana'</span>: <span class="st">'MT'</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Nebraska'</span>: <span class="st">'NE'</span>,<span class="st">'Nevada'</span>: <span class="st">'NV'</span>,<span class="st">'New Hampshire'</span>: <span class="st">'NH'</span>,<span class="st">'New Jersey'</span>: <span class="st">'NJ'</span>,<span class="st">'New Mexico'</span>: <span class="st">'NM'</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'New York'</span>: <span class="st">'NY'</span>,<span class="st">'North Carolina'</span>: <span class="st">'NC'</span>,<span class="st">'North Dakota'</span>: <span class="st">'ND'</span>,<span class="st">'Ohio'</span>: <span class="st">'OH'</span>,<span class="st">'Oklahoma'</span>: <span class="st">'OK'</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Oregon'</span>: <span class="st">'OR'</span>,<span class="st">'Pennsylvania'</span>: <span class="st">'PA'</span>,<span class="st">'Rhode Island'</span>: <span class="st">'RI'</span>,<span class="st">'South Carolina'</span>: <span class="st">'SC'</span>,<span class="st">'South Dakota'</span>: <span class="st">'SD'</span>,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Tennessee'</span>: <span class="st">'TN'</span>,<span class="st">'Texas'</span>: <span class="st">'TX'</span>,<span class="st">'Utah'</span>: <span class="st">'UT'</span>,<span class="st">'Vermont'</span>: <span class="st">'VT'</span>,<span class="st">'Virginia'</span>: <span class="st">'VA'</span>,<span class="st">'Washington'</span>: <span class="st">'WA'</span>,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'West Virginia'</span>: <span class="st">'WV'</span>,<span class="st">'Wisconsin'</span>: <span class="st">'WI'</span>,<span class="st">'Wyoming'</span>: <span class="st">'WY'</span>,<span class="st">'District of Columbia'</span>:<span class="st">"DC"</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>cleaned <span class="op">=</span> cleaned[cleaned[<span class="st">"State"</span>].isin(state_dict)]</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>cleaned[<span class="st">"StateAbbv"</span>] <span class="op">=</span> [state_dict[s] <span class="cf">for</span> s <span class="kw">in</span> cleaned[<span class="st">"State"</span>]]</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>cleaned.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="92">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">County</th>
+<th data-quarto-table-cell-role="th">GEOID</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Value</th>
+<th data-quarto-table-cell-role="th">Latitude</th>
+<th data-quarto-table-cell-role="th">Longitude</th>
+<th data-quarto-table-cell-role="th">Location</th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">StateAbbv</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16165</td>
+<td>Bridges_Bridges, poor</td>
+<td>Greeley County</td>
+<td>31077</td>
+<td>Nebraska</td>
+<td>10.0</td>
+<td>41.567444</td>
+<td>-98.521218</td>
+<td>POINT (-98.521218 41.567444)</td>
+<td>2018</td>
+<td>NE</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">16166</td>
+<td>Bridges_Bridges, fair</td>
+<td>Lewis County</td>
+<td>29111</td>
+<td>Missouri</td>
+<td>72.0</td>
+<td>40.096875</td>
+<td>-91.722106</td>
+<td>POINT (-91.722106 40.096875)</td>
+<td>2017</td>
+<td>MO</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16167</td>
+<td>Bridges_Bridges, fair</td>
+<td>Knox County</td>
+<td>39083</td>
+<td>Ohio</td>
+<td>107.0</td>
+<td>40.398760</td>
+<td>-82.421514</td>
+<td>POINT (-82.421514 40.39876)</td>
+<td>2018</td>
+<td>OH</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">16168</td>
+<td>Bridges_Total bridges</td>
+<td>Harnett County</td>
+<td>37085</td>
+<td>North Carolina</td>
+<td>135.0</td>
+<td>35.368633</td>
+<td>-78.869415</td>
+<td>POINT (-78.869415 35.368633)</td>
+<td>2017</td>
+<td>NC</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16169</td>
+<td>Bridges_Total bridges</td>
+<td>Gem County</td>
+<td>16045</td>
+<td>Idaho</td>
+<td>56.0</td>
+<td>43.979330</td>
+<td>-116.432524</td>
+<td>POINT (-116.432524 43.97933)</td>
+<td>2017</td>
+<td>ID</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="pivot-data-to-have-variables-as-columns" class="level4">
+<h4 class="anchored" data-anchor-id="pivot-data-to-have-variables-as-columns">5. Pivot Data to have variables as columns</h4>
+<div class="cell" data-execution_count="93">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cleaned <span class="op">=</span> cleaned.pivot(index<span class="op">=</span>[c <span class="cf">for</span> c <span class="kw">in</span> cleaned.columns <span class="cf">if</span> c <span class="kw">not</span> <span class="kw">in</span> [<span class="st">"Variable"</span>,<span class="st">"Value"</span>]], columns<span class="op">=</span>[<span class="st">"Variable"</span>], values<span class="op">=</span><span class="st">"Value"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>cleaned.reset_index(inplace <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># cleaned.fillna(0, inplace = True)</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>cleaned.to_csv(<span class="st">"../data/cleaned.csv"</span>, index <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>cleaned.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="93">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Variable</th>
+<th data-quarto-table-cell-role="th">County</th>
+<th data-quarto-table-cell-role="th">GEOID</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Latitude</th>
+<th data-quarto-table-cell-role="th">Longitude</th>
+<th data-quarto-table-cell-role="th">Location</th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">StateAbbv</th>
+<th data-quarto-table-cell-role="th">Bridges_Bridge area (square meters)</th>
+<th data-quarto-table-cell-role="th">Bridges_Bridge area, fair (square meters)</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Person trips_Trips 1-3 miles</th>
+<th data-quarto-table-cell-role="th">Person trips_Trips 10-25 miles</th>
+<th data-quarto-table-cell-role="th">Person trips_Trips 100-250 miles</th>
+<th data-quarto-table-cell-role="th">Person trips_Trips 25-50 miles</th>
+<th data-quarto-table-cell-role="th">Person trips_Trips 250-500 miles</th>
+<th data-quarto-table-cell-role="th">Person trips_Trips 3-5 miles</th>
+<th data-quarto-table-cell-role="th">Person trips_Trips 5-10 miles</th>
+<th data-quarto-table-cell-role="th">Person trips_Trips 50-100 miles</th>
+<th data-quarto-table-cell-role="th">Person trips_Trips greater than or equal to 500 miles</th>
+<th data-quarto-table-cell-role="th">Person trips_Trips less than 1 mile</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Abbeville County</td>
+<td>45001</td>
+<td>South Carolina</td>
+<td>34.222593</td>
+<td>-82.459165</td>
+<td>POINT (-82.459165 34.222593)</td>
+<td>2014</td>
+<td>SC</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Abbeville County</td>
+<td>45001</td>
+<td>South Carolina</td>
+<td>34.222593</td>
+<td>-82.459165</td>
+<td>POINT (-82.459165 34.222593)</td>
+<td>2015</td>
+<td>SC</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Abbeville County</td>
+<td>45001</td>
+<td>South Carolina</td>
+<td>34.222593</td>
+<td>-82.459165</td>
+<td>POINT (-82.459165 34.222593)</td>
+<td>2016</td>
+<td>SC</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Abbeville County</td>
+<td>45001</td>
+<td>South Carolina</td>
+<td>34.222593</td>
+<td>-82.459165</td>
+<td>POINT (-82.459165 34.222593)</td>
+<td>2017</td>
+<td>SC</td>
+<td>64177.63</td>
+<td>22864.17</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Abbeville County</td>
+<td>45001</td>
+<td>South Carolina</td>
+<td>34.222593</td>
+<td>-82.459165</td>
+<td>POINT (-82.459165 34.222593)</td>
+<td>2018</td>
+<td>SC</td>
+<td>73924.01</td>
+<td>34151.20</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 40 columns</p>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

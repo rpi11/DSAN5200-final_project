@@ -1,0 +1,71 @@
+---
+format:
+  html:
+    code-fold: true
+execute:
+  warning: false
+title: Transporation Methods
+jupyter: python3
+---
+
+
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.figure_factory as ff
+import warnings
+warnings.filterwarnings('ignore')
+```
+
+```{python}
+with open("../data/data.csv", "r") as f:
+    df = pd.read_csv(f)
+df.head()
+```
+
+```{python}
+filtered_df = df[(df['Category'] == 'Person trips') & (df['Variable'] == 'Total trips')]
+```
+
+## Filter out rows featuring states with the top 5 travel frequencies
+```{python}
+filtered_df = filtered_df[filtered_df['State'].isin(["California", "Texas", "New York", "Florida", "Illinois"])]
+filtered_df.head()
+```
+
+## Filter out rows based on 5 selected methods of commuting
+```{python}
+top_50_values_df = filtered_df.nlargest(50, 'Value')
+population_vs_commute = df[(df['Category'] == "Demographics") | (df['Category'] == "Commuting")]
+population_vs_commute = population_vs_commute[population_vs_commute['Variable'].isin(["Workers", "Commute by car/ truck/van", "Commute by public transportation", "Work at home","Population" ])]
+population_vs_commute = population_vs_commute[population_vs_commute['GEOID'].isin(top_50_values_df['GEOID'])]
+population_vs_commute.head()
+```
+
+## Plot an interactive plot for the counties featureing top 50 travel frequencies from the 5 states selected before
+```{python}
+pivoted_df = population_vs_commute.pivot_table(index='County', columns='Variable', values='Value', aggfunc='first')
+long_df = pivoted_df.reset_index().melt(id_vars='County', var_name='Variable', value_name='Value')
+
+fig = px.line(
+    long_df,
+    x='County',
+    y='Value',
+    color='Variable',  
+    title='Comparison of 3 Commuting methods vs Population by Counties',
+    labels={'Value': 'Value', 'County': 'County name'}
+)
+
+fig.update_layout(
+    hovermode='x unified',  
+    xaxis={'tickangle': -90},  
+    xaxis_title='County name',
+    yaxis_title='Value'
+)
+
+fig.show()
+```
+
