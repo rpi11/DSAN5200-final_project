@@ -131,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">EDA</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../PASHA/folium-county.html" aria-current="page"> 
+    <a class="nav-link" href="../PASHA/explore.html"> 
 <span class="menu-text">Explore the Data!</span></a>
   </li>  
   <li class="nav-item">
@@ -174,13 +174,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div id="initial_id" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T13:38:47.926540Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T13:38:47.536073Z&quot;}" data-execution_count="1">
+<div id="initial_id" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T16:00:08.947111Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T16:00:08.537096Z&quot;}" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> folium.features <span class="im">import</span> GeoJsonTooltip</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<div id="150cf03508efcf1b" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T13:38:48.724400Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T13:38:47.928140Z&quot;}" data-execution_count="2">
+<div id="150cf03508efcf1b" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T16:00:09.721072Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T16:00:08.935141Z&quot;}" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Path to your CSV file</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>csv_file_path <span class="op">=</span> <span class="st">'../data/data.csv'</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>variable_options <span class="op">=</span> [</span>
@@ -196,8 +201,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(csv_file_path)</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># df.columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<div id="1d1ba0e8b0621fd9" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T13:38:48.885415Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T13:38:48.743451Z&quot;}" data-execution_count="3">
+<div id="1d1ba0e8b0621fd9" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T16:00:09.876492Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T16:00:09.739253Z&quot;}" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mapping for renaming and scaling</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>name_scale_mapping <span class="op">=</span> {</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Total bridges'</span>: {</span>
@@ -249,8 +257,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Fair'</span>: <span class="st">'Oranges'</span>,</span>
 <span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Good'</span>: <span class="st">'Greens'</span></span>
 <span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<div id="f64703144276e92c" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T13:38:49.002262Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T13:38:48.886401Z&quot;}" data-execution_count="4">
+<div id="f64703144276e92c" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T16:00:09.984577Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T16:00:09.877709Z&quot;}" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>folium_counties_url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/python-visualization/folium/main/tests/us-counties.json"</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>us_counties <span class="op">=</span> requests.get(folium_counties_url).json()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -262,8 +273,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    feature <span class="cf">for</span> feature <span class="kw">in</span> us_counties[<span class="st">'features'</span>] </span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> feature[<span class="st">'id'</span>].zfill(<span class="dv">5</span>)[:<span class="dv">2</span>] <span class="kw">not</span> <span class="kw">in</span> fips_to_drop  <span class="co"># Ensure IDs are 5 digits for uniform comparison</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<div id="e7f83b9f35308848" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T13:38:49.010423Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T13:38:49.003693Z&quot;}" data-execution_count="5">
+<div id="e7f83b9f35308848" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T16:00:09.994198Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T16:00:09.986140Z&quot;}" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a folium Map object, centered on the US, *without* a tile layer yet</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> folium.Map(</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">43</span>, <span class="op">-</span><span class="dv">100</span>],</span>
@@ -273,11 +287,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># # Add the TileLayer to m *separately*, with control=False so that users</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># # are not able remove the layer by unchecking a checkbox</span></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>folium.TileLayer(<span class="st">'CartoDB positron'</span>,name<span class="op">=</span><span class="st">"Light Map"</span>,control<span class="op">=</span><span class="va">False</span>).add_to(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>&lt;folium.raster_layers.TileLayer at 0x147bf7610&gt;</code></pre>
+<pre><code>&lt;folium.raster_layers.TileLayer at 0x132b3e250&gt;</code></pre>
 </div>
 </div>
-<div id="bea08c2e7994d4ad" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T13:38:49.184714Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T13:38:49.027064Z&quot;}" data-execution_count="6">
+<div id="bea08c2e7994d4ad" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T16:00:10.173322Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T16:00:10.010045Z&quot;}" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each variable option to create separate choropleth layers</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> variable <span class="kw">in</span> variable_options:</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    subset_df <span class="op">=</span> df[df[<span class="st">'Variable'</span>] <span class="op">==</span> variable]</span>
@@ -322,15 +339,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>        max_width<span class="op">=</span><span class="dv">800</span>,</span>
 <span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    choro.geojson.add_child(tooltip)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<div id="4114d436dec593c9" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T13:38:49.187930Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T13:38:49.185146Z&quot;}" data-execution_count="7">
+<div id="4114d436dec593c9" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T16:00:10.177325Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T16:00:10.174223Z&quot;}" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>folium.LayerControl(collapsed<span class="op">=</span><span class="va">False</span>).add_to(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>&lt;folium.map.LayerControl at 0x147bfde50&gt;</code></pre>
+<pre><code>&lt;folium.map.LayerControl at 0x15d9fcd90&gt;</code></pre>
 </div>
 </div>
-<div id="c8f10a6e206405b3" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T13:38:50.434968Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T13:38:49.188798Z&quot;}" data-execution_count="8">
+<div id="c8f10a6e206405b3" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-04-29T16:00:11.437101Z&quot;,&quot;start_time&quot;:&quot;2024-04-29T16:00:10.177263Z&quot;}" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="6c6ef4f766e1926f" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the interactive chart has the ability to re-render automatically based on the provided options</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># also, the `overlay=False` option has been set to FALSE, so that only one layer can you shown as a time</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 
 

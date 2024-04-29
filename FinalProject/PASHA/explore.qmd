@@ -1,0 +1,166 @@
+---
+format:
+  html:
+    code-fold: true
+execute:
+  warning: false
+---
+```{python}
+import pandas as pd
+import folium
+from folium.features import GeoJsonTooltip
+import requests
+```
+
+```{python}
+# Path to your CSV file
+csv_file_path = '../data/data.csv'
+variable_options = [
+    'Total bridges',
+    'Bridges, poor',
+    'Bridges, fair',
+    'Bridges, good',
+    'Bridge area (square meters)',
+    'Bridge area, poor (square meters)',
+    'Bridge area, fair (square meters)',
+    'Bridge area, good (square meters)'
+]
+
+df = pd.read_csv(csv_file_path)
+# df.columns
+```
+
+```{python}
+# Mapping for renaming and scaling
+name_scale_mapping = {
+    'Total bridges': {
+        'new_name': 'Total Bridges (100)',
+        'scale': 100
+    },
+    'Bridges, poor': {
+        'new_name': 'Total Poor Bridges (100)',
+        'scale': 100
+    },
+    'Bridges, fair': {
+        'new_name': 'Total Fair Bridges (100)',
+        'scale': 100
+    },
+    'Bridges, good': {
+        'new_name': 'Total Good Bridges (100)',
+        'scale': 100
+    },
+    'Bridge area (square meters)': {
+        'new_name': 'Total Bridge Area (10k m²)',
+        'scale': 10000
+    },
+    'Bridge area, poor (square meters)': {
+        'new_name': 'Total Poor Bridge Area (10k m²)',
+        'scale': 100000
+    },
+    'Bridge area, fair (square meters)': {
+        'new_name': 'Total Fair Bridge Area (10k m²)',
+        'scale': 100000
+    },
+    'Bridge area, good (square meters)': {
+        'new_name': 'Total Good Bridge Area (10k m²)',
+        'scale': 100000
+    },
+}
+
+# Apply renaming and scaling based on the mapping
+for original_name, props in name_scale_mapping.items():
+    updated_rows = df['Variable'] == original_name  # Capture the rows to update
+    df.loc[updated_rows, 'Variable'] = props['new_name']
+    df.loc[updated_rows, 'Value'] /= props['scale']  # Apply scaling only to the updated rows
+
+variable_options = [props['new_name'] for props in name_scale_mapping.values()]
+
+# Define color scheme for each category
+color_scheme = {
+    'Total': 'Blues',
+    'Poor': 'Reds',
+    'Fair': 'Oranges',
+    'Good': 'Greens'
+}
+```
+
+```{python}
+folium_counties_url = "https://raw.githubusercontent.com/python-visualization/folium/main/tests/us-counties.json"
+us_counties = requests.get(folium_counties_url).json()
+
+# Define state FIPS codes to drop (Hawaii, Alaska, DC)
+fips_to_drop = ['02', '15', '11']  # FIPS codes for AK, HI, DC respectively
+
+# Filter out counties based on their state FIPS code
+us_counties['features'] = [
+    feature for feature in us_counties['features']
+    if feature['id'].zfill(5)[:2] not in fips_to_drop  # Ensure IDs are 5 digits for uniform comparison
+]
+```
+
+```{python}
+# Create a folium Map object, centered on the US, *without* a tile layer yet
+m = folium.Map(
+    [43, -100],
+    zoom_start=4,
+    tiles=None
+)
+# # Add the TileLayer to m *separately*, with control=False so that users
+# # are not able remove the layer by unchecking a checkbox
+folium.TileLayer('CartoDB positron',name="Light Map",control=False).add_to(m)
+```
+
+```{python}
+# Loop through each variable option to create separate choropleth layers
+for variable in variable_options:
+    subset_df = df[df['Variable'] == variable]
+    legend_label = variable.replace('_', ' ').title()
+    if 'Poor' in variable:
+        color = color_scheme['Poor']
+    elif 'Fair' in variable:
+        color = color_scheme['Fair']
+    elif 'Good' in variable:
+        color = color_scheme['Good']
+    else:  # Default to 'Total' for any other cases, typically 'Total'
+        color = color_scheme['Total']
+
+    choro = folium.Choropleth(
+        geo_data=us_counties,
+        name=variable,
+        data=subset_df,
+        columns=['GEOID', 'Value'],  # Changed from ['State', 'Value']
+        key_on='feature.id',  # Ensure this matches your county GeoJSON
+        fill_color=color,
+        fill_opacity=0.7,
+        line_opacity=0.2,
+        legend_name=legend_label,
+        highlight=True,
+        show=(variable == 'Total Bridges (100)'),
+        overlay=False
+    ).add_to(m)
+
+    # Add tooltips to each layer
+    tooltip = GeoJsonTooltip(
+        fields=['name'],
+        aliases=['County:'],
+        localize=True,
+        sticky=False,
+        labels=True,
+        style="""
+            background-color: #F0EFEF;
+            border: 2px solid black;
+            border-radius: 3px;
+            box-shadow: 3px;
+        """,
+        max_width=800,
+    )
+    choro.geojson.add_child(tooltip)
+```
+
+```{python}
+folium.LayerControl(collapsed=False).add_to(m)
+```
+
+```{python}
+m
+```
