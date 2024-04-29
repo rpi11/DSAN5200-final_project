@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="cell" data-execution_count="218">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -202,11 +202,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="219">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../data/data.csv"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(f)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="219">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
@@ -334,7 +334,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="220">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> df[(df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">'Person trips'</span>) <span class="op">&amp;</span> (df[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">'Total trips'</span>)]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(filtered_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -393,7 +393,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [6279 rows x 16 columns]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="221">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>aggregated_df <span class="op">=</span> df.groupby(<span class="st">'State'</span>)[<span class="st">'Value'</span>].<span class="bu">sum</span>().reset_index()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> abbreviate_states(states):</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    state_dict <span class="op">=</span> {</span>
@@ -431,10 +431,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="222">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> filtered_df[filtered_df[<span class="st">'State'</span>].isin([<span class="st">"California"</span>, <span class="st">"Texas"</span>, <span class="st">"New York"</span>, <span class="st">"Florida"</span>, <span class="st">"Illinois"</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>values<span class="op">=</span>filtered_df[<span class="st">'Value'</span>]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>endpts <span class="op">=</span> <span class="bu">list</span>(np.mgrid[<span class="bu">min</span>(values):<span class="bu">max</span>(values):<span class="ot">50j</span>])</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> ff.create_choropleth(fips<span class="op">=</span>filtered_df[<span class="st">'GEOID'</span>], values<span class="op">=</span>values,  legend_title<span class="op">=</span><span class="st">'Travel Frequency by County in the top 5 States with most Aggregated Trips'</span>)</span>
@@ -444,17 +444,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    annotations <span class="op">=</span> {<span class="st">'x'</span>: <span class="op">-</span><span class="fl">0.5</span>, <span class="st">'xanchor'</span>: <span class="st">'left'</span>}</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>NameError: name 'filtered_df' is not defined</code></pre>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="224">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>top_100_values_df <span class="op">=</span> filtered_df.nlargest(<span class="dv">100</span>, <span class="st">'Value'</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df[df[<span class="st">'GEOID'</span>].isin(top_100_values_df[<span class="st">'GEOID'</span>])]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df_with_top100_travel[df_with_top100_travel[<span class="st">'Category'</span>].isin([<span class="st">'Business'</span>, <span class="st">'Commuting'</span>])]</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df_with_top100_travel[(df_with_top100_travel[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">'Establishments'</span>) <span class="op">|</span> (df_with_top100_travel[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">"Commute by car/ truck/van"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="225">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> df_with_top100_travel.pivot_table(index<span class="op">=</span><span class="st">'County'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'first'</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>pivoted_df.plot(kind<span class="op">=</span><span class="st">'bar'</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -466,7 +466,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="viz_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="226">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>top_100_values_df <span class="op">=</span> filtered_df.nlargest(<span class="dv">100</span>, <span class="st">'Value'</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df[df[<span class="st">'GEOID'</span>].isin(top_100_values_df[<span class="st">'GEOID'</span>])]</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df_with_top100_travel[df_with_top100_travel[<span class="st">'Category'</span>].isin([<span class="st">'Bridges'</span>, <span class="st">'Commuting'</span>])]</span>
@@ -474,7 +474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="viz-6" class="level2">
 <h2 class="anchored" data-anchor-id="viz-6">Viz 6</h2>
-<div class="cell" data-execution_count="227">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> df_with_top100_travel.pivot_table(index<span class="op">=</span><span class="st">'County'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'first'</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pivoted_df.plot(kind<span class="op">=</span><span class="st">'bar'</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -486,7 +486,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="viz_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="228">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>income_vs_commute <span class="op">=</span> df[(df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">"Demographics"</span>) <span class="op">|</span> (df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">"Commuting"</span>)]</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>income_vs_commute <span class="op">=</span> income_vs_commute[income_vs_commute[<span class="st">'Variable'</span>].isin([<span class="st">"Median Household Income"</span>, <span class="st">"Commute by car/ truck/van"</span>])]</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>income_vs_commute <span class="op">=</span> income_vs_commute[income_vs_commute[<span class="st">'GEOID'</span>].isin(top_100_values_df[<span class="st">'GEOID'</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -494,7 +494,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="viz-7" class="level2">
 <h2 class="anchored" data-anchor-id="viz-7">Viz 7</h2>
-<div class="cell" data-execution_count="229">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> income_vs_commute.pivot_table(index<span class="op">=</span><span class="st">'County'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'first'</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>pivoted_df.plot(kind<span class="op">=</span><span class="st">'bar'</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -506,7 +506,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="viz_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="230">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>top_50_values_df <span class="op">=</span> filtered_df.nlargest(<span class="dv">50</span>, <span class="st">'Value'</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>population_vs_commute <span class="op">=</span> df[(df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">"Demographics"</span>) <span class="op">|</span> (df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">"Commuting"</span>)]</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>population_vs_commute <span class="op">=</span> population_vs_commute[population_vs_commute[<span class="st">'Variable'</span>].isin([<span class="st">"Workers"</span>, <span class="st">"Commute by car/ truck/van"</span>, <span class="st">"Commute by public transportation"</span>, <span class="st">"Work at home"</span>,<span class="st">"Population"</span> ])]</span>
@@ -515,7 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="viz-8" class="level2">
 <h2 class="anchored" data-anchor-id="viz-8">Viz 8</h2>
-<div class="cell" data-execution_count="231">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> population_vs_commute.pivot_table(index<span class="op">=</span><span class="st">'County'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'first'</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> pivoted_df.plot(kind<span class="op">=</span><span class="st">'area'</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>), stacked<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>current_ticks <span class="op">=</span> ax.get_xticks()</span>
@@ -535,7 +535,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="viz-9" class="level2">
 <h2 class="anchored" data-anchor-id="viz-9">Viz 9</h2>
-<div class="cell" data-execution_count="232">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>bridge <span class="op">=</span> df[df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">'Bridges'</span>]</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> bridge.pivot_table(index<span class="op">=</span><span class="st">'State'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'mean'</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
