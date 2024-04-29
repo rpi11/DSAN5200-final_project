@@ -17,7 +17,7 @@ website:
         text: Commuting Numbers
       - href: ZENAN/transportation.qmd
         text: Transportation Methods
-      - href: ZENAN/bridge.ipynb
+      - href: ZENAN/bridge.qmd
         text: Bridge Quality
       - href: conclusion.qmd
         text: Conclusion
