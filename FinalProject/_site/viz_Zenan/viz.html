@@ -434,18 +434,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="222">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> filtered_df[filtered_df[<span class="st">'State'</span>].isin([<span class="st">"California"</span>, <span class="st">"Texas"</span>, <span class="st">"New York"</span>, <span class="st">"Florida"</span>, <span class="st">"Illinois"</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="223">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>values<span class="op">=</span>filtered_df[<span class="st">'Value'</span>]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>endpts <span class="op">=</span> <span class="bu">list</span>(np.mgrid[<span class="bu">min</span>(values):<span class="bu">max</span>(values):<span class="ot">50j</span>])</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> ff.create_choropleth(fips<span class="op">=</span>filtered_df[<span class="st">'GEOID'</span>], values<span class="op">=</span>values, legend_title<span class="op">=</span><span class="st">'Travel Frequency by County in the top 5 States with most Aggregated Trips'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> ff.create_choropleth(fips<span class="op">=</span>filtered_df[<span class="st">'GEOID'</span>], values<span class="op">=</span>values,  legend_title<span class="op">=</span><span class="st">'Travel Frequency by County in the top 5 States with most Aggregated Trips'</span>)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>fig.layout.template <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>fig.update_layout(</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    legend_x <span class="op">=</span> <span class="dv">0</span>,</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    annotations <span class="op">=</span> {<span class="st">'x'</span>: <span class="op">-</span><span class="fl">0.5</span>, <span class="st">'xanchor'</span>: <span class="st">'left'</span>}</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'filtered_df' is not defined</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="224">
