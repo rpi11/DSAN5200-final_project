@@ -93,9 +93,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -128,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../PASHA/explore.html" rel="" target="">
- <span class="menu-text">Explore the Data!</span></a>
+ <span class="menu-text">Explore the Data</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="../RICH/trendOverTime.html" rel="" target="" aria-current="page">
@@ -168,7 +165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#import-packages-and-read-data" id="toc-import-packages-and-read-data" class="nav-link active" data-scroll-target="#import-packages-and-read-data">Import Packages and Read Data</a></li>
   <li><a href="#trip-frequency-over-time" id="toc-trip-frequency-over-time" class="nav-link" data-scroll-target="#trip-frequency-over-time">Trip Frequency Over Time</a></li>
-  <li><a href="#bridge-quality-over-time" id="toc-bridge-quality-over-time" class="nav-link" data-scroll-target="#bridge-quality-over-time">Bridge Quality Over Time</a></li>
+  <li><a href="#bridge-count-and-quality-over-time" id="toc-bridge-count-and-quality-over-time" class="nav-link" data-scroll-target="#bridge-count-and-quality-over-time">Bridge Count and Quality Over Time</a></li>
   </ul>
 </nav>
     </div>
@@ -192,9 +189,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<p>In this section, we explore how our selected variables change over time across the years for which they were collected. Specifically, we will explore changes in commuting frequency, bridge counts, and bridge quality.</p>
 <section id="import-packages-and-read-data" class="level2">
 <h2 class="anchored" data-anchor-id="import-packages-and-read-data">Import Packages and Read Data</h2>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="180">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="6">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -210,215 +208,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="181">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="23">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/cleaned.csv"</span>, <span class="at">header =</span> T)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># head(df, 3)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>A data.frame: 6 x 40</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">County</th>
-<th data-quarto-table-cell-role="th" scope="col">GEOID</th>
-<th data-quarto-table-cell-role="th" scope="col">State</th>
-<th data-quarto-table-cell-role="th" scope="col">Latitude</th>
-<th data-quarto-table-cell-role="th" scope="col">Longitude</th>
-<th data-quarto-table-cell-role="th" scope="col">Location</th>
-<th data-quarto-table-cell-role="th" scope="col">Year</th>
-<th data-quarto-table-cell-role="th" scope="col">StateAbbv</th>
-<th data-quarto-table-cell-role="th" scope="col">Bridges_Bridge.area..square.meters.</th>
-<th data-quarto-table-cell-role="th" scope="col">Bridges_Bridge.area..fair..square.meters.</th>
-<th data-quarto-table-cell-role="th" scope="col">...</th>
-<th data-quarto-table-cell-role="th" scope="col">Person.trips_Trips.1.3.miles</th>
-<th data-quarto-table-cell-role="th" scope="col">Person.trips_Trips.10.25.miles</th>
-<th data-quarto-table-cell-role="th" scope="col">Person.trips_Trips.100.250.miles</th>
-<th data-quarto-table-cell-role="th" scope="col">Person.trips_Trips.25.50.miles</th>
-<th data-quarto-table-cell-role="th" scope="col">Person.trips_Trips.250.500.miles</th>
-<th data-quarto-table-cell-role="th" scope="col">Person.trips_Trips.3.5.miles</th>
-<th data-quarto-table-cell-role="th" scope="col">Person.trips_Trips.5.10.miles</th>
-<th data-quarto-table-cell-role="th" scope="col">Person.trips_Trips.50.100.miles</th>
-<th data-quarto-table-cell-role="th" scope="col">Person.trips_Trips.greater.than.or.equal.to.500.miles</th>
-<th data-quarto-table-cell-role="th" scope="col">Person.trips_Trips.less.than.1.mile</th>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">...</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">1</td>
-<td>Abbeville County</td>
-<td>45001</td>
-<td>South Carolina</td>
-<td>34.22259</td>
-<td>-82.45916</td>
-<td>POINT (-82.459165 34.222593)</td>
-<td>2014</td>
-<td>SC</td>
-<td>NA</td>
-<td>NA</td>
-<td>...</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">2</td>
-<td>Abbeville County</td>
-<td>45001</td>
-<td>South Carolina</td>
-<td>34.22259</td>
-<td>-82.45916</td>
-<td>POINT (-82.459165 34.222593)</td>
-<td>2015</td>
-<td>SC</td>
-<td>NA</td>
-<td>NA</td>
-<td>...</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">3</td>
-<td>Abbeville County</td>
-<td>45001</td>
-<td>South Carolina</td>
-<td>34.22259</td>
-<td>-82.45916</td>
-<td>POINT (-82.459165 34.222593)</td>
-<td>2016</td>
-<td>SC</td>
-<td>NA</td>
-<td>NA</td>
-<td>...</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">4</td>
-<td>Abbeville County</td>
-<td>45001</td>
-<td>South Carolina</td>
-<td>34.22259</td>
-<td>-82.45916</td>
-<td>POINT (-82.459165 34.222593)</td>
-<td>2017</td>
-<td>SC</td>
-<td>64177.63</td>
-<td>22864.17</td>
-<td>...</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">5</td>
-<td>Abbeville County</td>
-<td>45001</td>
-<td>South Carolina</td>
-<td>34.22259</td>
-<td>-82.45916</td>
-<td>POINT (-82.459165 34.222593)</td>
-<td>2018</td>
-<td>SC</td>
-<td>73924.01</td>
-<td>34151.20</td>
-<td>...</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">6</td>
-<td>Abbeville County</td>
-<td>45001</td>
-<td>South Carolina</td>
-<td>34.22259</td>
-<td>-82.45916</td>
-<td>POINT (-82.459165 34.222593)</td>
-<td>2019</td>
-<td>SC</td>
-<td>73945.39</td>
-<td>35386.65</td>
-<td>...</td>
-<td>8301866</td>
-<td>7936643</td>
-<td>105036</td>
-<td>2640780</td>
-<td>12794</td>
-<td>3806550</td>
-<td>5149050</td>
-<td>690729</td>
-<td>80180</td>
-<td>6028016</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="182">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="8">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>counties <span class="ot">&lt;-</span> <span class="fu">geojson_sf</span>(<span class="st">"../data/us_counties.geojson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -427,94 +224,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="trip-frequency-over-time" class="level2">
 <h2 class="anchored" data-anchor-id="trip-frequency-over-time">Trip Frequency Over Time</h2>
-<section id="get-the-total-number-of-trips-in-each-county-for-each-year" class="level4">
-<h4 class="anchored" data-anchor-id="get-the-total-number-of-trips-in-each-county-for-each-year">1. Get the total number of trips in each county for each year</h4>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="183">
+<p>We start by examining how travel frequency has changed nationally from 2019 to 2020. We focus on these years with a specific interest in exploring how the COVID-19 pandemic impacted commuting volumes.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="9">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tripFreq <span class="ot">&lt;-</span> df[, <span class="fu">c</span>(<span class="fu">which</span>(<span class="fu">colnames</span>(df) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"State"</span>,<span class="st">"County"</span>,<span class="st">"Year"</span>,<span class="st">"Demographics_Population"</span>)), <span class="fu">grep</span>(<span class="st">"Person.trips"</span>, <span class="fu">names</span>(df)))]</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>tripFreq<span class="sc">$</span>TotalTrips <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(tripFreq[, <span class="fu">grep</span>(<span class="st">"Person.trips"</span>, <span class="fu">names</span>(tripFreq))])</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>tripFreq <span class="ot">&lt;-</span> tripFreq[, <span class="fu">c</span>(<span class="st">"State"</span>,<span class="st">"County"</span>,<span class="st">"Year"</span>,<span class="st">"Demographics_Population"</span>,<span class="st">"TotalTrips"</span>)]</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tripFreq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># head(tripFreq)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>A data.frame: 6 x 5</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">State</th>
-<th data-quarto-table-cell-role="th" scope="col">County</th>
-<th data-quarto-table-cell-role="th" scope="col">Year</th>
-<th data-quarto-table-cell-role="th" scope="col">Demographics_Population</th>
-<th data-quarto-table-cell-role="th" scope="col">TotalTrips</th>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">1</td>
-<td>South Carolina</td>
-<td>Abbeville County</td>
-<td>2014</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">2</td>
-<td>South Carolina</td>
-<td>Abbeville County</td>
-<td>2015</td>
-<td>24997</td>
-<td>NA</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">3</td>
-<td>South Carolina</td>
-<td>Abbeville County</td>
-<td>2016</td>
-<td>24951</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">4</td>
-<td>South Carolina</td>
-<td>Abbeville County</td>
-<td>2017</td>
-<td>24788</td>
-<td>NA</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">5</td>
-<td>South Carolina</td>
-<td>Abbeville County</td>
-<td>2018</td>
-<td>24657</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">6</td>
-<td>South Carolina</td>
-<td>Abbeville County</td>
-<td>2019</td>
-<td>24627</td>
-<td>69503288</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-</section>
-<section id="fill-missing-populations-and-calculate-per-capita-trips" class="level4">
-<h4 class="anchored" data-anchor-id="fill-missing-populations-and-calculate-per-capita-trips">2. Fill missing populations and calculate per-capita trips</h4>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="184">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="10">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pops <span class="ot">&lt;-</span> tripFreq <span class="sc">%&gt;%</span></span>
@@ -526,690 +246,324 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>tripFreq <span class="ot">&lt;-</span> tripFreq[<span class="fu">complete.cases</span>(tripFreq<span class="sc">$</span>TotalTrips), ]</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>tripFreq<span class="sc">$</span>TotalTrips.PerCap <span class="ot">&lt;-</span> tripFreq<span class="sc">$</span>TotalTrips <span class="sc">/</span> tripFreq<span class="sc">$</span>pops</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>tripFreq <span class="ot">&lt;-</span> tripFreq[, <span class="fu">c</span>(<span class="st">"State"</span>,<span class="st">"County"</span>,<span class="st">"Year"</span>,<span class="st">"TotalTrips.PerCap"</span>)]</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tripFreq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># head(tripFreq)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>A data.frame: 6 x 4</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">State</th>
-<th data-quarto-table-cell-role="th" scope="col">County</th>
-<th data-quarto-table-cell-role="th" scope="col">Year</th>
-<th data-quarto-table-cell-role="th" scope="col">TotalTrips.PerCap</th>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">6</td>
-<td>South Carolina</td>
-<td>Abbeville County</td>
-<td>2019</td>
-<td>2802.100</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">7</td>
-<td>South Carolina</td>
-<td>Abbeville County</td>
-<td>2020</td>
-<td>2329.602</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">13</td>
-<td>Louisiana</td>
-<td>Acadia County</td>
-<td>2019</td>
-<td>2837.425</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">14</td>
-<td>Louisiana</td>
-<td>Acadia County</td>
-<td>2020</td>
-<td>2559.405</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">20</td>
-<td>Virginia</td>
-<td>Accomack County</td>
-<td>2019</td>
-<td>3661.523</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">21</td>
-<td>Virginia</td>
-<td>Accomack County</td>
-<td>2020</td>
-<td>2679.957</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-</section>
-<section id="examine-data" class="level4">
-<h4 class="anchored" data-anchor-id="examine-data">3. Examine Data</h4>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="185">
+<section id="choropleths" class="level4">
+<h4 class="anchored" data-anchor-id="choropleths">Choropleths</h4>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="11">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(tripFreq<span class="sc">$</span>Year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">4</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="fl">2.5</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>tf<span class="fl">.2019</span> <span class="ot">&lt;-</span> tripFreq <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">==</span> (<span class="dv">2019</span>))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plot<span class="fl">.2019</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">merge</span>(counties, tf<span class="fl">.2019</span>, <span class="at">by.x =</span> <span class="fu">c</span>(<span class="st">"county"</span>,<span class="st">"full"</span>), <span class="at">by.y =</span> <span class="fu">c</span>(<span class="st">"County"</span>,<span class="st">"State"</span>), <span class="at">all.x =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">fill =</span> TotalTrips.PerCap)) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">"Trips Per</span><span class="sc">\n</span><span class="st">Capita"</span>, </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                                <span class="at">low =</span> <span class="st">"#66CCFF"</span>, <span class="at">high =</span> <span class="st">"#336699"</span>,<span class="at">na.value =</span> <span class="st">"white"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                                <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5400</span>)) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">14</span>, </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"black"</span>, </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">b =</span> <span class="sc">-</span><span class="dv">5</span>)),  <span class="co"># Adjust font size, face, color, and background of the plot title</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                        <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#aaaaaa"</span>),  <span class="co"># Set background color of the plot</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),  <span class="co"># Adjust font size of legend title</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>                        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                        <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">20</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>)) <span class="sc">+</span> </span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Trips Per Capita, 2019"</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>plot<span class="fl">.2019</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<pre><code>
-2019 2020 
-3138 3141 </code></pre>
+<p><img src="trendOverTime_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-</section>
-<section id="plot-a-choropleth-of-trip-frequency-over-time" class="level4">
-<h4 class="anchored" data-anchor-id="plot-a-choropleth-of-trip-frequency-over-time">4. Plot a choropleth of trip frequency over time</h4>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="186">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="12">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">4</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="fl">2.5</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>tf<span class="fl">.2019</span> <span class="ot">&lt;-</span> tripFreq <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">==</span> (<span class="dv">2019</span>))</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plot<span class="fl">.2019</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">merge</span>(counties, tf<span class="fl">.2019</span>, <span class="at">by.x =</span> <span class="fu">c</span>(<span class="st">"county"</span>,<span class="st">"full"</span>), <span class="at">by.y =</span> <span class="fu">c</span>(<span class="st">"County"</span>,<span class="st">"State"</span>), <span class="at">all.x =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">fill =</span> TotalTrips.PerCap)) <span class="sc">+</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">"Trips Per</span><span class="sc">\n</span><span class="st">Capita"</span>, </span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                                <span class="at">low =</span> <span class="st">"#66CCFF"</span>, <span class="at">high =</span> <span class="st">"#336699"</span>,<span class="at">na.value =</span> <span class="st">"white"</span>,</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                                <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5400</span>)) <span class="sc">+</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>                        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">14</span>, </span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"black"</span>, </span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">b =</span> <span class="sc">-</span><span class="dv">5</span>)),  <span class="co"># Adjust font size, face, color, and background of the plot title</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>                        <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#aaaaaa"</span>),  <span class="co"># Set background color of the plot</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>                        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),  <span class="co"># Adjust font size of legend title</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>                        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>                        <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">20</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>)) <span class="sc">+</span> </span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Trips Per Capita, 2019"</span>)</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>plot<span class="fl">.2019</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tf<span class="fl">.2020</span> <span class="ot">&lt;-</span> tripFreq <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">==</span> (<span class="dv">2020</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plot<span class="fl">.2020</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">merge</span>(counties, tf<span class="fl">.2020</span>, <span class="at">by.x =</span> <span class="fu">c</span>(<span class="st">"county"</span>,<span class="st">"full"</span>), <span class="at">by.y =</span> <span class="fu">c</span>(<span class="st">"County"</span>,<span class="st">"State"</span>), <span class="at">all.x =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">fill =</span> TotalTrips.PerCap)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">"Trips Per</span><span class="sc">\n</span><span class="st">Capita"</span>, </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                                <span class="at">low =</span> <span class="st">"#66CCFF"</span>, <span class="at">high =</span> <span class="st">"#336699"</span>,<span class="at">na.value =</span> <span class="st">"white"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                                <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5400</span>)) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">14</span>, </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"black"</span>, </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">b =</span> <span class="sc">-</span><span class="dv">5</span>)),  <span class="co"># Adjust font size, face, color, and background of the plot title</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                        <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#aaaaaa"</span>),  <span class="co"># Set background color of the plot</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),  <span class="co"># Adjust font size of legend title</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                        <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">20</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>)) <span class="sc">+</span> </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Trips Per Capita, 2020"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plot<span class="fl">.2020</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <p><img src="trendOverTime_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="187">
+</section>
+<section id="alluvial-trajectory-chart" class="level4">
+<h4 class="anchored" data-anchor-id="alluvial-trajectory-chart">Alluvial Trajectory Chart</h4>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="13">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tf<span class="fl">.2020</span> <span class="ot">&lt;-</span> tripFreq <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">==</span> (<span class="dv">2020</span>))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plot<span class="fl">.2020</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">merge</span>(counties, tf<span class="fl">.2020</span>, <span class="at">by.x =</span> <span class="fu">c</span>(<span class="st">"county"</span>,<span class="st">"full"</span>), <span class="at">by.y =</span> <span class="fu">c</span>(<span class="st">"County"</span>,<span class="st">"State"</span>), <span class="at">all.x =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">fill =</span> TotalTrips.PerCap)) <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">"Trips Per</span><span class="sc">\n</span><span class="st">Capita"</span>, </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                                <span class="at">low =</span> <span class="st">"#66CCFF"</span>, <span class="at">high =</span> <span class="st">"#336699"</span>,<span class="at">na.value =</span> <span class="st">"white"</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                                <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5400</span>)) <span class="sc">+</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">14</span>, </span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"black"</span>, </span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">b =</span> <span class="sc">-</span><span class="dv">5</span>)),  <span class="co"># Adjust font size, face, color, and background of the plot title</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                        <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#aaaaaa"</span>),  <span class="co"># Set background color of the plot</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),  <span class="co"># Adjust font size of legend title</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                        <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">20</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>)) <span class="sc">+</span> </span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Trips Per Capita, 2020"</span>)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>plot<span class="fl">.2020</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">10</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="dv">5</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>tripFreq<span class="sc">$</span>countyAndState <span class="ot">&lt;-</span> <span class="fu">paste</span>(tripFreq<span class="sc">$</span>County,<span class="st">", "</span>,tripFreq<span class="sc">$</span>State,<span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>tripFreq.wide <span class="ot">&lt;-</span> <span class="fu">pivot_wider</span>(tripFreq[, <span class="fu">c</span>(<span class="st">"countyAndState"</span>,<span class="st">"Year"</span>,<span class="st">"TotalTrips.PerCap"</span>)], <span class="at">names_from =</span> Year, <span class="at">values_from =</span> TotalTrips.PerCap, <span class="at">id_cols =</span> <span class="st">"countyAndState"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>tripFreq.wide<span class="sc">$</span>diff <span class="ot">&lt;-</span> tripFreq.wide<span class="sc">$</span><span class="st">'2020'</span> <span class="sc">-</span> tripFreq.wide<span class="sc">$</span><span class="st">'2019'</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"black"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">0</span>, <span class="at">type =</span> <span class="st">"n"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">2018.95</span>, <span class="fl">2020.05</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5000</span>,<span class="dv">6000</span>),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">xaxt =</span> <span class="st">"n"</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(tripFreq.wide)) {</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2020</span>), <span class="fu">c</span>(<span class="dv">0</span>, tripFreq.wide<span class="sc">$</span>diff[i]), <span class="at">col =</span> <span class="st">"#1B03A3"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)  <span class="co"># Plot a line for each row, with a different color</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2019</span>,<span class="dv">2020</span>),<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">"Change in Per Capita Trips</span><span class="sc">\n</span><span class="st">from 2019 to 2020, by County"</span>, <span class="at">col.main =</span> <span class="st">"white"</span>, <span class="at">cex.main =</span> <span class="fl">1.5</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">xlab =</span> <span class="st">"Year"</span>, <span class="at">col.lab =</span> <span class="st">"white"</span>, <span class="at">font.lab =</span> <span class="dv">2</span>, <span class="at">cex.lab =</span> <span class="fl">1.2</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">ylab =</span> <span class="st">"Change in Per Capita Trips"</span>, <span class="at">col.lab =</span> <span class="st">"white"</span>, <span class="at">font.lab =</span> <span class="dv">2</span>, <span class="at">cex.lab =</span> <span class="fl">1.2</span>)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>xlabs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2019"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">"2020"</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">2019</span>, <span class="dv">2020</span>, <span class="at">length.out =</span> <span class="dv">6</span>), <span class="at">labels =</span> xlabs, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">col.axis =</span> <span class="st">"white"</span>)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">col.axis =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <p><img src="trendOverTime_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="188">
+</section>
+</section>
+<section id="bridge-count-and-quality-over-time" class="level2">
+<h2 class="anchored" data-anchor-id="bridge-count-and-quality-over-time">Bridge Count and Quality Over Time</h2>
+<p>We explore infrastructural development over time as well, by exploring how bridge counts and quality have changed within recent years across the country.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="24">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">10</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="dv">5</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>tripFreq<span class="sc">$</span>countyAndState <span class="ot">&lt;-</span> <span class="fu">paste</span>(tripFreq<span class="sc">$</span>County,<span class="st">", "</span>,tripFreq<span class="sc">$</span>State,<span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>tripFreq.wide <span class="ot">&lt;-</span> <span class="fu">pivot_wider</span>(tripFreq[, <span class="fu">c</span>(<span class="st">"countyAndState"</span>,<span class="st">"Year"</span>,<span class="st">"TotalTrips.PerCap"</span>)], <span class="at">names_from =</span> Year, <span class="at">values_from =</span> TotalTrips.PerCap, <span class="at">id_cols =</span> <span class="st">"countyAndState"</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>tripFreq.wide<span class="sc">$</span>diff <span class="ot">&lt;-</span> tripFreq.wide<span class="sc">$</span><span class="st">'2020'</span> <span class="sc">-</span> tripFreq.wide<span class="sc">$</span><span class="st">'2019'</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"black"</span>)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">0</span>, <span class="at">type =</span> <span class="st">"n"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">2018.95</span>, <span class="fl">2020.05</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5000</span>,<span class="dv">6000</span>),</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">xaxt =</span> <span class="st">"n"</span>)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(tripFreq.wide)) {</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2020</span>), <span class="fu">c</span>(<span class="dv">0</span>, tripFreq.wide<span class="sc">$</span>diff[i]), <span class="at">col =</span> <span class="st">"#1B03A3"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)  <span class="co"># Plot a line for each row, with a different color</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2019</span>,<span class="dv">2020</span>),<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">"Change in Per Capita Trips</span><span class="sc">\n</span><span class="st">from 2019 to 2020, by County"</span>, <span class="at">col.main =</span> <span class="st">"white"</span>, <span class="at">cex.main =</span> <span class="fl">1.5</span>)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">xlab =</span> <span class="st">"Year"</span>, <span class="at">col.lab =</span> <span class="st">"white"</span>, <span class="at">font.lab =</span> <span class="dv">2</span>, <span class="at">cex.lab =</span> <span class="fl">1.2</span>)</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">ylab =</span> <span class="st">"Change in Per Capita Trips"</span>, <span class="at">col.lab =</span> <span class="st">"white"</span>, <span class="at">font.lab =</span> <span class="dv">2</span>, <span class="at">cex.lab =</span> <span class="fl">1.2</span>)</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>xlabs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2019"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">"2020"</span>)</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">2019</span>, <span class="dv">2020</span>, <span class="at">length.out =</span> <span class="dv">6</span>), <span class="at">labels =</span> xlabs, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">col.axis =</span> <span class="st">"white"</span>)</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">col.axis =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bridgeQual <span class="ot">&lt;-</span> df[, <span class="fu">c</span>(<span class="fu">which</span>(<span class="fu">colnames</span>(df) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"State"</span>,<span class="st">"County"</span>,<span class="st">"Year"</span>,<span class="st">"Demographics_Population"</span>)), <span class="fu">grep</span>(<span class="st">"Bridges_Bridges.."</span>, <span class="fu">names</span>(df)))]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>bridgeQual<span class="sc">$</span>bridgeCount <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(bridgeQual[, <span class="fu">grep</span>(<span class="st">"Bridges_Bridges.."</span>, <span class="fu">names</span>(bridgeQual))])</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>bridgeQual <span class="ot">&lt;-</span> bridgeQual <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">qualityScore =</span> (Bridges_Bridges..poor <span class="sc">+</span> (<span class="dv">2</span><span class="sc">*</span>Bridges_Bridges..fair) <span class="sc">+</span> (<span class="dv">3</span><span class="sc">*</span>Bridges_Bridges..good))<span class="sc">/</span>bridgeCount)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># head(bridgeQual)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display">
-<p><img src="trendOverTime_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
 </div>
-</div>
-</section>
-</section>
-<section id="bridge-quality-over-time" class="level2">
-<h2 class="anchored" data-anchor-id="bridge-quality-over-time">Bridge Quality Over Time</h2>
-<section id="get-the-total-number-of-bridges-for-each-county-as-well-as-an-average-bridge-quality-score-from-1-3." class="level4">
-<h4 class="anchored" data-anchor-id="get-the-total-number-of-bridges-for-each-county-as-well-as-an-average-bridge-quality-score-from-1-3.">1. Get the total number of bridges for each county, as well as an average bridge quality score (from 1-3).</h4>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="189">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="25">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bridgeQual <span class="ot">&lt;-</span> df[, <span class="fu">c</span>(<span class="fu">which</span>(<span class="fu">colnames</span>(df) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"State"</span>,<span class="st">"County"</span>,<span class="st">"Year"</span>,<span class="st">"Demographics_Population"</span>)), <span class="fu">grep</span>(<span class="st">"Bridges_Bridges.."</span>, <span class="fu">names</span>(df)))]</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>bridgeQual<span class="sc">$</span>bridgeCount <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(bridgeQual[, <span class="fu">grep</span>(<span class="st">"Bridges_Bridges.."</span>, <span class="fu">names</span>(bridgeQual))])</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>bridgeQual <span class="ot">&lt;-</span> bridgeQual <span class="sc">%&gt;%</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">qualityScore =</span> (Bridges_Bridges..poor <span class="sc">+</span> (<span class="dv">2</span><span class="sc">*</span>Bridges_Bridges..fair) <span class="sc">+</span> (<span class="dv">3</span><span class="sc">*</span>Bridges_Bridges..good))<span class="sc">/</span>bridgeCount)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bridgeQual)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bridgeQual <span class="ot">&lt;-</span> bridgeQual[<span class="fu">complete.cases</span>(bridgeQual<span class="sc">$</span>bridgeCount), ]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># head(bridgeQual)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>A data.frame: 6 x 9</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">County</th>
-<th data-quarto-table-cell-role="th" scope="col">State</th>
-<th data-quarto-table-cell-role="th" scope="col">Year</th>
-<th data-quarto-table-cell-role="th" scope="col">Demographics_Population</th>
-<th data-quarto-table-cell-role="th" scope="col">Bridges_Bridges..fair</th>
-<th data-quarto-table-cell-role="th" scope="col">Bridges_Bridges..good</th>
-<th data-quarto-table-cell-role="th" scope="col">Bridges_Bridges..poor</th>
-<th data-quarto-table-cell-role="th" scope="col">bridgeCount</th>
-<th data-quarto-table-cell-role="th" scope="col">qualityScore</th>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">1</td>
-<td>Abbeville County</td>
-<td>South Carolina</td>
-<td>2014</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">2</td>
-<td>Abbeville County</td>
-<td>South Carolina</td>
-<td>2015</td>
-<td>24997</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">3</td>
-<td>Abbeville County</td>
-<td>South Carolina</td>
-<td>2016</td>
-<td>24951</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">4</td>
-<td>Abbeville County</td>
-<td>South Carolina</td>
-<td>2017</td>
-<td>24788</td>
-<td>83</td>
-<td>62</td>
-<td>17</td>
-<td>162</td>
-<td>2.277778</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">5</td>
-<td>Abbeville County</td>
-<td>South Carolina</td>
-<td>2018</td>
-<td>24657</td>
-<td>87</td>
-<td>61</td>
-<td>15</td>
-<td>163</td>
-<td>2.282209</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">6</td>
-<td>Abbeville County</td>
-<td>South Carolina</td>
-<td>2019</td>
-<td>24627</td>
-<td>92</td>
-<td>56</td>
-<td>14</td>
-<td>162</td>
-<td>2.259259</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-</section>
-<section id="remove-missing-bridge-quality-measurements" class="level4">
-<h4 class="anchored" data-anchor-id="remove-missing-bridge-quality-measurements">2. Remove missing bridge quality measurements</h4>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="190">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="26">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>bridgeQual <span class="ot">&lt;-</span> bridgeQual[<span class="fu">complete.cases</span>(bridgeQual<span class="sc">$</span>bridgeCount), ]</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bridgeQual)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bridgeQual <span class="ot">&lt;-</span> bridgeQual[<span class="fu">order</span>(bridgeQual<span class="sc">$</span>State, bridgeQual<span class="sc">$</span>County, bridgeQual<span class="sc">$</span>Year), ]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>bridgeQual <span class="ot">&lt;-</span> bridgeQual <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(County, State) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fill</span>(Demographics_Population)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>bridgeQual<span class="sc">$</span>bridgesPer1000 <span class="ot">&lt;-</span> (bridgeQual<span class="sc">$</span>bridgeCount <span class="sc">/</span> bridgeQual<span class="sc">$</span>Demographics_Population)<span class="sc">*</span><span class="dv">1000</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>bridgeQual <span class="ot">&lt;-</span> bridgeQual[, <span class="fu">c</span>(<span class="st">"State"</span>,<span class="st">"County"</span>,<span class="st">"Year"</span>,<span class="st">"bridgesPer1000"</span>,<span class="st">"qualityScore"</span>)]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># head(bridgeQual)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>A data.frame: 6 x 9</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">County</th>
-<th data-quarto-table-cell-role="th" scope="col">State</th>
-<th data-quarto-table-cell-role="th" scope="col">Year</th>
-<th data-quarto-table-cell-role="th" scope="col">Demographics_Population</th>
-<th data-quarto-table-cell-role="th" scope="col">Bridges_Bridges..fair</th>
-<th data-quarto-table-cell-role="th" scope="col">Bridges_Bridges..good</th>
-<th data-quarto-table-cell-role="th" scope="col">Bridges_Bridges..poor</th>
-<th data-quarto-table-cell-role="th" scope="col">bridgeCount</th>
-<th data-quarto-table-cell-role="th" scope="col">qualityScore</th>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">4</td>
-<td>Abbeville County</td>
-<td>South Carolina</td>
-<td>2017</td>
-<td>24788</td>
-<td>83</td>
-<td>62</td>
-<td>17</td>
-<td>162</td>
-<td>2.277778</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">5</td>
-<td>Abbeville County</td>
-<td>South Carolina</td>
-<td>2018</td>
-<td>24657</td>
-<td>87</td>
-<td>61</td>
-<td>15</td>
-<td>163</td>
-<td>2.282209</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">6</td>
-<td>Abbeville County</td>
-<td>South Carolina</td>
-<td>2019</td>
-<td>24627</td>
-<td>92</td>
-<td>56</td>
-<td>14</td>
-<td>162</td>
-<td>2.259259</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">7</td>
-<td>Abbeville County</td>
-<td>South Carolina</td>
-<td>2020</td>
-<td>NA</td>
-<td>96</td>
-<td>56</td>
-<td>11</td>
-<td>163</td>
-<td>2.276074</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">11</td>
-<td>Acadia County</td>
-<td>Louisiana</td>
-<td>2017</td>
-<td>62607</td>
-<td>130</td>
-<td>144</td>
-<td>27</td>
-<td>301</td>
-<td>2.388704</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">12</td>
-<td>Acadia County</td>
-<td>Louisiana</td>
-<td>2018</td>
-<td>62568</td>
-<td>135</td>
-<td>141</td>
-<td>26</td>
-<td>302</td>
-<td>2.380795</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-</section>
-<section id="add-missing-population-measurements-and-get-bridge-per-capita" class="level4">
-<h4 class="anchored" data-anchor-id="add-missing-population-measurements-and-get-bridge-per-capita">3. Add missing population measurements and get bridge per-capita</h4>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="191">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="27">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bridgeQual <span class="ot">&lt;-</span> bridgeQual[<span class="fu">order</span>(bridgeQual<span class="sc">$</span>State, bridgeQual<span class="sc">$</span>County, bridgeQual<span class="sc">$</span>Year), ]</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>bridgeQual <span class="ot">&lt;-</span> bridgeQual <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(County, State) <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fill</span>(Demographics_Population)</span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">8</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="fl">5.2</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>plotBridgePer1000 <span class="ot">&lt;-</span> <span class="cf">function</span>(year){</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        bq <span class="ot">&lt;-</span> bridgeQual <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">==</span> year)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        bq.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">merge</span>(counties, bq, <span class="at">by.x =</span> <span class="fu">c</span>(<span class="st">"county"</span>,<span class="st">"full"</span>), <span class="at">by.y =</span> <span class="fu">c</span>(<span class="st">"County"</span>,<span class="st">"State"</span>), <span class="at">all.x =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">aes</span>(<span class="at">fill =</span> bridgesPer1000)) <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">"Bridges Per</span><span class="sc">\n</span><span class="st">1000 People"</span>, </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">low =</span> <span class="st">"#fbefae"</span>, <span class="at">high =</span> <span class="st">"#FF6600"</span>,<span class="at">na.value =</span> <span class="st">"white"</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">20</span>, </span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>                                                        <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"black"</span>, </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>                                                        <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">b =</span> <span class="sc">-</span><span class="dv">20</span>)),</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#aaaaaa"</span>),</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>                                <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>                                <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>                                <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="sc">-</span><span class="dv">40</span>)) <span class="sc">+</span> </span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Bridges Per 1000 People, "</span>,year))</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(bq.plot)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>plotQualityScores <span class="ot">&lt;-</span> <span class="cf">function</span>(year){</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>        bq <span class="ot">&lt;-</span> bridgeQual <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">==</span> year)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>        bq.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">merge</span>(counties, bq, <span class="at">by.x =</span> <span class="fu">c</span>(<span class="st">"county"</span>,<span class="st">"full"</span>), <span class="at">by.y =</span> <span class="fu">c</span>(<span class="st">"County"</span>,<span class="st">"State"</span>), <span class="at">all.x =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">aes</span>(<span class="at">fill =</span> qualityScore)) <span class="sc">+</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">scale_fill_gradient2</span>(<span class="at">name =</span> <span class="st">"Average Bridge Quality Score"</span>, </span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">mid =</span> <span class="st">"red"</span>, <span class="at">high =</span> <span class="st">"green"</span>,<span class="at">na.value =</span> <span class="st">"white"</span>,</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">20</span>, </span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>                                                        <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"black"</span>, </span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>                                                        <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">b =</span> <span class="sc">-</span><span class="dv">20</span>)),</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#aaaaaa"</span>),</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>                                <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>                                <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>                                <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">20</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>)) <span class="sc">+</span> </span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Average Bridge Quality Score, "</span>,year))</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(bq.plot)</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="choropleths-of-bridge-count-over-time" class="level4">
+<h4 class="anchored" data-anchor-id="choropleths-of-bridge-count-over-time">Choropleths of Bridge Count Over Time</h4>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="28">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">27</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="fl">5.2</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>bridgeQual<span class="sc">$</span>bridgesPer1000 <span class="ot">&lt;-</span> (bridgeQual<span class="sc">$</span>bridgeCount <span class="sc">/</span> bridgeQual<span class="sc">$</span>Demographics_Population)<span class="sc">*</span><span class="dv">1000</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>bridgeQual <span class="ot">&lt;-</span> bridgeQual[, <span class="fu">c</span>(<span class="st">"State"</span>,<span class="st">"County"</span>,<span class="st">"Year"</span>,<span class="st">"bridgesPer1000"</span>,<span class="st">"qualityScore"</span>)]</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bridgeQual)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(<span class="fu">plotBridgePer1000</span>(<span class="dv">2017</span>),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotBridgePer1000</span>(<span class="dv">2018</span>),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotBridgePer1000</span>(<span class="dv">2019</span>),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotBridgePer1000</span>(<span class="dv">2020</span>),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">ncol =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>A grouped_df: 6 x 5</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th" scope="col">State</th>
-<th data-quarto-table-cell-role="th" scope="col">County</th>
-<th data-quarto-table-cell-role="th" scope="col">Year</th>
-<th data-quarto-table-cell-role="th" scope="col">bridgesPer1000</th>
-<th data-quarto-table-cell-role="th" scope="col">qualityScore</th>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Alabama</td>
-<td>Autauga County</td>
-<td>2017</td>
-<td>2.071371</td>
-<td>2.324561</td>
-</tr>
-<tr class="even">
-<td>Alabama</td>
-<td>Autauga County</td>
-<td>2018</td>
-<td>2.065217</td>
-<td>2.368421</td>
-</tr>
-<tr class="odd">
-<td>Alabama</td>
-<td>Autauga County</td>
-<td>2019</td>
-<td>2.058505</td>
-<td>2.421053</td>
-</tr>
-<tr class="even">
-<td>Alabama</td>
-<td>Autauga County</td>
-<td>2020</td>
-<td>2.076562</td>
-<td>2.417391</td>
-</tr>
-<tr class="odd">
-<td>Alabama</td>
-<td>Baldwin County</td>
-<td>2017</td>
-<td>1.716168</td>
-<td>2.510029</td>
-</tr>
-<tr class="even">
-<td>Alabama</td>
-<td>Baldwin County</td>
-<td>2018</td>
-<td>1.729879</td>
-<td>2.519444</td>
-</tr>
-</tbody>
-</table>
+<p><img src="trendOverTime_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
-<section id="examine-data-1" class="level4">
-<h4 class="anchored" data-anchor-id="examine-data-1">4. Examine Data</h4>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="192">
+<section id="change-in-bridge" class="level4">
+<h4 class="anchored" data-anchor-id="change-in-bridge">Change in Bridge</h4>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="20">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(bridgeQual<span class="sc">$</span>Year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">6</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="dv">4</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>bridgeQual<span class="sc">$</span>countyAndState <span class="ot">&lt;-</span> <span class="fu">paste</span>(bridgeQual<span class="sc">$</span>County,<span class="st">", "</span>,bridgeQual<span class="sc">$</span>State,<span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>bridgeQual.wide <span class="ot">&lt;-</span> <span class="fu">pivot_wider</span>(bridgeQual[, <span class="fu">c</span>(<span class="st">"countyAndState"</span>,<span class="st">"Year"</span>,<span class="st">"bridgesPer1000"</span>)], <span class="at">names_from =</span> Year, <span class="at">values_from =</span> bridgesPer1000, <span class="at">id_cols =</span> <span class="st">"countyAndState"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2018</span> <span class="ot">&lt;-</span> bridgeQual.wide<span class="sc">$</span><span class="st">'2018'</span> <span class="sc">-</span> bridgeQual.wide<span class="sc">$</span><span class="st">'2017'</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2019</span> <span class="ot">&lt;-</span> bridgeQual.wide<span class="sc">$</span><span class="st">'2019'</span> <span class="sc">-</span> bridgeQual.wide<span class="sc">$</span><span class="st">'2017'</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2020</span> <span class="ot">&lt;-</span> bridgeQual.wide<span class="sc">$</span><span class="st">'2020'</span> <span class="sc">-</span> bridgeQual.wide<span class="sc">$</span><span class="st">'2017'</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"black"</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">0</span>, <span class="at">type =</span> <span class="st">"n"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">2016.5</span>, <span class="fl">2020.5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">150</span>,<span class="dv">150</span>),</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">xaxt =</span> <span class="st">"n"</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(bridgeQual.wide)) {</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2017</span>, <span class="dv">2018</span>), <span class="fu">c</span>(<span class="dv">0</span>, bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2018</span>[i]), <span class="at">col =</span> <span class="st">"darkorange"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2018</span>, <span class="dv">2019</span>), <span class="fu">c</span>(bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2018</span>[i], bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2019</span>[i]), <span class="at">col =</span> <span class="st">"darkorange"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2020</span>), <span class="fu">c</span>(bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2019</span>[i], bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2020</span>[i]), <span class="at">col =</span> <span class="st">"darkorange"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2017</span>,<span class="dv">2017</span>),<span class="fu">c</span>(<span class="sc">-</span><span class="dv">150</span>,<span class="dv">150</span>), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2018</span>,<span class="dv">2018</span>),<span class="fu">c</span>(<span class="sc">-</span><span class="dv">150</span>,<span class="dv">150</span>), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2019</span>,<span class="dv">2019</span>),<span class="fu">c</span>(<span class="sc">-</span><span class="dv">150</span>,<span class="dv">150</span>), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2020</span>,<span class="dv">2020</span>),<span class="fu">c</span>(<span class="sc">-</span><span class="dv">150</span>,<span class="dv">150</span>), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">"Change in Bridges Per 1000 People</span><span class="sc">\n</span><span class="st">from 2017 to 2020, by County"</span>, <span class="at">col.main =</span> <span class="st">"white"</span>, <span class="at">cex.main =</span> <span class="fl">1.2</span>)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">xlab =</span> <span class="st">"Year"</span>, <span class="at">col.lab =</span> <span class="st">"white"</span>, <span class="at">font.lab =</span> <span class="dv">2</span>, <span class="at">cex.lab =</span> <span class="fl">1.2</span>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">ylab =</span> <span class="st">"Change in Bridges Per 1000 People Since 2017"</span>, <span class="at">col.lab =</span> <span class="st">"white"</span>, <span class="at">cex.lab =</span> <span class="fl">0.9</span>)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>xlabs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2017"</span>,<span class="st">"2018"</span>,<span class="st">"2019"</span>,<span class="st">"2020"</span>)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">2017</span>, <span class="dv">2020</span>, <span class="at">length.out =</span> <span class="dv">4</span>), <span class="at">labels =</span> xlabs, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">col.axis =</span> <span class="st">"white"</span>)</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">col.axis =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<pre><code>
-2017 2018 2019 2020 
-3123 3124 3125 3133 </code></pre>
+<p><img src="trendOverTime_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
-<section id="plot-choropleths-for-bridge-quality-over-time" class="level4">
-<h4 class="anchored" data-anchor-id="plot-choropleths-for-bridge-quality-over-time">5. Plot choropleths for bridge quality over time</h4>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="209">
+<section id="choropleths-of-bridge-count-over-time-1" class="level4">
+<h4 class="anchored" data-anchor-id="choropleths-of-bridge-count-over-time-1">Choropleths of Bridge Count Over Time</h4>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="21">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">8</span>,</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="fl">5.2</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>plotBridgePer1000 <span class="ot">&lt;-</span> <span class="cf">function</span>(year){</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        bq <span class="ot">&lt;-</span> bridgeQual <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">==</span> year)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        bq.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">merge</span>(counties, bq, <span class="at">by.x =</span> <span class="fu">c</span>(<span class="st">"county"</span>,<span class="st">"full"</span>), <span class="at">by.y =</span> <span class="fu">c</span>(<span class="st">"County"</span>,<span class="st">"State"</span>), <span class="at">all.x =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">aes</span>(<span class="at">fill =</span> bridgesPer1000)) <span class="sc">+</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">"Bridges Per</span><span class="sc">\n</span><span class="st">1000 People"</span>, </span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">low =</span> <span class="st">"#fbefae"</span>, <span class="at">high =</span> <span class="st">"#FF6600"</span>,<span class="at">na.value =</span> <span class="st">"white"</span>,</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>)) <span class="sc">+</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">20</span>, </span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>                                                        <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"black"</span>, </span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>                                                        <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">b =</span> <span class="sc">-</span><span class="dv">20</span>)),</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#aaaaaa"</span>),</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>                                <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>                                <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>                                <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="sc">-</span><span class="dv">40</span>)) <span class="sc">+</span> </span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Bridges Per 1000 People, "</span>,year))</span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(bq.plot)</span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>plotQualityScores <span class="ot">&lt;-</span> <span class="cf">function</span>(year){</span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>        bq <span class="ot">&lt;-</span> bridgeQual <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">==</span> year)</span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>        bq.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">merge</span>(counties, bq, <span class="at">by.x =</span> <span class="fu">c</span>(<span class="st">"county"</span>,<span class="st">"full"</span>), <span class="at">by.y =</span> <span class="fu">c</span>(<span class="st">"County"</span>,<span class="st">"State"</span>), <span class="at">all.x =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">aes</span>(<span class="at">fill =</span> qualityScore)) <span class="sc">+</span></span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">scale_fill_gradient2</span>(<span class="at">name =</span> <span class="st">"Average Bridge Quality Score"</span>, </span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">mid =</span> <span class="st">"red"</span>, <span class="at">high =</span> <span class="st">"green"</span>,<span class="at">na.value =</span> <span class="st">"white"</span>,</span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)) <span class="sc">+</span></span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">20</span>, </span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>                                                        <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"black"</span>, </span>
-<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>                                                        <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">b =</span> <span class="sc">-</span><span class="dv">20</span>)),</span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>                                <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#aaaaaa"</span>),</span>
-<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>                                <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>                                <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
-<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>                                <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">20</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>)) <span class="sc">+</span> </span>
-<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Average Bridge Quality Score, "</span>,year))</span>
-<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(bq.plot)</span>
-<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="211">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">27</span>,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="fl">5.2</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(<span class="fu">plotBridgePer1000</span>(<span class="dv">2017</span>),</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotBridgePer1000</span>(<span class="dv">2018</span>),</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotBridgePer1000</span>(<span class="dv">2019</span>),</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotBridgePer1000</span>(<span class="dv">2020</span>),</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">ncol =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">27</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="fl">5.2</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(<span class="fu">plotQualityScores</span>(<span class="dv">2017</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotQualityScores</span>(<span class="dv">2018</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotQualityScores</span>(<span class="dv">2019</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>),</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotQualityScores</span>(<span class="dv">2020</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>),</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">ncol =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <p><img src="trendOverTime_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="212">
+</section>
+<section id="bar-graph-of-quality-proportions-over-time" class="level4">
+<h4 class="anchored" data-anchor-id="bar-graph-of-quality-proportions-over-time">Bar Graph of Quality Proportions Over Time</h4>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="22">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">6</span>,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="dv">4</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>bridgeQual<span class="sc">$</span>countyAndState <span class="ot">&lt;-</span> <span class="fu">paste</span>(bridgeQual<span class="sc">$</span>County,<span class="st">", "</span>,bridgeQual<span class="sc">$</span>State,<span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>bridgeQual.wide <span class="ot">&lt;-</span> <span class="fu">pivot_wider</span>(bridgeQual[, <span class="fu">c</span>(<span class="st">"countyAndState"</span>,<span class="st">"Year"</span>,<span class="st">"bridgesPer1000"</span>)], <span class="at">names_from =</span> Year, <span class="at">values_from =</span> bridgesPer1000, <span class="at">id_cols =</span> <span class="st">"countyAndState"</span>)</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2018</span> <span class="ot">&lt;-</span> bridgeQual.wide<span class="sc">$</span><span class="st">'2018'</span> <span class="sc">-</span> bridgeQual.wide<span class="sc">$</span><span class="st">'2017'</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2019</span> <span class="ot">&lt;-</span> bridgeQual.wide<span class="sc">$</span><span class="st">'2019'</span> <span class="sc">-</span> bridgeQual.wide<span class="sc">$</span><span class="st">'2017'</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2020</span> <span class="ot">&lt;-</span> bridgeQual.wide<span class="sc">$</span><span class="st">'2020'</span> <span class="sc">-</span> bridgeQual.wide<span class="sc">$</span><span class="st">'2017'</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">bg =</span> <span class="st">"black"</span>)</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">0</span>, <span class="at">type =</span> <span class="st">"n"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">2016.5</span>, <span class="fl">2020.5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">150</span>,<span class="dv">150</span>),</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">xaxt =</span> <span class="st">"n"</span>)</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(bridgeQual.wide)) {</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2017</span>, <span class="dv">2018</span>), <span class="fu">c</span>(<span class="dv">0</span>, bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2018</span>[i]), <span class="at">col =</span> <span class="st">"darkorange"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2018</span>, <span class="dv">2019</span>), <span class="fu">c</span>(bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2018</span>[i], bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2019</span>[i]), <span class="at">col =</span> <span class="st">"darkorange"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2020</span>), <span class="fu">c</span>(bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2019</span>[i], bridgeQual.wide<span class="sc">$</span>diff<span class="fl">.2020</span>[i]), <span class="at">col =</span> <span class="st">"darkorange"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2017</span>,<span class="dv">2017</span>),<span class="fu">c</span>(<span class="sc">-</span><span class="dv">150</span>,<span class="dv">150</span>), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2018</span>,<span class="dv">2018</span>),<span class="fu">c</span>(<span class="sc">-</span><span class="dv">150</span>,<span class="dv">150</span>), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2019</span>,<span class="dv">2019</span>),<span class="fu">c</span>(<span class="sc">-</span><span class="dv">150</span>,<span class="dv">150</span>), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">c</span>(<span class="dv">2020</span>,<span class="dv">2020</span>),<span class="fu">c</span>(<span class="sc">-</span><span class="dv">150</span>,<span class="dv">150</span>), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">"Change in Bridges Per 1000 People</span><span class="sc">\n</span><span class="st">from 2017 to 2020, by County"</span>, <span class="at">col.main =</span> <span class="st">"white"</span>, <span class="at">cex.main =</span> <span class="fl">1.2</span>)</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">xlab =</span> <span class="st">"Year"</span>, <span class="at">col.lab =</span> <span class="st">"white"</span>, <span class="at">font.lab =</span> <span class="dv">2</span>, <span class="at">cex.lab =</span> <span class="fl">1.2</span>)</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">ylab =</span> <span class="st">"Change in Bridges Per 1000 People Since 2017"</span>, <span class="at">col.lab =</span> <span class="st">"white"</span>, <span class="at">cex.lab =</span> <span class="fl">0.9</span>)</span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>xlabs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2017"</span>,<span class="st">"2018"</span>,<span class="st">"2019"</span>,<span class="st">"2020"</span>)</span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">2017</span>, <span class="dv">2020</span>, <span class="at">length.out =</span> <span class="dv">4</span>), <span class="at">labels =</span> xlabs, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">col.axis =</span> <span class="st">"white"</span>)</span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">col.axis =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">10</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="dv">4</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>, <span class="fl">2.5</span>, <span class="dv">3</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>qualBins <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Poor"</span>, <span class="st">"Fair"</span>, <span class="st">"Good"</span>, <span class="st">"Great"</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>bridgeQual<span class="sc">$</span>scoreBin <span class="ot">&lt;-</span> <span class="fu">cut</span>(bridgeQual<span class="sc">$</span>qualityScore, <span class="at">breaks =</span> bins, <span class="at">labels =</span> qualBins)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>barChart <span class="ot">&lt;-</span> <span class="fu">table</span>(bridgeQual<span class="sc">$</span>Year, bridgeQual<span class="sc">$</span>scoreBin)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>barDf <span class="ot">&lt;-</span> <span class="fu">as.data.frame.matrix</span>(barChart)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>totals <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(barDf)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>barDf<span class="sc">$</span>Year <span class="ot">&lt;-</span> <span class="fu">rownames</span>(barDf)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(barDf) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(c <span class="cf">in</span> qualBins){</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    barDf[c] <span class="ot">&lt;-</span> barDf[c] <span class="sc">/</span> totals</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>barDf <span class="ot">&lt;-</span> <span class="fu">gather</span>(barDf, <span class="at">key =</span> <span class="st">"scoreBin"</span>, <span class="at">value =</span> <span class="st">"Proportion"</span>, <span class="sc">-</span>Year)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>barDf<span class="sc">$</span>scoreBin <span class="ot">&lt;-</span> <span class="fu">factor</span>(barDf<span class="sc">$</span>scoreBin, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Great"</span>,<span class="st">"Good"</span>,<span class="st">"Fair"</span>,<span class="st">"Poor"</span>))</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(barDf, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Proportion, <span class="at">fill =</span> scoreBin)) <span class="sc">+</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Quality Score Proportion"</span>, <span class="at">fill =</span> <span class="st">"Bridge</span><span class="sc">\n</span><span class="st">Quality"</span>,</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Proportion of Total County</span><span class="sc">\n</span><span class="st">Bridge Quality Scores Over Time"</span>) <span class="sc">+</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"yellow"</span>, <span class="st">"orange"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">24</span>),</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>)</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <p><img src="trendOverTime_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
-</div>
-</div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="213">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">27</span>,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="fl">5.2</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(<span class="fu">plotQualityScores</span>(<span class="dv">2017</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>),</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotQualityScores</span>(<span class="dv">2018</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>),</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotQualityScores</span>(<span class="dv">2019</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>),</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotQualityScores</span>(<span class="dv">2020</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>),</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">ncol =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="trendOverTime_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
-</div>
-</div>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="214">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.width =</span> <span class="dv">10</span>,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repr.plot.height =</span> <span class="dv">4</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>, <span class="fl">2.5</span>, <span class="dv">3</span>)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>qualBins <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Poor"</span>, <span class="st">"Fair"</span>, <span class="st">"Good"</span>, <span class="st">"Great"</span>)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>bridgeQual<span class="sc">$</span>scoreBin <span class="ot">&lt;-</span> <span class="fu">cut</span>(bridgeQual<span class="sc">$</span>qualityScore, <span class="at">breaks =</span> bins, <span class="at">labels =</span> qualBins)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>barChart <span class="ot">&lt;-</span> <span class="fu">table</span>(bridgeQual<span class="sc">$</span>Year, bridgeQual<span class="sc">$</span>scoreBin)</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>barDf <span class="ot">&lt;-</span> <span class="fu">as.data.frame.matrix</span>(barChart)</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>totals <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(barDf)</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>barDf<span class="sc">$</span>Year <span class="ot">&lt;-</span> <span class="fu">rownames</span>(barDf)</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(barDf) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(c <span class="cf">in</span> qualBins){</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    barDf[c] <span class="ot">&lt;-</span> barDf[c] <span class="sc">/</span> totals</span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>barDf <span class="ot">&lt;-</span> <span class="fu">gather</span>(barDf, <span class="at">key =</span> <span class="st">"scoreBin"</span>, <span class="at">value =</span> <span class="st">"Proportion"</span>, <span class="sc">-</span>Year)</span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>barDf<span class="sc">$</span>scoreBin <span class="ot">&lt;-</span> <span class="fu">factor</span>(barDf<span class="sc">$</span>scoreBin, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Great"</span>,<span class="st">"Good"</span>,<span class="st">"Fair"</span>,<span class="st">"Poor"</span>))</span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(barDf, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Proportion, <span class="at">fill =</span> scoreBin)) <span class="sc">+</span></span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Quality Score Proportion"</span>, <span class="at">fill =</span> <span class="st">"Bridge</span><span class="sc">\n</span><span class="st">Quality"</span>,</span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Proportion of Total County</span><span class="sc">\n</span><span class="st">Bridge Quality Scores Over Time"</span>) <span class="sc">+</span></span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"yellow"</span>, <span class="st">"orange"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">24</span>),</span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>)</span>
-<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="trendOverTime_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 
