@@ -184,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -196,14 +196,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="3">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../data/data.csv"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(f)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -331,105 +331,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="3">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> df[(df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">'Person trips'</span>) <span class="op">&amp;</span> (df[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">'Total trips'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>         Level      Category     Variable                        County  \
-338538  County  Person trips  Total trips        Adair County, Kentucky   
-338541  County  Person trips  Total trips        Cass County, Minnesota   
-338543  County  Person trips  Total trips        Dundy County, Nebraska   
-338545  County  Person trips  Total trips          Menard County, Texas   
-338547  County  Person trips  Total trips        Malheur County, Oregon   
-...        ...           ...          ...                           ...   
-407541  County  Person trips  Total trips  Judith Basin County, Montana   
-407576  County  Person trips  Total trips       Massac County, Illinois   
-407577  County  Person trips  Total trips     Orange County, California   
-407589  County  Person trips  Total trips    Butte County, South Dakota   
-407596  County  Person trips  Total trips         Caribou County, Idaho   
-
-                          Date  GEOID  State FIPS         State         Value  \
-338538  01/01/2019 12:00:00 AM  21001          21      Kentucky  2.690490e+07   
-338541  01/01/2020 12:00:00 AM  27021          27     Minnesota  3.458602e+07   
-338543  01/01/2019 12:00:00 AM  31057          31      Nebraska  2.444445e+06   
-338545  01/01/2020 12:00:00 AM  48327          48         Texas  2.741053e+06   
-338547  01/01/2019 12:00:00 AM  41045          41        Oregon  6.099970e+07   
-...                        ...    ...         ...           ...           ...   
-407541  01/01/2019 12:00:00 AM  30045          30       Montana  2.284353e+06   
-407576  01/01/2020 12:00:00 AM  17127          17      Illinois  2.246585e+07   
-407577  01/01/2020 12:00:00 AM   6059           6    California  3.002547e+09   
-407589  01/01/2019 12:00:00 AM  46019          46  South Dakota  1.430882e+07   
-407596  01/01/2020 12:00:00 AM  16029          16         Idaho  6.149330e+06   
-
-         Denominator Denominator Description            Row-ID   Latitude  \
-338538  2.690490e+07            Person trips  trips-2019-21001  37.104170   
-338541  3.458602e+07            Person trips  trips-2020-27021  47.117876   
-338543  2.444445e+06            Person trips  trips-2019-31057  40.176201   
-338545  2.741053e+06            Person trips  trips-2020-48327  30.889818   
-338547  6.099970e+07            Person trips  trips-2019-41045  43.193414   
-...              ...                     ...               ...        ...   
-407541  2.284353e+06            Person trips  trips-2019-30045  47.045432   
-407576  2.246585e+07            Person trips  trips-2020-17127  37.218970   
-407577  3.002547e+09            Person trips  trips-2020-06059  33.702972   
-407589  1.430882e+07            Person trips  trips-2019-46019  44.905772   
-407596  6.149330e+06            Person trips  trips-2020-16029  42.770497   
-
-         Longitude                       Location  Year  
-338538  -85.280620     POINT (-85.28062 37.10417)  2019  
-338541  -94.280528   POINT (-94.280528 47.117876)  2020  
-338543 -101.687947  POINT (-101.687947 40.176201)  2019  
-338545  -99.820600     POINT (-99.8206 30.889818)  2020  
-338547 -117.623150   POINT (-117.62315 43.193414)  2019  
-...            ...                            ...   ...  
-407541 -110.266027  POINT (-110.266027 47.045432)  2019  
-407576  -88.707722    POINT (-88.707722 37.21897)  2020  
-407577 -117.761070   POINT (-117.76107 33.702972)  2020  
-407589 -103.507928  POINT (-103.507928 44.905772)  2019  
-407596 -111.562260   POINT (-111.56226 42.770497)  2020  
-
-[6279 rows x 16 columns]</code></pre>
-</div>
-</div>
 <div class="cell" data-execution_count="4">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>top_100_values_df <span class="op">=</span> filtered_df.nlargest(<span class="dv">100</span>, <span class="st">'Value'</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df[df[<span class="st">'GEOID'</span>].isin(top_100_values_df[<span class="st">'GEOID'</span>])]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df_with_top100_travel[df_with_top100_travel[<span class="st">'Category'</span>].isin([<span class="st">'Bridges'</span>, <span class="st">'Commuting'</span>])]</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df_with_top100_travel[(df_with_top100_travel[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">"Bridge area, good (square meters)"</span>) <span class="op">|</span> (df_with_top100_travel[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">"Commute by car/ truck/van"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> df[(df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">'Person trips'</span>) <span class="op">&amp;</span> (df[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">'Total trips'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="5">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> df_with_top100_travel.pivot_table(index<span class="op">=</span><span class="st">'County'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'first'</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>pivoted_df.plot(kind<span class="op">=</span><span class="st">'bar'</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'County name'</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Value'</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparison of Commuting (Personal vehicle) vs. Bridges(Bridge area, good (square meters)) for the Counties with top 100 most Travel'</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>top_100_values_df <span class="op">=</span> filtered_df.nlargest(<span class="dv">100</span>, <span class="st">'Value'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df[df[<span class="st">'GEOID'</span>].isin(top_100_values_df[<span class="st">'GEOID'</span>])]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df_with_top100_travel[df_with_top100_travel[<span class="st">'Category'</span>].isin([<span class="st">'Bridges'</span>, <span class="st">'Commuting'</span>])]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df_with_top100_travel[(df_with_top100_travel[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">"Bridge area, good (square meters)"</span>) <span class="op">|</span> (df_with_top100_travel[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">"Commute by car/ truck/van"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> df_with_top100_travel.pivot_table(index<span class="op">=</span><span class="st">'County'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'first'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pivoted_df.plot(kind<span class="op">=</span><span class="st">'bar'</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'County name'</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Value'</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparison of Commuting (Personal vehicle) vs. Bridges(Bridge area, good (square meters)) for the Counties with top 100 most Travel'</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <p><img src="bridge_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="10">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bridge <span class="op">=</span> df[df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">'Bridges'</span>]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> bridge.pivot_table(index<span class="op">=</span><span class="st">'State'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'mean'</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> pivoted_df.plot(kind<span class="op">=</span><span class="st">'barh'</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Value'</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'State'</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparison of Bridge Types by State'</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">75</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="st">'Bridge Type'</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bridge <span class="op">=</span> df[df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">'Bridges'</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>bridge <span class="op">=</span> bridge[bridge[<span class="st">'State'</span>].isin([<span class="st">"Georgia"</span>, <span class="st">"Utah"</span>, <span class="st">"Maryland"</span>, <span class="st">"Virginia"</span>, <span class="st">"District of Columbia"</span>])]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> bridge.pivot_table(index<span class="op">=</span><span class="st">'State'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'mean'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> pivoted_df.plot(kind<span class="op">=</span><span class="st">'barh'</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Value'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'State'</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Comparison of Bridge Types by Selected States'</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">75</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="st">'Bridge Type'</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <p><img src="bridge_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
