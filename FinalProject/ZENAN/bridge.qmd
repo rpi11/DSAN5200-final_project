@@ -74,7 +74,7 @@ pivoted_df = bridge.pivot_table(index='State', columns='Variable', values='Value
 pivoted_df.head()
 ```
 
-## Plot all the indicators for bridge for each state
+## Plot the indicators with relatively large values for bridge for each state
 ```{python}
 state_colors = {
     'Georgia': 'blue',
@@ -89,7 +89,62 @@ fig = go.Figure()
 for state, color in state_colors.items():
     fig.add_trace(go.Bar(
         name=state,
-        x=pivoted_df.columns,
+        x=pivoted_df.columns[0:4],
+        y=pivoted_df.loc[state],
+        visible=False,  
+        marker_color=color  
+    ))
+
+fig.data[0].visible = True
+
+dropdown_buttons = [
+    {'label': state,
+     'method': 'update',
+     'args': [{
+         'visible': [state == s for s in pivoted_df.index]
+     },
+         {'title': f'Bridge Types in {state}'}
+     ]}
+    for state in pivoted_df.index
+]
+
+fig.update_layout(
+    updatemenus=[{
+        'buttons': dropdown_buttons,
+        'direction': 'down',
+        'pad': {"r": 10, "t": 10},
+        'showactive': True,
+        'x': 0.1,
+        'xanchor': 'left',
+        'y': 1.1,
+        'yanchor': 'top'
+    }],
+    title_text='Comparison of Bridge Types by Selected States',
+    barmode='group'
+)
+
+fig.update_layout(title=f'Bridge Types in District of Columbia ')
+fig.update_xaxes(title_text='Bridge Type')
+fig.update_yaxes(title_text='Average Value')
+fig.show()
+```
+
+## Plot the remaining indicators for bridge for each state
+```{python}
+state_colors = {
+    'Georgia': 'blue',
+    'Utah': 'green',
+    'Maryland': 'red',
+    'Virginia': 'purple',
+    'District of Columbia': 'orange'
+}
+
+fig = go.Figure()
+
+for state, color in state_colors.items():
+    fig.add_trace(go.Bar(
+        name=state,
+        x=pivoted_df.columns[4:8],
         y=pivoted_df.loc[state],
         visible=False,  
         marker_color=color  
