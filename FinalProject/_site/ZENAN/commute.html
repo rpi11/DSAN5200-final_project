@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.545">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -57,7 +57,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -79,7 +79,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -88,13 +94,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script type="text/javascript">
 window.PlotlyConfig = {MathJaxConfig: 'local'};
@@ -121,9 +128,9 @@ require(['plotly'], function(Plotly) {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Final Project</span>
     </a>
@@ -135,41 +142,41 @@ require(['plotly'], function(Plotly) {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html" rel="" target="">
- <span class="menu-text">Introduction</span></a>
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Introduction</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../RICH/eda.html" rel="" target="">
- <span class="menu-text">EDA</span></a>
+    <a class="nav-link" href="../RICH/eda.html"> 
+<span class="menu-text">EDA</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../PASHA/explore.html" rel="" target="">
- <span class="menu-text">Explore the Data</span></a>
+    <a class="nav-link" href="../PASHA/explore.html"> 
+<span class="menu-text">Explore the Data</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../RICH/trendOverTime.html" rel="" target="">
- <span class="menu-text">Trends Over Time</span></a>
+    <a class="nav-link" href="../RICH/trendOverTime.html"> 
+<span class="menu-text">Trends Over Time</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../ZENAN/commute.html" rel="" target="" aria-current="page">
- <span class="menu-text">Commuting Numbers</span></a>
+    <a class="nav-link active" href="../ZENAN/commute.html" aria-current="page"> 
+<span class="menu-text">Commuting Numbers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ZENAN/transportation.html" rel="" target="">
- <span class="menu-text">Transportation Methods</span></a>
+    <a class="nav-link" href="../ZENAN/transportation.html"> 
+<span class="menu-text">Transportation Methods</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../ZENAN/bridge.html" rel="" target="">
- <span class="menu-text">Bridge Quality</span></a>
+    <a class="nav-link" href="../ZENAN/bridge.html"> 
+<span class="menu-text">Bridge Quality</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../conclusion.html" rel="" target="">
- <span class="menu-text">Conclusion</span></a>
+    <a class="nav-link" href="../conclusion.html"> 
+<span class="menu-text">Conclusion</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -182,11 +189,14 @@ require(['plotly'], function(Plotly) {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#get-all-rows-that-fall-into-the-category-of-person-trips-and-the-subcategory-of-total-trips" id="toc-get-all-rows-that-fall-into-the-category-of-person-trips-and-the-subcategory-of-total-trips" class="nav-link active" data-scroll-target="#get-all-rows-that-fall-into-the-category-of-person-trips-and-the-subcategory-of-total-trips">Get all rows that fall into the category of ‘Person trips’ and the subcategory of ‘Total trips’</a></li>
+  <li><a href="#commuting-numbers" id="toc-commuting-numbers" class="nav-link active" data-scroll-target="#commuting-numbers">Commuting Numbers</a>
+  <ul class="collapse">
+  <li><a href="#get-all-rows-that-fall-into-the-category-of-person-trips-and-the-subcategory-of-total-trips" id="toc-get-all-rows-that-fall-into-the-category-of-person-trips-and-the-subcategory-of-total-trips" class="nav-link" data-scroll-target="#get-all-rows-that-fall-into-the-category-of-person-trips-and-the-subcategory-of-total-trips">Get all rows that fall into the category of ‘Person trips’ and the subcategory of ‘Total trips’</a></li>
   <li><a href="#plot-the-choropleth-of-travel-frequency-based-on-summed-values-by-state" id="toc-plot-the-choropleth-of-travel-frequency-based-on-summed-values-by-state" class="nav-link" data-scroll-target="#plot-the-choropleth-of-travel-frequency-based-on-summed-values-by-state">Plot the choropleth of travel frequency based on summed values by state</a></li>
   <li><a href="#filter-the-rows-featuring-the-states-with-the-top-5-travel-frequency-and-then-plot-a-choropleth-for-those-5-states-on-county-level" id="toc-filter-the-rows-featuring-the-states-with-the-top-5-travel-frequency-and-then-plot-a-choropleth-for-those-5-states-on-county-level" class="nav-link" data-scroll-target="#filter-the-rows-featuring-the-states-with-the-top-5-travel-frequency-and-then-plot-a-choropleth-for-those-5-states-on-county-level">Filter the rows featuring the states with the top 5 travel frequency and then plot a choropleth for those 5 states on county level</a></li>
   <li><a href="#select-the-counties-with-the-top-50-travel-frequencies-rank-counties-in-ascending-order-based-on-commuting-frequency-using-private-vehicles-with-establishments-plotted-on-the-graph-as-well" id="toc-select-the-counties-with-the-top-50-travel-frequencies-rank-counties-in-ascending-order-based-on-commuting-frequency-using-private-vehicles-with-establishments-plotted-on-the-graph-as-well" class="nav-link" data-scroll-target="#select-the-counties-with-the-top-50-travel-frequencies-rank-counties-in-ascending-order-based-on-commuting-frequency-using-private-vehicles-with-establishments-plotted-on-the-graph-as-well">Select the counties with the top 50 travel frequencies, rank counties in ascending order based on commuting frequency using private vehicles with ‘Establishments’ plotted on the graph as well</a></li>
   <li><a href="#histogram-of-commuting-using-personal-vehicles-and-median-household-income-for-the-selected-counties" id="toc-histogram-of-commuting-using-personal-vehicles-and-median-household-income-for-the-selected-counties" class="nav-link" data-scroll-target="#histogram-of-commuting-using-personal-vehicles-and-median-household-income-for-the-selected-counties">Histogram of commuting using personal vehicles and median household income for the selected counties</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -208,10 +218,14 @@ require(['plotly'], function(Plotly) {
   </div>
   
 
+
 </header>
 
-<div class="cell" data-execution_count="1">
-<details>
+
+<section id="commuting-numbers" class="level1">
+<h1>Commuting Numbers</h1>
+<div id="cell-2" class="cell" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -224,8 +238,8 @@ require(['plotly'], function(Plotly) {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="2">
-<details>
+<div id="cell-3" class="cell" data-execution_count="2">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../data/data.csv"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(f)</span>
@@ -361,8 +375,8 @@ require(['plotly'], function(Plotly) {
 </div>
 <section id="get-all-rows-that-fall-into-the-category-of-person-trips-and-the-subcategory-of-total-trips" class="level2">
 <h2 class="anchored" data-anchor-id="get-all-rows-that-fall-into-the-category-of-person-trips-and-the-subcategory-of-total-trips">Get all rows that fall into the category of ‘Person trips’ and the subcategory of ‘Total trips’</h2>
-<div class="cell" data-execution_count="12">
-<details>
+<div id="cell-5" class="cell" data-execution_count="12">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> df[(df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">'Person trips'</span>) <span class="op">&amp;</span> (df[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">'Total trips'</span>)]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>filtered_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -400,8 +414,8 @@ require(['plotly'], function(Plotly) {
 </section>
 <section id="plot-the-choropleth-of-travel-frequency-based-on-summed-values-by-state" class="level2">
 <h2 class="anchored" data-anchor-id="plot-the-choropleth-of-travel-frequency-based-on-summed-values-by-state">Plot the choropleth of travel frequency based on summed values by state</h2>
-<div class="cell" data-execution_count="4">
-<details>
+<div id="cell-7" class="cell" data-execution_count="4">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>aggregated_df <span class="op">=</span> df.groupby(<span class="st">'State'</span>)[<span class="st">'Value'</span>].<span class="bu">sum</span>().reset_index()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> abbreviate_states(states):</span>
@@ -438,7 +452,6 @@ require(['plotly'], function(Plotly) {
 <span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-
 <div>                            <div id="c5051e44-c3de-438a-9f22-d8940c44af93" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("c5051e44-c3de-438a-9f22-d8940c44af93")) {                    Plotly.newPlot(                        "c5051e44-c3de-438a-9f22-d8940c44af93",                        [{"coloraxis":"coloraxis","geo":"geo","hovertemplate":"State=%{location}\u003cbr\u003eValue=%{z}\u003cextra\u003e\u003c\u002fextra\u003e","locationmode":"USA-states","locations":["AL","AK","AS","AZ","AR","CA","CO","CT","DE","DC","FL","GA","GU","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","MP","OH","OK","OR","PA","PR","RI","SC","SD","TN","TX","U.S. Virgin Islands","UT","VT","VA","WA","WV","WI","WY"],"name":"","z":[23960032620.3271,3998235653.2261,35597.0,34675031796.1357,14782875630.7654,197657399246.7727,34175861311.799202,18775220297.3835,4870494412.4454,4416675326.709,104207405133.8071,52757752997.975,4721.24,6818090046.940001,8972747898.952,72855894869.2695,36306409902.8469,17347977961.9326,15869432455.3962,25021027296.5934,26251262734.5427,6646402015.1545,32278626180.3419,43256949291.0777,52507049285.015,28835594660.5126,14164687922.1558,31594892203.2582,5451412646.5536,10280018383.7914,15271002050.6529,7387162129.4373,51025242855.6636,12960712252.9959,119905772895.0507,57118175379.5379,3786133237.1411,95045.0,61837896771.0722,19655916780.5591,22500211210.1813,66274528345.6491,82985119.04,5731442505.7126,26385820528.3857,4766273178.2212,35789227486.045,139763405294.2274,174131.96,18175625666.558,3347717310.8347,46884320270.1411,39666185666.5301,8984810965.0382,30603036152.8078,3480595922.9922],"type":"choropleth"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"geo":{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"center":{},"scope":"usa"},"coloraxis":{"colorbar":{"title":{"text":"Value"}},"colorscale":[[0.0,"#440154"],[0.1111111111111111,"#482878"],[0.2222222222222222,"#3e4989"],[0.3333333333333333,"#31688e"],[0.4444444444444444,"#26828e"],[0.5555555555555556,"#1f9e89"],[0.6666666666666666,"#35b779"],[0.7777777777777778,"#6ece58"],[0.8888888888888888,"#b5de2b"],[1.0,"#fde725"]]},"legend":{"tracegroupgap":0},"title":{"text":"Choropleth Map based on State Values of Travel Frequency"}},                        {"responsive": true}                    ).then(function(){
                             
 var gd = document.getElementById('c5051e44-c3de-438a-9f22-d8940c44af93');
@@ -466,8 +479,8 @@ if (outputEl) {{
                         })                };                });            </script>        </div>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
-<details>
+<div id="cell-8" class="cell" data-execution_count="5">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> filtered_df[filtered_df[<span class="st">'State'</span>].isin([<span class="st">"California"</span>, <span class="st">"Texas"</span>, <span class="st">"New York"</span>, <span class="st">"Florida"</span>, <span class="st">"Illinois"</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -475,8 +488,8 @@ if (outputEl) {{
 </section>
 <section id="filter-the-rows-featuring-the-states-with-the-top-5-travel-frequency-and-then-plot-a-choropleth-for-those-5-states-on-county-level" class="level2">
 <h2 class="anchored" data-anchor-id="filter-the-rows-featuring-the-states-with-the-top-5-travel-frequency-and-then-plot-a-choropleth-for-those-5-states-on-county-level">Filter the rows featuring the states with the top 5 travel frequency and then plot a choropleth for those 5 states on county level</h2>
-<div class="cell" data-execution_count="6">
-<details>
+<div id="cell-10" class="cell" data-execution_count="6">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>values<span class="op">=</span>filtered_df[<span class="st">'Value'</span>]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>endpts <span class="op">=</span> <span class="bu">list</span>(np.mgrid[<span class="bu">min</span>(values):<span class="bu">max</span>(values):<span class="ot">150j</span>])</span>
@@ -516,8 +529,8 @@ if (outputEl) {{
                         })                };                });            </script>        </div>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
-<details>
+<div id="cell-11" class="cell" data-execution_count="7">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>top_100_values_df <span class="op">=</span> filtered_df.nlargest(<span class="dv">50</span>, <span class="st">'Value'</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df[df[<span class="st">'GEOID'</span>].isin(top_100_values_df[<span class="st">'GEOID'</span>])]</span>
@@ -525,8 +538,8 @@ if (outputEl) {{
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>df_with_top100_travel <span class="op">=</span> df_with_top100_travel[(df_with_top100_travel[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">'Establishments'</span>) <span class="op">|</span> (df_with_top100_travel[<span class="st">'Variable'</span>] <span class="op">==</span> <span class="st">"Commute by car/ truck/van"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="8">
-<details>
+<div id="cell-12" class="cell" data-execution_count="8">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> df_with_top100_travel.pivot_table(index<span class="op">=</span><span class="st">'County'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'first'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -534,8 +547,8 @@ if (outputEl) {{
 </section>
 <section id="select-the-counties-with-the-top-50-travel-frequencies-rank-counties-in-ascending-order-based-on-commuting-frequency-using-private-vehicles-with-establishments-plotted-on-the-graph-as-well" class="level2">
 <h2 class="anchored" data-anchor-id="select-the-counties-with-the-top-50-travel-frequencies-rank-counties-in-ascending-order-based-on-commuting-frequency-using-private-vehicles-with-establishments-plotted-on-the-graph-as-well">Select the counties with the top 50 travel frequencies, rank counties in ascending order based on commuting frequency using private vehicles with ‘Establishments’ plotted on the graph as well</h2>
-<div class="cell" data-execution_count="9">
-<details>
+<div id="cell-14" class="cell" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>reset_df <span class="op">=</span> pivoted_df.reset_index().melt(id_vars<span class="op">=</span><span class="st">'County'</span>, var_name<span class="op">=</span><span class="st">'Variable'</span>, value_name<span class="op">=</span><span class="st">'Value'</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(</span>
@@ -558,7 +571,6 @@ if (outputEl) {{
 <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-
 <div>                            <div id="59407b5a-81dd-4d14-9b3a-7b04f97cc756" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("59407b5a-81dd-4d14-9b3a-7b04f97cc756")) {                    Plotly.newPlot(                        "59407b5a-81dd-4d14-9b3a-7b04f97cc756",                        [{"alignmentgroup":"True","hovertemplate":"Variable=Commute by car\u002f truck\u002fvan\u003cbr\u003eCounty name=%{x}\u003cbr\u003eValue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Commute by car\u002f truck\u002fvan","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"Commute by car\u002f truck\u002fvan","offsetgroup":"Commute by car\u002f truck\u002fvan","orientation":"v","showlegend":true,"textposition":"auto","x":["Alameda County, California","Bexar County, Texas","Bronx County, New York","Broward County, Florida","Contra Costa County, California","Cook County, Illinois","Dallas County, Texas","Erie County, New York","Fresno County, California","Harris County, Texas","Hillsborough County, Florida","Kern County, California","Kings County, New York","Los Angeles County, California","Miami-Dade County, Florida","Nassau County, New York","New York County, New York","Orange County, California","Orange County, Florida","Palm Beach County, Florida","Queens County, New York","Riverside County, California","Sacramento County, California","San Bernardino County, California","San Diego County, California","Santa Clara County, California","Suffolk County, New York","Tarrant County, Texas","Travis County, Texas","Westchester County, New York"],"xaxis":"x","y":[552777.0,747344.0,149417.0,839831.0,399524.0,1717708.0,1128574.0,394543.0,330459.0,1990510.0,608552.0,293228.0,265480.0,3745936.0,1041383.0,501003.0,68659.0,1325725.0,579427.0,537668.0,427291.0,860364.0,587410.0,819700.0,1306221.0,817073.0,645979.0,865576.0,564008.0,308168.0],"yaxis":"y","type":"bar"},{"alignmentgroup":"True","hovertemplate":"Variable=Establishments\u003cbr\u003eCounty name=%{x}\u003cbr\u003eValue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Establishments","marker":{"color":"#EF553B","pattern":{"shape":""}},"name":"Establishments","offsetgroup":"Establishments","orientation":"v","showlegend":true,"textposition":"auto","x":["Alameda County, California","Bexar County, Texas","Bronx County, New York","Broward County, Florida","Contra Costa County, California","Cook County, Illinois","Dallas County, Texas","Erie County, New York","Fresno County, California","Harris County, Texas","Hillsborough County, Florida","Kern County, California","Kings County, New York","Los Angeles County, California","Miami-Dade County, Florida","Nassau County, New York","New York County, New York","Orange County, California","Orange County, Florida","Palm Beach County, Florida","Queens County, New York","Riverside County, California","Sacramento County, California","San Bernardino County, California","San Diego County, California","Santa Clara County, California","Suffolk County, New York","Tarrant County, Texas","Travis County, Texas","Westchester County, New York"],"xaxis":"x","y":[38793.0,34489.0,18199.0,61995.0,23591.0,130833.0,63485.0,22565.0,16881.0,103417.0,34020.0,12642.0,54723.0,258982.0,86242.0,48608.0,104691.0,92798.0,35327.0,46570.0,49597.0,39822.0,29515.0,33735.0,83146.0,48711.0,49795.0,41261.0,34547.0,31885.0],"yaxis":"y","type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"County name"},"categoryorder":"total ascending"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Value"}},"legend":{"title":{"text":"Variable"},"tracegroupgap":0},"title":{"text":"Comparison of Commuting (Personal vehicle) vs. Business (Establishments) for the Counties with top 100 most Travel"},"barmode":"group"},                        {"responsive": true}                    ).then(function(){
                             
 var gd = document.getElementById('59407b5a-81dd-4d14-9b3a-7b04f97cc756');
@@ -586,8 +598,8 @@ if (outputEl) {{
                         })                };                });            </script>        </div>
 </div>
 </div>
-<div class="cell" data-execution_count="10">
-<details>
+<div id="cell-15" class="cell" data-execution_count="10">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>income_vs_commute <span class="op">=</span> df[(df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">"Demographics"</span>) <span class="op">|</span> (df[<span class="st">'Category'</span>] <span class="op">==</span> <span class="st">"Commuting"</span>)]</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>income_vs_commute <span class="op">=</span> income_vs_commute[income_vs_commute[<span class="st">'Variable'</span>].isin([<span class="st">"Median Household Income"</span>, <span class="st">"Commute by car/ truck/van"</span>])]</span>
@@ -597,8 +609,8 @@ if (outputEl) {{
 </section>
 <section id="histogram-of-commuting-using-personal-vehicles-and-median-household-income-for-the-selected-counties" class="level2">
 <h2 class="anchored" data-anchor-id="histogram-of-commuting-using-personal-vehicles-and-median-household-income-for-the-selected-counties">Histogram of commuting using personal vehicles and median household income for the selected counties</h2>
-<div class="cell" data-execution_count="11">
-<details>
+<div id="cell-17" class="cell" data-execution_count="11">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pivoted_df <span class="op">=</span> income_vs_commute.pivot_table(index<span class="op">=</span><span class="st">'County'</span>, columns<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span><span class="st">'Value'</span>, aggfunc<span class="op">=</span><span class="st">'first'</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pivoted_df.plot(kind<span class="op">=</span><span class="st">'bar'</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -609,11 +621,16 @@ if (outputEl) {{
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="commute_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="commute_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -696,10 +713,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -709,8 +725,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -723,6 +748,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -766,6 +910,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -791,6 +936,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -851,6 +1022,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
