@@ -13,12 +13,8 @@ website:
         text: Explore the Data
       - href: RICH/trendOverTime.ipynb
         text: Trends Over Time
-      - href: ZENAN/commute.ipynb
-        text: Commuting Numbers
-      - href: ZENAN/transportation.qmd
-        text: Transportation Methods
-      - href: ZENAN/bridge.qmd
-        text: Bridge Quality
+      - href: RICH/compare.ipynb
+        text: Quality Vs. Indicators
       - href: conclusion.qmd
         text: Conclusion
 
